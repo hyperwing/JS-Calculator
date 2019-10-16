@@ -2,10 +2,10 @@
 ### JavaScript Calculator
 
 ### Roles
-* Overall Project Manager:
-* Coding Manager:
-* Testing Manager:
-* Documentation:
+* Overall Project Manager: Leah Gillespie
+* Coding Manager: Sharon Qiu
+* Testing Manager: David Wing
+* Documentation: Neel Mansukhani
 
 ### Contributions
 Please list who did what for each part of the project.
