@@ -1,4 +1,5 @@
 <!-- File Created 10/16/2019 by Neel Mansukhani -->
+<!-- Edited 10/17/2019 by Neel Mansukhani: Added number input events -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,39 +12,86 @@
     <link rel="stylesheet" type="text/css" href="calculator.css">
   </head>
   <body>
-    <form> 
-        <table class="calculator">
-            <tr>
-                <td><button>CE</button></td>
-                <td><button>C</button></td>
-                <td><button>DEL</button></td>
-                <td><button>/</button></td>
-            </tr>
-            <tr>
-                <td><button>7</button></td>
-                <td><button>8</button></td>
-                <td><button>9</button></td>
-                <td><button>*</button></td>
-            </tr>
-            <tr>
-                <td><button>4</button></td>
-                <td><button>5</button></td>
-                <td><button>6</button></td>
-                <td><button>-</button></td>
-            </tr>
-            <tr>
-                <td><button>1</button></td>
-                <td><button>2</button></td>
-                <td><button>3</button></td>
-                <td><button>+</button></td>
-            </tr>
-            <tr>
-                <td><button>+/-</button></td>
-                <td><button>0</button></td>
-                <td><button>.</button></td>
-                <td><button>=</button></td>
-            </tr>                         
-        </table>
-    </form>
+    <table class="calculator">
+        <tr>
+            <td id="calculations"></td>
+        </tr>
+        <tr>
+            <td id="display" style="float: right;">0</td> 
+        </tr>
+        <tr>
+            <td><button>CE</button></td>
+            <td><button>C</button></td>
+            <td><button>DEL</button></td>
+            <td><button>/</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('7')">7</button></td>
+            <td><button onclick="onSimpleButtonClick('8')">8</button></td>
+            <td><button onclick="onSimpleButtonClick('9')">9</button></td>
+            <td><button>*</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('4')">4</button></td>
+            <td><button onclick="onSimpleButtonClick('5')">5</button></td>
+            <td><button onclick="onSimpleButtonClick('6')">6</button></td>
+            <td><button>-</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('1')">1</button></td>
+            <td><button onclick="onSimpleButtonClick('2')">2</button></td>
+            <td><button onclick="onSimpleButtonClick('3')">3</button></td>
+            <td><button>+</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('+/-')">+/-</button></td>
+            <td><button onclick="onSimpleButtonClick('0')">0</button></td>
+            <td><button onclick="onSimpleButtonClick('.')">.</button></td>
+            <td><button>=</button></td>
+        </tr>                         
+    </table>
   </body>
 </html>
+<script type="text/javascript">
+var display = "0";
+var calculations = [];
+var memory = [];
+var history = [];
+// Created 10/17/2019 by Neel Mansukhani
+// Number button clicks are registered here then display is updated.
+function onSimpleButtonClick(symbol) {
+    if(symbol == "+/-" && display != "0") {
+        if(display.charAt(0) == '-') {
+            display = display.substr(1);
+        } else {
+            display = "-" + display;
+        }
+    } else {
+        if(display == "0") {
+            display = symbol;
+        } else {
+            display += symbol;
+        }
+    }
+    updateDisplay();
+}
+
+// Created 10/17/2019 by Neel Mansukhani
+// Updates the display after new calculations.
+function updateDisplay() {
+    document.getElementById("display").innerHTML = display;
+    document.getElementById("calculations").innerHTML = calculations.toString().replace(","," ");
+    document.getElementById("memory").innerHTML = memory;
+    document.getElementById("history").innerHTML = history;
+}
+// Created 10/17/2019 by Neel Mansukhani
+// Equal button clicks are registered here then display is updated.
+function onEqualClick() {
+    history.unshift({display: display, calculations: calculations});
+}
+// Created 10/17/2019 by Neel Mansukhani
+// moves display to the end of calculations.
+function insertDisplayInCalculations() {
+    calculations.push(display);
+}
+</script>
