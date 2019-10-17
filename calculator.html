@@ -14,15 +14,15 @@
   <body>
     <table class="calculator">
         <tr>
-            <td id="calculations"></td>
+            <td id="calculations" colspan="4"></td>
         </tr>
         <tr>
-            <td id="display" style="float: right;">0</td> 
+            <td id="display" colspan="4">0</td> 
         </tr>
         <tr>
             <td><button>CE</button></td>
             <td><button>C</button></td>
-            <td><button>DEL</button></td>
+            <td><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
             <td><button>/</button></td>
         </tr>
         <tr>
@@ -66,6 +66,13 @@ function onSimpleButtonClick(symbol) {
         } else {
             display = "-" + display;
         }
+    } else if (symbol == "DEL") {
+        if(display != "0") {
+            display = display.substr(0, display.length - 1);
+            if(display.length == 0 || display == "-") {
+                display = "0";
+            }
+        }    
     } else {
         if(display == "0") {
             display = symbol;
@@ -88,10 +95,13 @@ function updateDisplay() {
 // Equal button clicks are registered here then display is updated.
 function onEqualClick() {
     history.unshift({display: display, calculations: calculations});
+    // TODO: Add code for doing the math.
+    updateDisplay();
 }
 // Created 10/17/2019 by Neel Mansukhani
 // moves display to the end of calculations.
 function insertDisplayInCalculations() {
     calculations.push(display);
+    updateDisplay();
 }
 </script>
