@@ -24,7 +24,7 @@
         </tr>
 
         <tr>
-            <td><button onclick="memoryClear([4,6,2])">MC</button></td>
+            <td><button onclick="memoryClear([4,6,2])">MC1</button></td>
             <td><button onclick="memoryRecall([4,6,2])">MR</button></td>
             <td><button onclick="storeMemory()">MS</button></td>
             <td>
@@ -102,7 +102,6 @@ function onSimpleButtonClick(symbol) {
                 lastButtonOperator = false;            
             }
         }
-        
     } else {
         if(symbol == "+/-" && display != "0") {
             if(display.charAt(0) == '-') {
@@ -155,8 +154,6 @@ function onOperationButtonClick(operation) {
         calculations.push(parseFloat(display));
         calculations.push(operation);
         display = calculateCalculations();
-        
-            
     }
     lastButtonOperator = true;
     updateDisplay();
@@ -187,7 +184,6 @@ function calculateCalculations() {
                     return calcValue;
                 }        
             }
-
         }
     }
     return calcValue;
@@ -233,7 +229,6 @@ function setButtonState() {
     }    
 }
 
-
 /*
 Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 */
@@ -248,16 +243,19 @@ function clearMemory(memoryStack, currentDisplay){
 
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for ms button. Stores a value in memory
-function storeMemory(element) {
-    memory.unshift(element);
-    updateDisplay();
+function storeMemory() {
+    memory.unshift(display);
+    displayMemory(memory)
 }
 
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(element) {
-    memory.shift(element);
-    updateDisplay();
+    var index = memory.indexOf(element)
+    if (index > -1){
+        memory.splice(index,1)
+    }
+    displayMemory(memory)
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
@@ -274,8 +272,6 @@ function memoryRecall(memoryStack){
 function displayMemory(memoryStack){
     var htmlCode = "";
     memoryStack.forEach(function(element) {
-
-        //TODO: Memory to delete a specific value necessary?
         htmlCode += 
             `
             <button class="memory-list" onclick="memoryRecall([${element}])">${element}</button><br/>
@@ -300,11 +296,6 @@ function hideMemory(){
     document.getElementById('display-memory-list').style.display = "none";
 }
 
-// Created 10/18/2019 by Sharon Qiu
-// Display button options for a specific element in memory
-function memoryOptionsDisplay(element) {
-}
-
 /*
 * Memory operations
 */
@@ -319,7 +310,7 @@ function memorySubtract(element) {
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for m+ button.
 function memoryAdd(element) {
-    display += element;
+    display = Number(display) + element;
     updateDisplay();
 }
 
