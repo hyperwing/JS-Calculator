@@ -27,6 +27,19 @@ button {
     z-index: 1;
 }
 
+/* memory operations within the memory list*/
+.memory-operations-container {
+    min-width: 295px;
+    min-height: auto;
+}
+
+/* memory button formatting*/
+.memory-operations-container .memory-button {
+    max-width: 20%;
+    display: inline-block;
+    float: right;
+}
+
 /* display indivual number in the list */
 .memory-list{
     height: 40px;
