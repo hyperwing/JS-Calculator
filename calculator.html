@@ -1,5 +1,6 @@
 <!-- File Created 10/16/2019 by Neel Mansukhani -->
 <!-- Edited 10/17/2019 by Neel Mansukhani: Added number input events -->
+<!-- Edited 10/17/2019 by Sri Ramya Dandu: Added memory buttons and logic for clear,recall, and display-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,6 +19,18 @@
         </tr>
         <tr>
             <td id="display" colspan="4">0</td> 
+        </tr>
+
+        <tr>
+            <td><button onclick="memoryClear([4,6,2])">MC</button></td>
+            <td><button onclick="memoryRecall([4,6,2])">MR</button></td>
+            <td><button>MS</button></td>
+            <td>
+                <button onclick="displayMemory([4,6,2])">M&#9660;</button>
+                <div id="display-memory-list">
+                    <p id = "memory-stack-display"></p>
+                </div>
+            </td>
         </tr>
         <tr>
             <td><button>CE</button></td>
@@ -52,6 +65,8 @@
     </table>
   </body>
 </html>
+
+
 <script type="text/javascript">
 var display = "0";
 var calculations = [];
@@ -104,4 +119,40 @@ function insertDisplayInCalculations() {
     calculations.push(display);
     updateDisplay();
 }
+
+
+// Created 10/17/2019 by Sri Ramya Dandu
+// Clears all the values stored in memory, sets the memory to 0
+function clearMemory(memoryStack, currentDisplay){
+    memoryStack.length = 0;
+    currentDisplay = 0;
+    return memoryStack;
+}
+
+// Created 10/17/2019 by Sri Ramya Dandu
+// Uses the number in memory as the current value 
+function memoryRecall(memoryStack){
+    display = memoryStack[0];
+    hideMemory();
+    updateDisplay();
+}
+
+// Created 10/17/2019 by Sri Ramya Dandu
+// Shows the list of numbers in memory 
+function displayMemory(memoryStack){
+    var htmlCode = "";
+    memoryStack.forEach(function(element) {
+        htmlCode += '<button class= "memory-list" onclick="memoryRecall([' + element+ '])">' + element + "</button><br/>"
+    });
+
+    document.getElementById("memory-stack-display").innerHTML = htmlCode;
+    document.getElementById('display-memory-list').style.display = "block";
+}
+
+// Created 10/17/2019 by Sri Ramya Dandu
+// Hides the list of numbers in memory 
+function hideMemory(){
+    document.getElementById('display-memory-list').style.display = "none";
+}
+
 </script>

@@ -1,4 +1,5 @@
 /* File Created 10/16/2019 by Neel Mansukhani */
+/* Edited 10/17/2019 by Sri Ramya Dandu */
 html {
     height: 100%;
 }
@@ -12,4 +13,22 @@ button {
 }
 #display, #calculations {
     text-align: right;
+}
+
+/* Display for overall list of numbers in memory */
+#display-memory-list {
+    display: none;
+    min-width: 295px;
+    min-height: 262px;
+    left: 1.1%;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* display indivual number in the list */
+.memory-list{
+    height: 40px;
+    background-color:lightgrey;
 }
