@@ -4,6 +4,8 @@
 <!-- Edited 10/18/2019 by Neel Mansukhani: Added operators -->
 <!-- Edited 10/18/2019 by Sharon Qiu: Added memory buttons for simple operations and memory storing  -->
 <!-- Edited 10/18/2019 by Sri Ramya Dandu: Refactored code for memory functions and modified appearce of memory stack -->
+<!-- Edited 10/19/2019 by David Wing: Wrote functionality for clear line and clear history-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -37,8 +39,8 @@
             </td>
         </tr>
         <tr>
-            <td><button>CE</button></td>
-            <td><button>C</button></td>
+            <td><button onclick="onSimpleButtonClick('CE')">CE</button></td>
+            <td><button onclick="onSimpleButtonClick('C')">C</button></td>
             <td><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
             <td><button class="div-by-zero" onclick="onOperationButtonClick('/')">/</button></td>
         </tr>
@@ -81,6 +83,7 @@ var history = [];
 var buttonState = true;
 // TODO: set buttonState to true when =, CE, or C are pressed.
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/19/2019 by David Wing: added CE and C routes
 // Number button clicks are registered here then display is updated.
 function onSimpleButtonClick(symbol) {
     if(lastButtonOperator) {
@@ -97,7 +100,7 @@ function onSimpleButtonClick(symbol) {
             buttonState = true;
             display = symbol;
             lastButtonOperator = false;
-        } else {
+        } else { //CE or C
             if(!buttonState) {
                 buttonState = true;
                 display = "0"
@@ -123,6 +126,12 @@ function onSimpleButtonClick(symbol) {
                     display = "0";
                 }
             }    
+        } else if (symbol == "C") {
+            display = "0"
+            calculations = [];
+        } else if (symbol == "CE") {
+            display = "0"
+
         } else if(!isNaN(symbol)) {
             if(!buttonState) {
                 buttonState = true;
@@ -156,17 +165,16 @@ function onOperationButtonClick(operation) {
     } else {
         calculations.push(parseFloat(display));
         calculations.push(operation);
-        display = calculateCalculations();
-        
-            
+        display = calculateCalculations();    
     }
     lastButtonOperator = true;
     updateDisplay();
 }
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/19/2019 by David Wing: added C as an operator
 // Returns whether the given parameter is an operator.
 function isOperator(input) {
-    return input == "+" || input == "-" || input == "*" || input == "/";
+    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C";
 }
 
 // Created 10/17/2019 by Neel Mansukhani
@@ -221,6 +229,11 @@ function doMath(num1, num2, operator) {
                 } else {
                     value = num1 / num2;  
                 }
+                break;
+            case "C":
+                value = 0;
+                break;
+            default:
                 break;
         }
     return value; 
