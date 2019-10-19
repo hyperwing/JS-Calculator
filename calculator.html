@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="calculator.css">
   </head>
   <body>
+    
     <table class="calculator">
         <tr>
             <td id="calculations" colspan="4"></td>
@@ -33,9 +34,6 @@
             <td><button onclick="storeMemory()">MS</button></td>
             <td>
                 <button onclick="displayMemory([4,6,3,4,5,6,7,2])">M&#9654;</button>
-                <div id="display-memory-list">
-                    <span id = "memory-stack-display"></span>
-                </div>
             </td>
         </tr>
         <tr>
@@ -69,6 +67,11 @@
             <td><button onclick="onEqualClick()">=</button></td>
         </tr>                         
     </table>
+
+    <div id="display-memory-list">
+            <span id = "memory-stack-display"></span>
+    </div>
+ 
   </body>
 </html>
 

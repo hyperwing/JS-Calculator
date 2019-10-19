@@ -33,16 +33,18 @@ td{
     box-shadow: none;
 }
 
-
+.calculator{
+    float: left;
+}
 /* Display for overall list of numbers in memory */
 #display-memory-list {
     display: none;
-    min-width: 295px;
-    height: 260px;
+    width: 295px;
+    height: 307px;
     overflow: scroll;
-    left: 48%;
-    position: absolute;
-    box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.2);
+    float: left;
+    margin-top: 90px;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
