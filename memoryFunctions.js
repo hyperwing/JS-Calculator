@@ -106,7 +106,11 @@ function memoryAdd(element) {
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for m+ button.
 function memoryDivide(element) {
-    display /= element;
+    if(display == 0){
+        display = "Cannot divide by 0";
+    }else{
+        display /= element;
+    }
     updateDisplay();
 }
 
