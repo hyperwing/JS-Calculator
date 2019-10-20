@@ -30,7 +30,10 @@ function storeMemory() {
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
     memory.splice(Number(index),1);
-    console.log(memory);
+    if (memory.length == 0){
+        document.getElementById('MC').disabled = true;
+        document.getElementById('MR').disabled = true;
+    }
     displayMemory();
 }
 
