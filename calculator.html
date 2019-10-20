@@ -24,7 +24,7 @@
         </tr>
 
         <tr>
-            <td><button onclick="memoryClear([4,6,2])">MC1</button></td>
+            <td><button onclick="memoryClear([4,6,2])">MC</button></td>
             <td><button onclick="memoryRecall([4,6,2])">MR</button></td>
             <td><button onclick="storeMemory()">MS</button></td>
             <td>
@@ -267,7 +267,7 @@ function memoryRecall(memoryStack){
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
-// Edited 10/18/2019 by Sharon Qiu: Added html code for buttons
+// Edited 10/18/2019 by Sharon Qiu: Added html code for buttons and reorganized html code display.
 // Shows the list of numbers in memory 
 function displayMemory(memoryStack){
     var htmlCode = "";
@@ -283,7 +283,7 @@ function displayMemory(memoryStack){
                 <button class="memory-button" onclick="clearMemorySingle(${element})">MC</button>
             </div>
             <br/>
-            `
+            `;
     });
 
     document.getElementById("memory-stack-display").innerHTML = htmlCode;
