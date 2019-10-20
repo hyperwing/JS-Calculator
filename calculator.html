@@ -3,9 +3,13 @@
 <!-- Edited 10/17/2019 by Sri Ramya Dandu: Added memory buttons and logic for clear,recall, and display-->
 <!-- Edited 10/18/2019 by Neel Mansukhani: Added operators -->
 <!-- Edited 10/18/2019 by Sharon Qiu: Added memory buttons for simple operations and memory storing  -->
+<!-- Edited 10/18/2019 by Sri Ramya Dandu: Refactored code for memory functions and modified appearce of memory stack -->
+<!-- Edited 10/19/2019 by David Wing: Wrote functionality for clear line and clear history-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src = "memoryFunctions.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport"
@@ -15,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="calculator.css">
   </head>
   <body>
+    
     <table class="calculator">
         <tr>
             <td id="calculations" colspan="4"></td>
@@ -24,19 +29,14 @@
         </tr>
 
         <tr>
-            <td><button onclick="memoryClear([4,6,2])">MC</button></td>
-            <td><button onclick="memoryRecall([4,6,2])">MR</button></td>
+            <td><button id = "MC" onclick="clearMemory()">MC</button></td>
+            <td><button id = "MR" onclick="memoryRecall()">MR</button></td>
             <td><button onclick="storeMemory()">MS</button></td>
-            <td>
-                <button onclick="displayMemory([4,6,2])">M&#9660;</button>
-                <div id="display-memory-list">
-                    <p id = "memory-stack-display"></p>
-                </div>
-            </td>
+            <td><button onclick="displayMemory()">M&#9654;</button></td>
         </tr>
         <tr>
-            <td><button>CE</button></td>
-            <td><button>C</button></td>
+            <td><button onclick="onSimpleButtonClick('CE')">CE</button></td>
+            <td><button onclick="onSimpleButtonClick('C')">C</button></td>
             <td><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
             <td><button class="div-by-zero" onclick="onOperationButtonClick('/')">/</button></td>
         </tr>
@@ -65,6 +65,11 @@
             <td><button onclick="onEqualClick()">=</button></td>
         </tr>                         
     </table>
+
+    <div id="display-memory-list">
+            <span id = "memory-stack-display"></span>
+    </div>
+ 
   </body>
 </html>
 
@@ -79,6 +84,7 @@ var history = [];
 var buttonState = true;
 // TODO: set buttonState to true when =, CE, or C are pressed.
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/19/2019 by David Wing: added CE and C routes
 // Number button clicks are registered here then display is updated.
 function onSimpleButtonClick(symbol) {
     if(lastButtonOperator) {
@@ -95,7 +101,7 @@ function onSimpleButtonClick(symbol) {
             buttonState = true;
             display = symbol;
             lastButtonOperator = false;
-        } else {
+        } else { //CE or C
             if(!buttonState) {
                 buttonState = true;
                 display = "0"
@@ -120,6 +126,12 @@ function onSimpleButtonClick(symbol) {
                     display = "0";
                 }
             }    
+        } else if (symbol == "C") {
+            display = "0"
+            calculations = [];
+        } else if (symbol == "CE") {
+            display = "0"
+
         } else if(!isNaN(symbol)) {
             if(!buttonState) {
                 buttonState = true;
@@ -153,15 +165,16 @@ function onOperationButtonClick(operation) {
     } else {
         calculations.push(parseFloat(display));
         calculations.push(operation);
-        display = calculateCalculations();
+        display = calculateCalculations();    
     }
     lastButtonOperator = true;
     updateDisplay();
 }
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/19/2019 by David Wing: added C as an operator
 // Returns whether the given parameter is an operator.
 function isOperator(input) {
-    return input == "+" || input == "-" || input == "*" || input == "/";
+    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C";
 }
 
 // Created 10/17/2019 by Neel Mansukhani
@@ -216,6 +229,11 @@ function doMath(num1, num2, operator) {
                     value = num1 / num2;  
                 }
                 break;
+            case "C":
+                value = 0;
+                break;
+            default:
+                break;
         }
     return value; 
 }
@@ -227,105 +245,6 @@ function setButtonState() {
     for(var i = 0; i < buttons.length; i++) {
         buttons[i].disabled = !buttonState;
     }    
-}
-
-/*
-Functions for memory including ms, mr, m-, m+, m*, m/, mc.
-*/
-
-// Created 10/17/2019 by Sri Ramya Dandu
-// Clears all the values stored in memory, sets the memory to 0
-function clearMemory(memoryStack, currentDisplay){
-    memoryStack.length = 0;
-    currentDisplay = 0;
-    return memoryStack;
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for ms button. Stores a value in memory
-function storeMemory() {
-    memory.unshift(display);
-    displayMemory(memory)
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for ms button. clears a single specific value.
-function clearMemorySingle(element) {
-    var index = memory.indexOf(element)
-    if (index > -1){
-        memory.splice(index,1)
-    }
-    displayMemory(memory)
-}
-
-// Created 10/17/2019 by Sri Ramya Dandu
-// Uses the number in memory as the current value 
-function memoryRecall(memoryStack){
-    display = memoryStack[0];
-    hideMemory();
-    updateDisplay();
-}
-
-// Created 10/17/2019 by Sri Ramya Dandu
-// Edited 10/18/2019 by Sharon Qiu: Added html code for buttons and reorganized html code display.
-// Shows the list of numbers in memory 
-function displayMemory(memoryStack){
-    var htmlCode = "";
-    memoryStack.forEach(function(element) {
-        htmlCode += 
-            `
-            <button class="memory-list" onclick="memoryRecall([${element}])">${element}</button><br/>
-            <div class="memory-operations-container">
-                <button class="memory-button" onclick="memorySubtract(${element})">M-</button>
-                <button class="memory-button" onclick="memoryAdd(${element})">M+</button>
-                <button class="memory-button" onclick="memoryDivide(${element})">M/</button>
-                <button class="memory-button" onclick="memoryMultiply(${element})">M*</button>
-                <button class="memory-button" onclick="clearMemorySingle(${element})">MC</button>
-            </div>
-            <br/>
-            `;
-    });
-
-    document.getElementById("memory-stack-display").innerHTML = htmlCode;
-    document.getElementById('display-memory-list').style.display = "block";
-}
-
-// Created 10/17/2019 by Sri Ramya Dandu
-// Hides the list of numbers in memory 
-function hideMemory(){
-    document.getElementById('display-memory-list').style.display = "none";
-}
-
-/*
-* Memory operations
-*/
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for m- button.
-function memorySubtract(element) {
-    display -= element;
-    updateDisplay();
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for m+ button.
-function memoryAdd(element) {
-    display = Number(display) + element;
-    updateDisplay();
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for m+ button.
-function memoryDivide(element) {
-    display /= element;
-    updateDisplay();
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for m+ button.
-function memoryMultiply(element) {
-    display *= element;
-    updateDisplay();
 }
 
 </script>
