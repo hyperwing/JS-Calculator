@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src = "memoryFunctions.js"></script>
+    <script src="memoryFunctions.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport"
@@ -19,7 +19,6 @@
     <link rel="stylesheet" type="text/css" href="calculator.css">
   </head>
   <body>
-    
     <table class="calculator">
         <tr>
             <td id="calculations" colspan="4"></td>
@@ -67,7 +66,7 @@
     </table>
 
     <div id="display-memory-list">
-            <span id = "memory-stack-display"></span>
+            <span id="memory-stack-display"></span>
     </div>
  
   </body>
@@ -78,11 +77,10 @@
 var display = "0";
 var lastButtonOperator = false;
 var calculations = [];
-var calcValue = 0;
-var memory = [];
 var history = [];
-var buttonState = true;
+var buttonState = true; //Might not need to exist.
 // TODO: set buttonState to true when =, CE, or C are pressed.
+// TODO: make method less thicc.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
 // Number button clicks are registered here then display is updated.
@@ -101,7 +99,7 @@ function onSimpleButtonClick(symbol) {
             buttonState = true;
             display = symbol;
             lastButtonOperator = false;
-        } else { //CE or C
+        } else {
             if(!buttonState) {
                 buttonState = true;
                 display = "0"
@@ -152,6 +150,7 @@ function onSimpleButtonClick(symbol) {
 function updateDisplay() {
     document.getElementById("display").innerHTML = display;
     document.getElementById("calculations").innerHTML = calculations.toString().replace(/,/g," ");
+    displayMemory();
     // document.getElementById("memory").innerHTML = memory;
     // document.getElementById("history").innerHTML = history;
     setButtonState(buttonState);
@@ -174,7 +173,7 @@ function onOperationButtonClick(operation) {
 // Edited 10/19/2019 by David Wing: added C as an operator
 // Returns whether the given parameter is an operator.
 function isOperator(input) {
-    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C";
+    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C";// TODO: Remove C
 }
 
 // Created 10/17/2019 by Neel Mansukhani
@@ -188,7 +187,7 @@ function calculateCalculations() {
         if(typeof calcValue == "string") {
             return calcValue;
         }
-        for(var i = 3; i < calculations.length; i++) {
+        for(var i = 3; i < calculations.length; i++) {// TODO: Make Better
             if(i % 2 == 1) {
                 operator = calculations[i];
             } else {

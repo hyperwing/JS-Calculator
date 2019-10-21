@@ -16,32 +16,33 @@ function clearMemory(){
     memory.length = 0;
     document.getElementById('MC').disabled = true;
     document.getElementById('MR').disabled = true;
-    displayMemory();
+    updateDisplay();
 }
 
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for ms button. Stores a value in memory
 function storeMemory() {
     memory.unshift(display);
-    displayMemory();
+    updateDisplay();
 }
 
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
     memory.splice(index,1);
-    displayMemory();
+    updateDisplay();
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
 // Uses the number in memory as the current value 
 function memoryRecall(){
-    display = memory[0];
+    display = String(memory[0]);// TODO: Stringify
     updateDisplay();
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
 // Edited 10/18/2019 by Sharon Qiu: Added html code for more buttons
+// Edited 10/20/2019 by Sharon Qiu: Fixed popups for list.
 // Shows the list of numbers in memory 
 function displayMemory(){
     var htmlCode = "";
@@ -99,7 +100,7 @@ function memorySubtract(element) {
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for m+ button.
 function memoryAdd(element) {
-    display = Number(display) + element;
+    display = Number(display) + element;// TODO: Stringify
     updateDisplay();
 }
 
