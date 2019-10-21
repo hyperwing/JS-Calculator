@@ -22,19 +22,15 @@ function clearMemory(){
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for ms button. Stores a value in memory
 function storeMemory() {
-    memory.unshift(Number(display));
+    memory.unshift(display);
     displayMemory();
 }
 
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
-    memory.splice(Number(index),1);
+    memory.splice(index,1);
     displayMemory();
-
-    if ((document.getElementById('display-memory-list').style.display == "block") && memory.length == 0) {
-        document.getElementById('display-memory-list').style.display = "none";
-    }
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
@@ -49,18 +45,17 @@ function memoryRecall(){
 // Shows the list of numbers in memory 
 function displayMemory(){
     var htmlCode = "";
+    console.log(memory)
     
     if (memory.length < 1) {
         document.getElementById('MC').disabled = true;
         document.getElementById('MR').disabled = true;
-    }else{
+        document.getElementById('display-memory-list').style.display = "none";
+    }
+    else{
         document.getElementById('MC').disabled = false;
         document.getElementById('MR').disabled = false;
-    }
-    
-    if (document.getElementById('display-memory-list').style.display == "block"){
-        hideMemory();
-    }else{
+
         index = 0;
         memory.forEach(function(element) {
 
@@ -74,20 +69,15 @@ function displayMemory(){
                     <button class="memory-button" onclick="memoryMultiply(${element})">M*</button>
                     <button class="memory-button" id="MC single" onclick="clearMemorySingle(${index})">MC</button>
                 </div>
-                `
+                `;
                 index++;
         });
-        if (memory.length == 0) {
-            document.getElementById('MC').disabled = true;
-            document.getElementById('MR').disabled = true;
-        }
-        document.getElementById("memory-stack-display").innerHTML = htmlCode;
-        
-        if (document.getElementById('display-memory-list').style.display = "none") {
-            document.getElementById('display-memory-list').style.display = "block";
-        }
     }
+    
+    document.getElementById("memory-stack-display").innerHTML = htmlCode;
+    document.getElementById('display-memory-list').style.display = "block";
 }
+
 
 // Created 10/17/2019 by Sri Ramya Dandu
 // Hides the list of numbers in memory 
