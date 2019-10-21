@@ -96,6 +96,10 @@ function onOperatorClick(symbol) {
             } else {
                 display = "-" + display;
             }            
+        } else if (symbol == "C") {
+            display = "0"
+            buttonState = true;
+            calculations = [];
         } 
     } else {
         if(symbol == "+/-" && display != "0") {
@@ -115,12 +119,9 @@ function onOperatorClick(symbol) {
                     display = "0";
                 }
             }    
-        } else if (symbol == "C") {
-            display = "0"
-            calculations = [];
         } else if (symbol == "CE") {
             display = "0"
-
+            buttonState = true;
         } 
     }
     updateDisplay();
@@ -249,6 +250,7 @@ function doMath(num1, num2, operator) {
                 break;
             case "C":
                 value = 0;
+                calculations = [];
                 break;
             default:
                 break;
