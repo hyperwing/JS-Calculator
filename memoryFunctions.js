@@ -30,11 +30,11 @@ function storeMemory() {
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
     memory.splice(Number(index),1);
-    if (memory.length == 0){
-        document.getElementById('MC').disabled = true;
-        document.getElementById('MR').disabled = true;
-    }
     displayMemory();
+
+    if ((document.getElementById('display-memory-list').style.display == "block") && memory.length == 0) {
+        document.getElementById('display-memory-list').style.display = "none";
+    }
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
@@ -49,7 +49,15 @@ function memoryRecall(){
 // Shows the list of numbers in memory 
 function displayMemory(){
     var htmlCode = "";
-
+    
+    if (memory.length < 1) {
+        document.getElementById('MC').disabled = true;
+        document.getElementById('MR').disabled = true;
+    }else{
+        document.getElementById('MC').disabled = false;
+        document.getElementById('MR').disabled = false;
+    }
+    
     if (document.getElementById('display-memory-list').style.display == "block"){
         hideMemory();
     }else{
@@ -69,8 +77,15 @@ function displayMemory(){
                 `
                 index++;
         });
+        if (memory.length == 0) {
+            document.getElementById('MC').disabled = true;
+            document.getElementById('MR').disabled = true;
+        }
         document.getElementById("memory-stack-display").innerHTML = htmlCode;
-        document.getElementById('display-memory-list').style.display = "block";
+        
+        if (document.getElementById('display-memory-list').style.display = "none") {
+            document.getElementById('display-memory-list').style.display = "block";
+        }
     }
 }
 
@@ -78,11 +93,6 @@ function displayMemory(){
 // Hides the list of numbers in memory 
 function hideMemory(){
     document.getElementById('display-memory-list').style.display = "none";
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Display button options for a specific element in memory
-function memoryOptionsDisplay(element) {
 }
 
 /*
@@ -106,7 +116,9 @@ function memoryAdd(element) {
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for m+ button.
 function memoryDivide(element) {
-    if(display == 0){
+    if ((element == 0) && (display == 0)) {
+        display = "Result is undefined.";
+    }else if(display == 0){
         display = "Cannot divide by 0";
     }else{
         display /= element;
