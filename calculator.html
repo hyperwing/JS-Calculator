@@ -100,6 +100,9 @@ function onOperatorClick(symbol) {
             display = "0"
             buttonState = true;
             calculations = [];
+        } else if (symbol == "CE") {
+            display = "0"
+            buttonState = true;
         } 
     } else {
         if(symbol == "+/-" && display != "0") {
@@ -119,9 +122,6 @@ function onOperatorClick(symbol) {
                     display = "0";
                 }
             }    
-        } else if (symbol == "CE") {
-            display = "0"
-            buttonState = true;
         } 
     }
     updateDisplay();
@@ -193,7 +193,7 @@ function onOperationButtonClick(operation) {
 // Edited 10/19/2019 by David Wing: added C as an operator
 // Returns whether the given parameter is an operator.
 function isOperator(input) {
-    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C";// TODO: Remove C
+    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C" || input == "CE";
 }
 
 // Created 10/17/2019 by Neel Mansukhani
