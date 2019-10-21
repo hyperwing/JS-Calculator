@@ -4,6 +4,7 @@ Edited 10/17/2019 by Sri Ramya Dandu
 Edited 10/18/2019 by Sharon Qiu
 Edited 10/18/2019 by Sri Ramya Dandu
 Edited 10/20/2019 by Sharon Qiu
+Edited 10/20/2019 by Sri Ramya Dandu
 Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 */
 
@@ -14,52 +15,53 @@ var memory = [];
 // Clears all the values stored in memory, sets the memory to 0
 function clearMemory(){
     memory.length = 0;
-    document.getElementById('MC').disabled = true;
-    document.getElementById('MR').disabled = true;
     updateDisplay();
 }
 
 // Created 10/18/2019 by Sharon Qiu
+// Edited 10/20/2019 by Sri Ramya Dandu: Added display memory
 // Functionality for ms button. Stores a value in memory
 function storeMemory() {
     memory.unshift(display);
+
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
+    }
     updateDisplay();
 }
 
 // Created 10/18/2019 by Sharon Qiu
+// Edited 10/20/2019 by Sri Ramya Dandu: Keeps memory up after deleting 
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
     memory.splice(index,1);
+    document.getElementById('display-memory-list').style.display = "none"
+    displayMemory();
     updateDisplay();
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
 // Uses the number in memory as the current value 
 function memoryRecall(){
-    display = String(memory[0]);// TODO: Stringify
+    display = String(memory[0]);
     updateDisplay();
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
 // Edited 10/18/2019 by Sharon Qiu: Added html code for more buttons
 // Edited 10/20/2019 by Sharon Qiu: Fixed popups for list.
+// Edited 10/20/2019 by Sri Ramya Dandu: Fixed glitch for memory 
 // Shows the list of numbers in memory 
 function displayMemory(){
     var htmlCode = "";
     console.log(memory)
     
-    if (memory.length < 1) {
-        document.getElementById('MC').disabled = true;
-        document.getElementById('MR').disabled = true;
-        document.getElementById('display-memory-list').style.display = "none";
-    }
-    else{
-        document.getElementById('MC').disabled = false;
-        document.getElementById('MR').disabled = false;
-
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        hideMemory();
+    } else {
         index = 0;
         memory.forEach(function(element) {
-
             htmlCode += 
                 `
                 <button class="memory-list" onclick="memoryRecall([${element}])">${element}</button>
@@ -73,10 +75,10 @@ function displayMemory(){
                 `;
                 index++;
         });
+
+        document.getElementById("memory-stack-display").innerHTML = htmlCode;
+        document.getElementById('display-memory-list').style.display = "block";
     }
-    
-    document.getElementById("memory-stack-display").innerHTML = htmlCode;
-    document.getElementById('display-memory-list').style.display = "block";
 }
 
 
