@@ -46,7 +46,6 @@ function memoryRecall(){
 // Shows the list of numbers in memory 
 function displayMemory(){
     var htmlCode = "";
-    console.log(memory)
     
     if (memory.length < 1) {
         document.getElementById('MC').disabled = true;
@@ -74,7 +73,6 @@ function displayMemory(){
                 index++;
         });
     }
-    
     document.getElementById("memory-stack-display").innerHTML = htmlCode;
     document.getElementById('display-memory-list').style.display = "block";
 }
