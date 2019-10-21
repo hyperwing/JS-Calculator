@@ -29,8 +29,8 @@ function storeMemory() {
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
-    memory.splice(Number(index),1);
-    if (memory.length == 0){
+    memory.splice(index,1);
+    if (memory.length == 0){ //TODO: Move to displayMemory
         document.getElementById('MC').disabled = true;
         document.getElementById('MR').disabled = true;
     }
@@ -40,7 +40,7 @@ function clearMemorySingle(index) {
 // Created 10/17/2019 by Sri Ramya Dandu
 // Uses the number in memory as the current value 
 function memoryRecall(){
-    display = memory[0];
+    display = memory[0];// TODO: Stringify
     updateDisplay();
 }
 
@@ -52,7 +52,7 @@ function displayMemory(){
 
     if (document.getElementById('display-memory-list').style.display == "block"){
         hideMemory();
-    }else{
+    }else{ //TODO: change so u don't have to rewrite every time.
         index = 0;
         memory.forEach(function(element) {
 
@@ -80,10 +80,6 @@ function hideMemory(){
     document.getElementById('display-memory-list').style.display = "none";
 }
 
-// Created 10/18/2019 by Sharon Qiu
-// Display button options for a specific element in memory
-function memoryOptionsDisplay(element) {
-}
 
 /*
 * Memory operations
@@ -99,7 +95,7 @@ function memorySubtract(element) {
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for m+ button.
 function memoryAdd(element) {
-    display = Number(display) + element;
+    display = Number(display) + element;// TODO: Stringify
     updateDisplay();
 }
 
@@ -107,7 +103,7 @@ function memoryAdd(element) {
 // Functionality for m+ button.
 function memoryDivide(element) {
     if(display == 0){
-        display = "Cannot divide by 0";
+        display = "Cannot divide by zero";// TODO: Account for 0/0 
     }else{
         display /= element;
     }

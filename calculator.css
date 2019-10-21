@@ -39,9 +39,9 @@ td{
 /* Display for overall list of numbers in memory */
 #display-memory-list {
     display: none;
-    width: 295px;
+    width: 300px;
     height: 307px;
-    overflow: scroll;
+    overflow: auto;
     float: left;
     margin-top: 90px;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
