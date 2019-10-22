@@ -1,0 +1,143 @@
+<!-- 
+File created 10/20/2019 by Sri Ramya Dandu
+Edited 10/21/2019 by Sri Ramya Dandu: Modfied look of the calc, added functionality for modes (binary/hex/decimal) display 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="modeConversion.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Use the title from a page's frontmatter if it has one -->
+    <title>Mode Converter</title>
+    <link rel="stylesheet" type="text/css" href="modes.css">
+  </head>
+  <body>
+      <!-- Format of display boxes -->
+      <table class = display-boxes>
+            <tr class = "space"></tr>
+            <tr> <td id="displayFrom" colspan="1.5">0</td> </tr>
+            <tr>
+                <td class = "options">
+                    <select id ="convertFrom" onchange= updateDisplay()>
+                        <option value="10">Decimal</option>
+                        <option value="2">Binary</option>
+                        <option value="16">Hexadecimal</option>
+                        <option value="18">Octal</option>
+                      </select>
+                </td>
+            </tr>
+            <tr class = "space"></tr>
+            <tr><td id="displayTo" colspan="1.5">0</td> </tr>
+            <tr> 
+                <td class = "options">
+                    <select id ="convertTo" onchange= updateDisplay()>
+                    <option value="10">Decimal</option>
+                    <option value="2">Binary</option>
+                    <option value="16">Hexadecimal</option>
+                    <option value="18">Octal</option>
+                  </select>
+                </td>
+            </tr>
+      </table>
+
+    <!-- Format of buttons -->
+    <table class="mode-converter">
+        <tr>
+            <td colspan="1.5"><button onclick="onSimpleButtonClick('CE')">CE</button></td>
+            <td colspan="1.5"><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
+           
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('7')">7</button></td>
+            <td><button onclick="onSimpleButtonClick('8')">8</button></td>
+            <td><button onclick="onSimpleButtonClick('9')">9</button></td>
+          
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('4')">4</button></td>
+            <td><button onclick="onSimpleButtonClick('5')">5</button></td>
+            <td><button onclick="onSimpleButtonClick('6')">6</button></td>
+           
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('1')">1</button></td>
+            <td><button onclick="onSimpleButtonClick('2')">2</button></td>
+            <td><button onclick="onSimpleButtonClick('3')">3</button></td>
+            
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('A')">A</button></td>
+            <td><button onclick="onSimpleButtonClick('B')">B</button></td>
+            <td><button onclick="onSimpleButtonClick('C')">C</button></td>
+            
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('D')">D</button></td>
+            <td><button onclick="onSimpleButtonClick('E')">E</button></td>
+            <td><button onclick="onSimpleButtonClick('F')">F</button></td>
+        </tr>
+        <tr>
+            <td><button class="div-by-zero" onclick="onSimpleButtonClick('-')">-</button></td>
+            <td><button onclick="onSimpleButtonClick('0')">0</button></td>
+            <td><button class="div-by-zero" onclick="onSimpleButtonClick('.')">.</button></td>
+           
+        </tr>                         
+    </table>
+  </body>
+</html>
+
+
+<script type="text/javascript">
+var display = "0";
+updateDisplay();
+// TODO: set buttonState to true when =, CE, or C are pressed.
+// TODO: make method less thicc.
+// Created 10/17/2019 by Neel Mansukhani
+// Edited 10/19/2019 by David Wing: added CE and C routes
+// Number button clicks are registered here then display is updated.
+function onSimpleButtonClick(symbol) {
+    if(symbol == "-" && display != "0") {
+        if(display.charAt(0) == '-') {
+            display = display.substr(1);
+        } else {
+            display = "-" + display;
+        }
+    } else if (symbol == "DEL") {
+        if(display != "0") {
+            display = display.substr(0, display.length - 1);
+            if(display.length == 0 || display == "-") {
+                display = "0";
+            }
+        }    
+    } else if (symbol == "CE") {
+        display = "0"
+    } else {
+       if(display == "0") {
+            display = symbol;
+        } else { 
+            display += symbol;
+        }
+        
+    }
+    updateDisplay();
+}
+
+// Created 10/17/2019 by Neel Mansukhani
+// Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
+// Updates the display after new calculations.
+function updateDisplay() {
+    document.getElementById("displayFrom").innerHTML = display;
+    splitNum = wholeFracSplit(display);
+    if(display.charAt(display.length-1) == '.'){
+        splitNum = wholeFracSplit(display + '0');
+    }
+    from = Number(document.getElementById("convertFrom").value);
+    to = Number(document.getElementById("convertTo").value);
+    console.log(splitNum);
+    callFunctions(splitNum,from,to);
+}
+</script>

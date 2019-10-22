@@ -1,0 +1,52 @@
+/*  File Created 10/20/2019 by Sri Ramya Dandu
+    Edited 10/21/2019 by Sri Ramya Dandu: Added formating for new display and options input 
+
+*/
+html {
+    height: 100%;
+}
+button {
+    height: 100%;
+    width: 100%;
+}
+
+.space{
+    height:90px;
+}
+.options{
+    background-color: transparent;
+    box-shadow: none;
+}
+select{
+    background-color: lightgray;
+    height: 20px;
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+td{
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+}
+
+#displayFrom, #displayTo{
+    border: 1px solid black;
+    box-shadow: none;
+    width: 300px;
+    max-width: 300px;
+    height: 30px;
+    text-align: right;
+    overflow: scroll;
+}
+
+.display-boxes{
+    float:left;
+    margin-left: 20%;
+    margin-right: 30px;
+}
+
+.mode-converter{
+    margin-left: 30%;
+    margin-top: 10%;
+    width: 300px;
+    height: 400px;
+}
