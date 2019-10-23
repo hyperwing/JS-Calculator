@@ -5,6 +5,7 @@ Edited 10/18/2019 by Sharon Qiu
 Edited 10/18/2019 by Sri Ramya Dandu
 Edited 10/20/2019 by Sharon Qiu
 Edited 10/20/2019 by Sri Ramya Dandu
+Edited 10/21/2019 by Sri Ramya Dandu
 Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 */
 
@@ -42,8 +43,9 @@ function clearMemorySingle(index) {
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
+// Edited 10/17/2019 by Sri Ramya Dandu: Added paramter for memory back in 
 // Uses the number in memory as the current value 
-function memoryRecall(){
+function memoryRecall(memory){
     display = String(memory[0]);
     updateDisplay();
 }

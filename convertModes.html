@@ -1,6 +1,8 @@
 <!-- 
 File created 10/20/2019 by Sri Ramya Dandu
 Edited 10/21/2019 by Sri Ramya Dandu: Modfied look of the calc, added functionality for modes (binary/hex/decimal) display 
+Edited 10/22/2019 by Sri Ramya Dandu: Added repeating value overline, refactored input to call functions 
+Edited 10/23/2019 by Sri Ramya Dandu: Added ids for . and - 
 -->
 
 <!DOCTYPE html>
@@ -19,26 +21,24 @@ Edited 10/21/2019 by Sri Ramya Dandu: Modfied look of the calc, added functional
       <!-- Format of display boxes -->
       <table class = display-boxes>
             <tr class = "space"></tr>
-            <tr> <td id="displayFrom" colspan="1.5">0</td> </tr>
+            <tr> <td id="displayFrom">0</td> </tr>
             <tr>
                 <td class = "options">
                     <select id ="convertFrom" onchange= updateDisplay()>
                         <option value="10">Decimal</option>
                         <option value="2">Binary</option>
                         <option value="16">Hexadecimal</option>
-                        <option value="18">Octal</option>
                       </select>
                 </td>
             </tr>
             <tr class = "space"></tr>
-            <tr><td id="displayTo" colspan="1.5">0</td> </tr>
+            <tr><td id="displayTo">0</td> </tr>
             <tr> 
                 <td class = "options">
                     <select id ="convertTo" onchange= updateDisplay()>
                     <option value="10">Decimal</option>
                     <option value="2">Binary</option>
                     <option value="16">Hexadecimal</option>
-                    <option value="18">Octal</option>
                   </select>
                 </td>
             </tr>
@@ -81,9 +81,9 @@ Edited 10/21/2019 by Sri Ramya Dandu: Modfied look of the calc, added functional
             <td><button onclick="onSimpleButtonClick('F')">F</button></td>
         </tr>
         <tr>
-            <td><button class="div-by-zero" onclick="onSimpleButtonClick('-')">-</button></td>
+            <td><button id = 'neg' class="div-by-zero" onclick="onSimpleButtonClick('-')">-</button></td>
             <td><button onclick="onSimpleButtonClick('0')">0</button></td>
-            <td><button class="div-by-zero" onclick="onSimpleButtonClick('.')">.</button></td>
+            <td><button id = 'dot' class="div-by-zero" onclick="onSimpleButtonClick('.')">.</button></td>
            
         </tr>                         
     </table>
@@ -94,19 +94,13 @@ Edited 10/21/2019 by Sri Ramya Dandu: Modfied look of the calc, added functional
 <script type="text/javascript">
 var display = "0";
 updateDisplay();
-// TODO: set buttonState to true when =, CE, or C are pressed.
-// TODO: make method less thicc.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
+// Edited 10/21/2019 by Sri Ramya Dandu: Modified to match new calc
+// Edited 10/22/2019 by Sri Ramya Dandu: Added decimal point recoganization 
 // Number button clicks are registered here then display is updated.
 function onSimpleButtonClick(symbol) {
-    if(symbol == "-" && display != "0") {
-        if(display.charAt(0) == '-') {
-            display = display.substr(1);
-        } else {
-            display = "-" + display;
-        }
-    } else if (symbol == "DEL") {
+    if (symbol == "DEL") {
         if(display != "0") {
             display = display.substr(0, display.length - 1);
             if(display.length == 0 || display == "-") {
@@ -116,7 +110,7 @@ function onSimpleButtonClick(symbol) {
     } else if (symbol == "CE") {
         display = "0"
     } else {
-       if(display == "0") {
+       if(display == "0" && symbol != '.') {
             display = symbol;
         } else { 
             display += symbol;
@@ -128,16 +122,37 @@ function onSimpleButtonClick(symbol) {
 
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
+// Edited 10/22/2019 by Sri Ramya Dandu: Added formatting for repeating values 
+// Edited 10/23/2019 by Sri Ramya Dandu: Enable/disable buttons
 // Updates the display after new calculations.
 function updateDisplay() {
     document.getElementById("displayFrom").innerHTML = display;
-    splitNum = wholeFracSplit(display);
-    if(display.charAt(display.length-1) == '.'){
-        splitNum = wholeFracSplit(display + '0');
-    }
+
     from = Number(document.getElementById("convertFrom").value);
     to = Number(document.getElementById("convertTo").value);
-    console.log(splitNum);
-    callFunctions(splitNum,from,to);
+
+    if(display.charAt(display.length-1) == '.'){ // on decimal entry
+        callFunctions(display + '0',from,to); //appends temporary 0 for display purposes
+    }else{
+        callFunctions(display,from,to);
+    }
+
+    // repeating value css 
+    if (document.getElementById("repeating") != null){
+        document.getElementById("repeating").style.textDecoration = "overline";
+    }
+
+    // Ensures correct input of . and -
+    if (display.indexOf('.') != -1){
+        document.getElementById("dot").disabled = true;
+    }else{
+        document.getElementById("dot").disabled = false;
+    }
+
+    if (display.indexOf('-') != -1 || (display.length >= 1 && display != '0')){
+        document.getElementById("neg").disabled = true;
+    }else{
+        document.getElementById("neg").disabled = false;
+    }
 }
 </script>

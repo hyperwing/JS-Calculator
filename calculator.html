@@ -4,8 +4,9 @@
 <!-- Edited 10/18/2019 by Neel Mansukhani: Added operators -->
 <!-- Edited 10/18/2019 by Sharon Qiu: Added memory buttons for simple operations and memory storing  -->
 <!-- Edited 10/18/2019 by Sri Ramya Dandu: Refactored code for memory functions and modified appearce of memory stack -->
-<!-- Edited 10/19/2019 by David Wing: Wrote functionality for clear line and clear history-->
 <!-- Edited 10/18/2019 by Sri Ramya Dandu: Fixed resziing of memory display -->
+<!-- Edited 10/19/2019 by David Wing: Wrote functionality for clear line and clear history-->
+<!-- Edited 10/21/2019 by Sri Ramya Dandu: Fixed memory recall functionality -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,7 +30,7 @@
 
         <tr>
             <td><button id = "MC" onclick="clearMemory()" disabled>MC</button></td>
-            <td><button id="MR" onclick="memoryRecall()" disabled>MR</button></td>
+            <td><button id="MR" onclick="memoryRecall(memory)" disabled>MR</button></td>
             <td><button onclick="storeMemory()">MS</button></td>
             <td><button id= "M" onclick="displayMemory()">M&#9654;</button></td>
         </tr>

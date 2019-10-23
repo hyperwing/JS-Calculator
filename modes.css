@@ -1,6 +1,6 @@
 /*  File Created 10/20/2019 by Sri Ramya Dandu
     Edited 10/21/2019 by Sri Ramya Dandu: Added formating for new display and options input 
-
+    Edited 10/22/2019 by Sri Ramya Dandu: Changed overflow and white space handling for displays 
 */
 html {
     height: 100%;
@@ -31,11 +31,13 @@ td{
 #displayFrom, #displayTo{
     border: 1px solid black;
     box-shadow: none;
-    width: 300px;
-    max-width: 300px;
+    width: 250px;
+    max-width: 250px;
     height: 30px;
+    max-height: 30px;
     text-align: right;
-    overflow: scroll;
+    overflow: auto;
+    white-space: nowrap;
 }
 
 .display-boxes{
