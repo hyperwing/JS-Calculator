@@ -16,12 +16,15 @@ var conversionsMap = {
 // Edited 10/21/2019 by Sri Ramya Dandu: Added hex values 
 // Edited 10/22/2019 by Sri Ramya Dandu: Replaced Math.floor()
 // Converts whole numbers from decimal to given base 
-function convertWholeFromDecimal(number, base,conversionsMap){
+// num: string input of number
+// base: the base of the new number 
+function convertWholeFromDecimal(num, base){
   var conversion = "";
-  while(number > 0){
-      value = conversionsMap[String(number % base)];
+  num = Number(num);
+  while(num > 0){
+      value = conversionsMap[String(num % base)];
       conversion = value + conversion; //remainder appends as msb 
-      number = (number/base) - ((number/base) %1); //integer division 
+      num = (num/base) - ((num/base) %1); //integer division 
   }
 
   // provides output when display = 0
@@ -34,14 +37,18 @@ function convertWholeFromDecimal(number, base,conversionsMap){
 // Created 10/20/2019 by Sri Ramya Dandu
 // Edited 10/22/2019 by Sri Ramya Dandu: Replaced Math library functions 
 // Converts fractions from decimal to given base 
-function convertFractionFromDecimal(number, base,conversionsMap){
+// num: string input of number
+// base: the base of the new number 
+function convertFractionFromDecimal(num, base){
     var conversion = "";
-    while(number > 0){
-        tempNum = number * base;
+    num = Number(num);
+    while(num > 0){
+        tempNum = num * base;
         conversion += conversionsMap[tempNum - (tempNum % 1)]; // whole number appends as lsb
-        number = tempNum % 1; //obtains fraction value 
-        if (isRepeating(conversion) && conversion.length > 7){  // check repeating 
-          number = 0;
+        num = tempNum % 1; //obtains fraction value 
+        // check repeating for the whole string or an offset of the string 
+        if ((isRepeating(conversion) && conversion.length > 7) || (isRepeating(conversion.substring(4)) && conversion.length > 11) ){  
+          num = 0;
         }
     }
 
@@ -61,11 +68,11 @@ function isRepeating(number){
 // Created 10/20/2019 by Sri Ramya Dandu
 // Edited 10/21/2019 by Sri Ramya Dandu: Added get key feature 
 // Converts whole number to decimal from given base 
-function convertWholeFromBase(conversionsMap,numStr, base){
+function convertWholeFromBase(numStr, base){
   var decimalNum = 0;
   var exponent = numStr.length-1;
   for(i = 0; i < numStr.length; i++){
-    decimalNum += getKey(conversionsMap, numStr.charAt(i)) * Math.pow(base,exponent); // # * base^exponent 
+    decimalNum += getKey(numStr.charAt(i)) * Math.pow(base,exponent); // # * base^exponent 
     exponent--;
   }
   return String(decimalNum);
@@ -73,13 +80,13 @@ function convertWholeFromBase(conversionsMap,numStr, base){
 
 // Created 10/21/2019 by Sri Ramya Dandu
 // Converts fraction to decimal from given base 
-function convertFractionFromBase(conversionsMap,numStr, base){
+function convertFractionFromBase(numStr, base){
   var decimalNum = 0;
   var exponent = -1;
   // removes decimal point from number 
   numStr = numStr.substring(1);
   for(i = 0; i < numStr.length; i++){
-    decimalNum += getKey(conversionsMap, numStr.charAt(i)) * Math.pow(base,exponent); // # * base^exponent  //TODO: Write a Math.pow func
+    decimalNum += getKey(numStr.charAt(i)) * Math.pow(base,exponent); // # * base^exponent  //TODO: Write a Math.pow func
     exponent--;
   }
   return String(decimalNum);
@@ -103,7 +110,7 @@ function wholeFracSplit(numStr){
 
 // Created 10/21/2019 by Sri Ramya Dandu
 // Returns the key number of the given value 
-function getKey(conversionsMap, value){
+function getKey(value){
   for (p in conversionsMap){
     if(conversionsMap[p] == value){
       return Number(p); //TODO: what if value doesn't exist 
@@ -114,7 +121,7 @@ function getKey(conversionsMap, value){
 
 // Created 10/23/2019 by Sri Ramya Dandu
 // Checks if input is valid 
-function isValidInput(display,from,conversionsMap){
+function isValidInput(display,from){
   var values = display.split('');
   var isValid = false;
   // checks for valid input 
@@ -124,11 +131,11 @@ function isValidInput(display,from,conversionsMap){
     });
   }else if (from == 16){
     isValid = values.every(function (currentElm) {
-      return currentElm == '.' || currentElm == '-' || getKey(conversionsMap,currentElm) != null;
+      return currentElm == '.' || currentElm == '-' || getKey(currentElm) != null;
     });
   }else if(from == 10){
     isValid = values.every(function (currentElm) {
-      return (getKey(conversionsMap,currentElm) != null && getKey(conversionsMap,currentElm) <= 9) || currentElm == '-' || currentElm == '.';
+      return (getKey(currentElm) != null && getKey(currentElm) <= 9) || currentElm == '-' || currentElm == '.';
     });
   }
   return isValid;
@@ -142,7 +149,7 @@ function isValidInput(display,from,conversionsMap){
 //        to is the base to convert to and from is the base to convert from 
 function callFunctions(display, from, to){
  
-  if (!isValidInput(display,from,conversionsMap)){
+  if (!isValidInput(display,from)){
     document.getElementById("displayTo").innerHTML = 'Invalid Input!'
   }else {
     var actualDisplay = display;
@@ -177,11 +184,11 @@ function getDecimalToBase(split,to){
   var converted = "";
   // if whole and fraction 
   if(split.length == 2){
-      whole = convertWholeFromDecimal(split[0],to,conversionsMap);
-      frac = convertFractionFromDecimal(split[1],to,conversionsMap);
+      whole = convertWholeFromDecimal(split[0],to);
+      frac = convertFractionFromDecimal(split[1],to);
       converted = whole + '.' + frac;
   }else if (split.length == 1){ // if only whole number 
-      whole = convertWholeFromDecimal(split[0],to,conversionsMap);
+      whole = convertWholeFromDecimal(split[0],to);
       converted = whole;
   }
   return converted;
@@ -195,11 +202,11 @@ function getBaseToDecimal(split,from){
   decimal = "";
   // converts from base to decimal 
   if(splitNum.length == 2){   // if whole and fraction 
-    var whole = convertWholeFromBase(conversionsMap,splitNum[0],from);
-    var frac = convertFractionFromBase(conversionsMap,splitNum[1],from);
+    var whole = convertWholeFromBase(splitNum[0],from);
+    var frac = convertFractionFromBase(splitNum[1],from);
     decimal = String(Number(whole) + Number(frac));
   }else if (splitNum.length == 1){  // if only whole 
-    var whole = convertWholeFromBase(conversionsMap,splitNum[0],from);
+    var whole = convertWholeFromBase(splitNum[0],from);
     decimal = whole;
   }
   return decimal;
@@ -241,6 +248,9 @@ function displayCalculated(result, isNegative){
     // adds repeating symbol 
     if (isRepeating(parts[1].substring(1))&& parts[1].length > 7){
       printValue += '<span id = "repeating" >' + splitInto4(parts[1]) + '</span>';
+    }else if (isRepeating(parts[1].substring(5))&& parts[1].length > 11) {
+      var toPrint = splitInto4(parts[1]);
+      printValue += toPrint.substring(0,5) + '<span id = "repeating" >' + toPrint.substring(5) + '</span>';
     }else{
       printValue += splitInto4(parts[1]);
     }
