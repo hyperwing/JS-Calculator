@@ -14,7 +14,7 @@ var conversionsMap = {
 };
 
 var display = "0";
-updateDisplay();
+
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
 // Edited 10/21/2019 by Sri Ramya Dandu: Modified to match new calc
