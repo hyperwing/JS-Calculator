@@ -3,6 +3,7 @@ File created 10/20/2019 by Sri Ramya Dandu
 Edited 10/21/2019 by Sri Ramya Dandu: Modfied look of the calc, added functionality for modes (binary/hex/decimal) display 
 Edited 10/22/2019 by Sri Ramya Dandu: Added repeating value overline, refactored input to call functions 
 Edited 10/23/2019 by Sri Ramya Dandu: Added ids for . and - 
+Edited 10/25/2019 by Sri Ramya Dandu: Moved all javascript into a different file 
 -->
 
 <!DOCTYPE html>
@@ -89,70 +90,3 @@ Edited 10/23/2019 by Sri Ramya Dandu: Added ids for . and -
     </table>
   </body>
 </html>
-
-
-<script type="text/javascript">
-var display = "0";
-updateDisplay();
-// Created 10/17/2019 by Neel Mansukhani
-// Edited 10/19/2019 by David Wing: added CE and C routes
-// Edited 10/21/2019 by Sri Ramya Dandu: Modified to match new calc
-// Edited 10/22/2019 by Sri Ramya Dandu: Added decimal point recoganization 
-// Number button clicks are registered here then display is updated.
-function onSimpleButtonClick(symbol) {
-    if (symbol == "DEL") {
-        if(display != "0") {
-            display = display.substr(0, display.length - 1);
-            if(display.length == 0 || display == "-") {
-                display = "0";
-            }
-        }    
-    } else if (symbol == "CE") {
-        display = "0"
-    } else {
-       if(display == "0" && symbol != '.') {
-            display = symbol;
-        } else { 
-            display += symbol;
-        }
-        
-    }
-    updateDisplay();
-}
-
-// Created 10/17/2019 by Neel Mansukhani
-// Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
-// Edited 10/22/2019 by Sri Ramya Dandu: Added formatting for repeating values 
-// Edited 10/23/2019 by Sri Ramya Dandu: Enable/disable buttons
-// Updates the display after new calculations.
-function updateDisplay() {
-    document.getElementById("displayFrom").innerHTML = display;
-
-    from = Number(document.getElementById("convertFrom").value);
-    to = Number(document.getElementById("convertTo").value);
-
-    if(display.charAt(display.length-1) == '.'){ // on decimal entry
-        callFunctions(display + '0',from,to); //appends temporary 0 for display purposes
-    }else{
-        callFunctions(display,from,to);
-    }
-
-    // repeating value css 
-    if (document.getElementById("repeating") != null){
-        document.getElementById("repeating").style.textDecoration = "overline";
-    }
-
-    // Ensures correct input of . and -
-    if (display.indexOf('.') != -1){
-        document.getElementById("dot").disabled = true;
-    }else{
-        document.getElementById("dot").disabled = false;
-    }
-
-    if (display.indexOf('-') != -1 || (display.length >= 1 && display != '0')){
-        document.getElementById("neg").disabled = true;
-    }else{
-        document.getElementById("neg").disabled = false;
-    }
-}
-</script>

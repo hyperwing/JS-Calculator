@@ -3,6 +3,8 @@ File created 10/20/2019 by Sri Ramya Dandu
 Edited 10/21/2019 by Sri Ramya Dandu
 Edited 10/22/2019 by Sri Ramya Dandu
 Edited 10/23/2019 by Sri Ramya Dandu 
+Edited 10/24/2019 by Sri Ramya Dandu
+Edited 10/25/2019 by Sri Ramya Dandu
 */
 
 // conversion values for hex and decimal 
@@ -11,6 +13,69 @@ var conversionsMap = {
   7:"7", 8:"8", 9:"9", 10:"A", 11:"B", 12:"C", 13:"D", 14:"E", 15:"F"
 };
 
+var display = "0";
+updateDisplay();
+// Created 10/17/2019 by Neel Mansukhani
+// Edited 10/19/2019 by David Wing: added CE and C routes
+// Edited 10/21/2019 by Sri Ramya Dandu: Modified to match new calc
+// Edited 10/22/2019 by Sri Ramya Dandu: Added decimal point recoganization 
+// Number button clicks are registered here then display is updated.
+function onSimpleButtonClick(symbol) {
+    if (symbol == "DEL") {
+        if(display != "0") {
+            display = display.substr(0, display.length - 1);
+            if(display.length == 0 || display == "-") {
+                display = "0";
+            }
+        }    
+    } else if (symbol == "CE") {
+        display = "0"
+    } else {
+       if(display == "0" && symbol != '.') {
+            display = symbol;
+        } else { 
+            display += symbol;
+        }
+        
+    }
+    updateDisplay();
+}
+
+// Created 10/17/2019 by Neel Mansukhani
+// Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
+// Edited 10/22/2019 by Sri Ramya Dandu: Added formatting for repeating values 
+// Edited 10/23/2019 by Sri Ramya Dandu: Enable/disable buttons
+// Updates the display after new calculations.
+function updateDisplay() {
+    document.getElementById("displayFrom").innerHTML = display;
+
+    from = Number(document.getElementById("convertFrom").value);
+    to = Number(document.getElementById("convertTo").value);
+
+    if(display.charAt(display.length-1) == '.'){ // on decimal entry
+        callFunctions(display + '0',from,to); //appends temporary 0 for display purposes
+    }else{
+        callFunctions(display,from,to);
+    }
+
+    // repeating value css 
+    if (document.getElementById("repeating") != null){
+        document.getElementById("repeating").style.textDecoration = "overline";
+    }
+
+    // Ensures correct input of . and -
+    if (display.indexOf('.') != -1){
+        document.getElementById("dot").disabled = true;
+    }else{
+        document.getElementById("dot").disabled = false;
+    }
+
+    if (display.indexOf('-') != -1 || (display.length >= 1 && display != '0')){
+        document.getElementById("neg").disabled = true;
+    }else{
+        document.getElementById("neg").disabled = false;
+    }
+}
 
 // Created 10/20/2019 by Sri Ramya Dandu
 // Edited 10/21/2019 by Sri Ramya Dandu: Added hex values 
@@ -36,7 +101,8 @@ function convertWholeFromDecimal(num, base){
 
 // Created 10/20/2019 by Sri Ramya Dandu
 // Edited 10/22/2019 by Sri Ramya Dandu: Replaced Math library functions 
-// Converts fractions from decimal to given base 
+// Converts fractions from decimal to given base. After 48+ bits the numbers 
+// tend to round due to IEEE FLoating Point representations 
 // num: string input of number
 // base: the base of the new number 
 function convertFractionFromDecimal(num, base){
@@ -47,7 +113,7 @@ function convertFractionFromDecimal(num, base){
         conversion += conversionsMap[tempNum - (tempNum % 1)]; // whole number appends as lsb
         num = tempNum % 1; //obtains fraction value 
         // check repeating for the whole string or an offset of the string 
-        if ((isRepeating(conversion) && conversion.length > 7) || (isRepeating(conversion.substring(4)) && conversion.length > 11) ){  
+        if ((conversion.length > 7 && isRepeating(conversion)) || (conversion.length > 11 && isRepeating(conversion.substring(4))) ){  
           num = 0;
         }
     }
@@ -61,13 +127,17 @@ function convertFractionFromDecimal(num, base){
 
 // Created 10/20/2019 by Sri Ramya Dandu
 // Checks if fraction portion is a repeating value 
-function isRepeating(number){
-   return number.substring(0,number.length/2) == number.substring(number.length/2);
+// function only called when num.length is even so we only worry about this case
+// Input is the string to check 
+function isRepeating(num){
+   return num.substring(0,num.length/2) == num.substring(num.length/2);
 }
 
 // Created 10/20/2019 by Sri Ramya Dandu
 // Edited 10/21/2019 by Sri Ramya Dandu: Added get key feature 
 // Converts whole number to decimal from given base 
+// Input: numStr: String of number in base rep
+//        base: the base currently representing the number 
 function convertWholeFromBase(numStr, base){
   var decimalNum = 0;
   var exponent = numStr.length-1;
@@ -79,7 +149,10 @@ function convertWholeFromBase(numStr, base){
 }
 
 // Created 10/21/2019 by Sri Ramya Dandu
-// Converts fraction to decimal from given base 
+// Converts fraction to decimal from given base; the numbers 
+// tend to round due to IEEE FLoating Point representations for many decimal values
+// Input: numStr: String of number in base rep with decimal point 
+//        base: the base currently representing the number 
 function convertFractionFromBase(numStr, base){
   var decimalNum = 0;
   var exponent = -1;
@@ -96,6 +169,7 @@ function convertFractionFromBase(numStr, base){
 // Created 10/21/2019 by Sri Ramya Dandu
 // Splits string into whole and fraction if it exists 
 // Return value at index 0 is whole number, index 1 is fraction if it exists 
+// Frcation value contains decimal point
 function wholeFracSplit(numStr){
   var split = [];
   var dot = numStr.indexOf('.')
@@ -109,7 +183,7 @@ function wholeFracSplit(numStr){
 }
 
 // Created 10/21/2019 by Sri Ramya Dandu
-// Returns the key number of the given value 
+// Returns the key number of the given value in String format
 function getKey(value){
   for (p in conversionsMap){
     if(conversionsMap[p] == value){
@@ -121,6 +195,7 @@ function getKey(value){
 
 // Created 10/23/2019 by Sri Ramya Dandu
 // Checks if input is valid 
+// Returns boolean 
 function isValidInput(display,from){
   var values = display.split('');
   var isValid = false;
@@ -175,7 +250,6 @@ function callFunctions(display, from, to){
   }
 }
 
-
 // Created 10/21/2019 by Sri Ramya Dandu
 // Input: split is an array such that split[0] is the whole number and split[1] is fraction
 //        to is the base to convert to 
@@ -213,6 +287,7 @@ function getBaseToDecimal(split,from){
 }
 
 // Created 10/22/2019 by Sri Ramya Dandu
+// Input: String to format
 // Displays 4 bits with space 
 function splitInto4(value){
   var spacedValue = "";
