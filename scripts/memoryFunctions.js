@@ -17,6 +17,7 @@ var memory = [];
 // Clears all the values stored in memory, sets the memory to 0
 function clearMemory(){
     memory.length = 0;
+    displayMemory();
     updateDisplay();
 }
 
