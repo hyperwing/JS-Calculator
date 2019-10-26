@@ -1,8 +1,9 @@
-/* File Created 10/16/2019 by Neel Mansukhani */
-/* Edited 10/17/2019 by Sri Ramya Dandu */
-/* Edited 10/18/2019 by Sri Ramya Dandu: Edited overflow/location of the 
+/*  File Created 10/16/2019 by Neel Mansukhani 
+    Edited 10/17/2019 by Sri Ramya Dandu: Added CSS for memory features
+    Edited 10/18/2019 by Sri Ramya Dandu: Edited overflow/location of the 
     memory list and modfied appearance of calc and buttons
-
+    Edited 10/19/2019 by Sri Ramya Dandu: Fixed memroy display for resizing
+    Edited 10/20/2019 by Sri Ramya Dandu: Moved calculator to center 
 */
 html {
     height: 100%;
@@ -35,6 +36,8 @@ td{
 
 .calculator{
     float: left;
+    margin-left: 30%;
+    margin-top: 10%
 }
 /* Display for overall list of numbers in memory */
 #display-memory-list {
@@ -42,8 +45,8 @@ td{
     width: 300px;
     height: 307px;
     overflow: auto;
+    margin-top: 16.2%;
     float: left;
-    margin-top: 90px;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
