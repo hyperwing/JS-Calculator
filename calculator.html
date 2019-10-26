@@ -4,8 +4,10 @@
 <!-- Edited 10/18/2019 by Neel Mansukhani: Added operators -->
 <!-- Edited 10/18/2019 by Sharon Qiu: Added memory buttons for simple operations and memory storing  -->
 <!-- Edited 10/18/2019 by Sri Ramya Dandu: Refactored code for memory functions and modified appearce of memory stack -->
-<!-- Edited 10/19/2019 by David Wing: Wrote functionality for clear line and clear history-->
 <!-- Edited 10/18/2019 by Sri Ramya Dandu: Fixed resziing of memory display -->
+<!-- Edited 10/19/2019 by David Wing: Wrote functionality for clear line and clear history-->
+<!-- Edited 10/21/2019 by Sri Ramya Dandu: Fixed memory recall functionality -->
+<!-- Edited 10/25/2019 by Leah Gillespie: Added history display -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,38 +31,38 @@
 
         <tr>
             <td><button id = "MC" onclick="clearMemory()" disabled>MC</button></td>
-            <td><button id="MR" onclick="memoryRecall()" disabled>MR</button></td>
+            <td><button id="MR" onclick="memoryRecall(memory)" disabled>MR</button></td>
             <td><button onclick="storeMemory()">MS</button></td>
             <td><button id= "M" onclick="displayMemory()">M&#9654;</button></td>
         </tr>
         <tr>
-            <td><button onclick="onSimpleButtonClick('CE')">CE</button></td>
-            <td><button onclick="onSimpleButtonClick('C')">C</button></td>
-            <td><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
+            <td><button onclick="onOperatorClick('CE')">CE</button></td>
+            <td><button onclick="onOperatorClick('C')">C</button></td>
+            <td><button onclick="onOperatorClick('DEL')">DEL</button></td>
             <td><button class="div-by-zero" onclick="onOperationButtonClick('/')">/</button></td>
         </tr>
         <tr>
-            <td><button onclick="onSimpleButtonClick('7')">7</button></td>
-            <td><button onclick="onSimpleButtonClick('8')">8</button></td>
-            <td><button onclick="onSimpleButtonClick('9')">9</button></td>
+            <td><button onclick="numberPress('7')">7</button></td>
+            <td><button onclick="numberPress('8')">8</button></td>
+            <td><button onclick="numberPress('9')">9</button></td>
             <td><button class="div-by-zero" onclick="onOperationButtonClick('*')">*</button></td>
         </tr>
         <tr>
-            <td><button onclick="onSimpleButtonClick('4')">4</button></td>
-            <td><button onclick="onSimpleButtonClick('5')">5</button></td>
-            <td><button onclick="onSimpleButtonClick('6')">6</button></td>
+            <td><button onclick="numberPress('4')">4</button></td>
+            <td><button onclick="numberPress('5')">5</button></td>
+            <td><button onclick="numberPress('6')">6</button></td>
             <td><button class="div-by-zero" onclick="onOperationButtonClick('-')">-</button></td>
         </tr>
         <tr>
-            <td><button onclick="onSimpleButtonClick('1')">1</button></td>
-            <td><button onclick="onSimpleButtonClick('2')">2</button></td>
-            <td><button onclick="onSimpleButtonClick('3')">3</button></td>
+            <td><button onclick="numberPress('1')">1</button></td>
+            <td><button onclick="numberPress('2')">2</button></td>
+            <td><button onclick="numberPress('3')">3</button></td>
             <td><button class="div-by-zero" onclick="onOperationButtonClick('+')">+</button></td>
         </tr>
         <tr>
-            <td><button class="div-by-zero" onclick="onSimpleButtonClick('+/-')">+/-</button></td>
-            <td><button onclick="onSimpleButtonClick('0')">0</button></td>
-            <td><button class="div-by-zero" onclick="onSimpleButtonClick('.')">.</button></td>
+            <td><button class="div-by-zero" onclick="onOperatorClick('+/-')">+/-</button></td>
+            <td><button onclick="numberPress('0')">0</button></td>
+            <td><button class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
             <td><button onclick="onEqualClick()">=</button></td>
         </tr>                         
     </table>
@@ -84,8 +86,8 @@ updateDisplay();
 // TODO: make method less thicc.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
-// Number button clicks are registered here then display is updated.
-function onSimpleButtonClick(symbol) {
+// Operators handled here and updates display
+function onOperatorClick(symbol) {
     if(lastButtonOperator) {
         if(symbol == ".") {
             display = "0.";
@@ -96,17 +98,14 @@ function onSimpleButtonClick(symbol) {
             } else {
                 display = "-" + display;
             }            
-        } else if(!isNaN(symbol)) {
+        } else if (symbol == "C") {
+            display = "0"
             buttonState = true;
-            display = symbol;
-            lastButtonOperator = false;
-        } else {
-            if(!buttonState) {
-                buttonState = true;
-                display = "0"
-                lastButtonOperator = false;            
-            }
-        }
+            calculations = [];
+        } else if (symbol == "CE") {
+            display = "0"
+            buttonState = true;
+        } 
     } else {
         if(symbol == "+/-" && display != "0") {
             if(display.charAt(0) == '-') {
@@ -125,13 +124,29 @@ function onSimpleButtonClick(symbol) {
                     display = "0";
                 }
             }    
-        } else if (symbol == "C") {
-            display = "0"
-            calculations = [];
-        } else if (symbol == "CE") {
-            display = "0"
+        } 
+    }
+    updateDisplay();
+}
 
-        } else if(!isNaN(symbol)) {
+
+//created by David Wing 10/21/19
+// handles numbers pressed on calc and updates display
+function numberPress(symbol){
+    if(lastButtonOperator) {
+        if(!isNaN(symbol)) {
+            buttonState = true;
+            display = symbol;
+            lastButtonOperator = false;
+        } else {
+            if(!buttonState) {
+                buttonState = true;
+                display = "0"
+                lastButtonOperator = false;            
+            }
+        }
+    }else{
+        if(!isNaN(symbol)) {
             if(!buttonState) {
                 buttonState = true;
                 display = "0"
@@ -146,8 +161,20 @@ function onSimpleButtonClick(symbol) {
     updateDisplay();
 }
 
+// Created 10/20/2019 by Leah Gillespie
+// Edited 10/25/2019 by Leah Gillespie: works with last thing entered being an operator
+// Registers = button click and updates display
+function onEqualClick() {
+    //history.unshift([calculations + " =\n" + display]);
+    calculations.push(parseFloat(display));
+    display = calculateCalculations();
+    calculations = [];
+    updateDisplay();
+}
+
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
+// Edited 10/25/2019 by Leah Gillespie: included history update
 // Updates the display after new calculations.
 function updateDisplay() {
     document.getElementById("display").innerHTML = display;
@@ -159,7 +186,7 @@ function updateDisplay() {
         hideMemory();
     }
     // document.getElementById("memory").innerHTML = memory;
-    // document.getElementById("history").innerHTML = history;
+    document.getElementById("history").innerHTML = history.toString().replace(/,/g," ");
     setButtonState(buttonState);
 }
 
@@ -180,7 +207,7 @@ function onOperationButtonClick(operation) {
 // Edited 10/19/2019 by David Wing: added C as an operator
 // Returns whether the given parameter is an operator.
 function isOperator(input) {
-    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C";// TODO: Remove C
+    return input == "+" || input == "-" || input == "*" || input == "/" || input == "C" || input == "CE";
 }
 
 // Created 10/17/2019 by Neel Mansukhani
@@ -237,6 +264,7 @@ function doMath(num1, num2, operator) {
                 break;
             case "C":
                 value = 0;
+                calculations = [];
                 break;
             default:
                 break;

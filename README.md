@@ -10,3 +10,9 @@
 ### Contributions
 Please list who did what for each part of the project.
 Also list if people worked together (pair programmed) on a particular section.
+
+### Testing
+1. Install mocha
+> sudo apt install mocha
+2. Run tests from the main project folder
+> mocha 

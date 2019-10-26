@@ -1,0 +1,92 @@
+<!-- 
+File created 10/20/2019 by Sri Ramya Dandu
+Edited 10/21/2019 by Sri Ramya Dandu: Modfied look of the calc, added functionality for modes (binary/hex/decimal) display 
+Edited 10/22/2019 by Sri Ramya Dandu: Added repeating value overline, refactored input to call functions 
+Edited 10/23/2019 by Sri Ramya Dandu: Added ids for . and - 
+Edited 10/25/2019 by Sri Ramya Dandu: Moved all javascript into a different file 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="modeConversion.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Use the title from a page's frontmatter if it has one -->
+    <title>Mode Converter</title>
+    <link rel="stylesheet" type="text/css" href="modes.css">
+  </head>
+  <body>
+      <!-- Format of display boxes -->
+      <table class = display-boxes>
+            <tr class = "space"></tr>
+            <tr> <td id="displayFrom">0</td> </tr>
+            <tr>
+                <td class = "options">
+                    <select id ="convertFrom" onchange= updateDisplay()>
+                        <option value="10">Decimal</option>
+                        <option value="2">Binary</option>
+                        <option value="16">Hexadecimal</option>
+                      </select>
+                </td>
+            </tr>
+            <tr class = "space"></tr>
+            <tr><td id="displayTo">0</td> </tr>
+            <tr> 
+                <td class = "options">
+                    <select id ="convertTo" onchange= updateDisplay()>
+                    <option value="10">Decimal</option>
+                    <option value="2">Binary</option>
+                    <option value="16">Hexadecimal</option>
+                  </select>
+                </td>
+            </tr>
+      </table>
+
+    <!-- Format of buttons -->
+    <table class="mode-converter">
+        <tr>
+            <td colspan="1.5"><button onclick="onSimpleButtonClick('CE')">CE</button></td>
+            <td colspan="1.5"><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
+           
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('7')">7</button></td>
+            <td><button onclick="onSimpleButtonClick('8')">8</button></td>
+            <td><button onclick="onSimpleButtonClick('9')">9</button></td>
+          
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('4')">4</button></td>
+            <td><button onclick="onSimpleButtonClick('5')">5</button></td>
+            <td><button onclick="onSimpleButtonClick('6')">6</button></td>
+           
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('1')">1</button></td>
+            <td><button onclick="onSimpleButtonClick('2')">2</button></td>
+            <td><button onclick="onSimpleButtonClick('3')">3</button></td>
+            
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('A')">A</button></td>
+            <td><button onclick="onSimpleButtonClick('B')">B</button></td>
+            <td><button onclick="onSimpleButtonClick('C')">C</button></td>
+            
+        </tr>
+        <tr>
+            <td><button onclick="onSimpleButtonClick('D')">D</button></td>
+            <td><button onclick="onSimpleButtonClick('E')">E</button></td>
+            <td><button onclick="onSimpleButtonClick('F')">F</button></td>
+        </tr>
+        <tr>
+            <td><button id = 'neg' class="div-by-zero" onclick="onSimpleButtonClick('-')">-</button></td>
+            <td><button onclick="onSimpleButtonClick('0')">0</button></td>
+            <td><button id = 'dot' class="div-by-zero" onclick="onSimpleButtonClick('.')">.</button></td>
+           
+        </tr>                         
+    </table>
+  </body>
+</html>

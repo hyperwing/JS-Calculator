@@ -1,5 +1,6 @@
-const assert = require('assert');
+// File created 10/25/2019 by Sri Ramya Dandu
 
-it('correctly calculates the sum of 1 and 3', () => {
-    assert.equal(add(1, 3), 4)
-  })
+const rewire = require("rewire");
+const memoryFunctions = rewire("../memoryFunctions");
+expect = require('chai').expect;
+var memory = [1,2,3];
