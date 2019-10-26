@@ -74,3 +74,38 @@ function callFunctions(display, from, to) {
         }
     }
 }
+
+//created by David Wing 10/21/19
+// handles numbers pressed on calc and updates display
+function numberPress(symbol) {
+    if (lastButtonOperator) {
+        if (!isNaN(symbol)) {
+            buttonState = true;
+            display = symbol;
+            lastButtonOperator = false;
+        } else {
+            if (!buttonState) {
+                buttonState = true;
+                display = "0"
+                lastButtonOperator = false;
+            }
+        }
+    } else {
+        if (!isNaN(symbol)) {
+            if (!buttonState) {
+                buttonState = true;
+                display = "0"
+            }
+            if (display == "0") {
+                display = symbol;
+            } else {
+                display += symbol;
+            }
+        }
+    }
+    updateDisplay();
+}
+
+function onPiPress(){
+    display
+}

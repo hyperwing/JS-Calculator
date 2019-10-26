@@ -13,7 +13,6 @@ Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 var memory = [];
 // Created 10/17/2019 by Sri Ramya Dandu
 // Edited 10/18/2019 by Sri Ramya Dandu: diabled buttons 
-// Edited 10/20/2019 by Sharon Qiu: fixed so it works with internal memory array and returns nothing.
 // Clears all the values stored in memory, sets the memory to 0
 function clearMemory(){
     memory.length = 0;
@@ -30,10 +29,7 @@ function storeMemory() {
         document.getElementById('display-memory-list').style.display = "none"
         displayMemory();
     }
-    console.log(memory);
-    updateDisplay();
     display = "";
-    console.log(display);
 }
 
 // Created 10/18/2019 by Sharon Qiu
@@ -42,7 +38,6 @@ function storeMemory() {
 function clearMemorySingle(index) {
     memory.splice(index,1);
     document.getElementById('display-memory-list').style.display = "none"
-    updateDisplay();
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
@@ -107,7 +102,7 @@ function memorySubtract(index) {
     }else {
         memory[index] -= Number(display)
     }
-    updateDisplay();
+    displayMemory();
     display = "";
 }
 
@@ -115,14 +110,16 @@ function memorySubtract(index) {
 // Edited 10/26/2019 by Sharon Qiu: Allowed for immediate add to list even if 0.
 // Functionality for m+ button.
 function memoryAdd(index) {
-    if (index === undefined && memory < 1) {
+    if (index === undefined && memory < 1 && display != 0) {
+        memory.unshift(display);
+    } else if (index === undefined && memory < 1) {
         memory.unshift(0);
     } else if (index === undefined) {
         memory[0] += Number(display);
     } else {
         memory[index] += Number(display)
     }
-    updateDisplay();
+    displayMemory();
     display = "";
 }
 
@@ -139,7 +136,7 @@ function memoryDivide(index) {
     }else{
         memory[index] /= display;
     }
-    updateDisplay();
+    displayMemory();
     display = "";
 }
 
@@ -153,6 +150,6 @@ function memoryMultiply(index) {
     }else{
         memory[index] *= display;
     }
-    updateDisplay();
+    displayMemory();
     display = "";
 }
