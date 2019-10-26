@@ -13,10 +13,12 @@ button {
 .space{
     height:90px;
 }
+
 .options{
     background-color: transparent;
     box-shadow: none;
 }
+
 select{
     background-color: lightgray;
     height: 20px;

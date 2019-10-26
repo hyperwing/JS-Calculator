@@ -6,6 +6,7 @@ Edited 10/18/2019 by Sri Ramya Dandu
 Edited 10/20/2019 by Sharon Qiu
 Edited 10/20/2019 by Sri Ramya Dandu
 Edited 10/21/2019 by Sri Ramya Dandu
+Edited 10/26/2019 by Sharon Qiu
 Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 */
 
@@ -29,7 +30,10 @@ function storeMemory() {
         document.getElementById('display-memory-list').style.display = "none"
         displayMemory();
     }
+    console.log(memory);
     updateDisplay();
+    display = "";
+    console.log(display);
 }
 
 // Created 10/18/2019 by Sharon Qiu
@@ -38,7 +42,6 @@ function storeMemory() {
 function clearMemorySingle(index) {
     memory.splice(index,1);
     document.getElementById('display-memory-list').style.display = "none"
-    displayMemory();
     updateDisplay();
 }
 
@@ -67,10 +70,10 @@ function displayMemory(){
                 `
                 <button class="memory-list" onclick="memoryRecall([${element}])">${element}</button>
                 <div class="memory-operations-container">
-                    <button class="memory-button" onclick="memorySubtract(${element})">M-</button>
-                    <button class="memory-button" onclick="memoryAdd(${element})">M+</button>
-                    <button class="memory-button" onclick="memoryDivide(${element})">M/</button>
-                    <button class="memory-button" onclick="memoryMultiply(${element})">M*</button>
+                    <button class="memory-button" onclick="memorySubtract(${index})">M-</button>
+                    <button class="memory-button" onclick="memoryAdd(${index})">M+</button>
+                    <button class="memory-button" onclick="memoryDivide(${index})">M/</button>
+                    <button class="memory-button" onclick="memoryMultiply(${index})">M*</button>
                     <button class="memory-button" id="MC single" onclick="clearMemorySingle(${index})">MC</button>
                 </div>
                 `;
@@ -94,35 +97,62 @@ function hideMemory(){
 */
 
 // Created 10/18/2019 by Sharon Qiu
+// Edited 10/26/2019 by Sharon Qiu: Allowed for immediate add to list even if 0.
 // Functionality for m- button.
-function memorySubtract(element) {
-    display -= element;
-    updateDisplay();
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for m+ button.
-function memoryAdd(element) {
-    display = Number(display) + element;// TODO: Stringify
-    updateDisplay();
-}
-
-// Created 10/18/2019 by Sharon Qiu
-// Functionality for m+ button.
-function memoryDivide(element) {
-    if ((element == 0) && (display == 0)) {
-        display = "Result is undefined.";
-    }else if(display == 0){
-        display = "Cannot divide by 0";
-    }else{
-        display /= element;
+function memorySubtract(index) {
+    if (index === undefined && memory < 1) {
+        memory.unshift(0);
+    } else if (index === undefined) {
+        memory[0] -= display;
+    }else {
+        memory[index] -= Number(display)
     }
     updateDisplay();
+    display = "";
+}
+
+// Created 10/18/2019 by Sharon Qiu
+// Edited 10/26/2019 by Sharon Qiu: Allowed for immediate add to list even if 0.
+// Functionality for m+ button.
+function memoryAdd(index) {
+    if (index === undefined && memory < 1) {
+        memory.unshift(0);
+    } else if (index === undefined) {
+        memory[0] += Number(display);
+    } else {
+        memory[index] += Number(display)
+    }
+    updateDisplay();
+    display = "";
+}
+
+// Created 10/18/2019 by Sharon Qiu
+// Edited 10/26/2019 by Sharon Qiu: Added conditions division by 0 and undefined results.
+// Functionality for m+ button.
+function memoryDivide(index) {
+    if (display == 0) {
+        display = "Cannot divide by 0";
+    } else if ((index == 0) && (display == 0)) {
+        display = "Result is undefined.";
+    } else if (index === undefined) {
+        memory[0] /= display;
+    }else{
+        memory[index] /= display;
+    }
+    updateDisplay();
+    display = "";
 }
 
 // Created 10/18/2019 by Sharon Qiu
 // Functionality for m+ button.
-function memoryMultiply(element) {
-    display *= element;
+function memoryMultiply(index) {
+    if (index === undefined && memory < 1) {
+        memory.unshift(0);
+    } else if (index === undefined) {
+        memory[0] *= display;
+    }else{
+        memory[index] *= display;
+    }
     updateDisplay();
+    display = "";
 }
