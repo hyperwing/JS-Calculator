@@ -31,8 +31,8 @@ function storeMemory() {
         document.getElementById('display-memory-list').style.display = "none"
         displayMemory();
     }
+    display = "0";
     updateDisplay();
-    display = "";
 }
 
 // Created 10/18/2019 by Sharon Qiu

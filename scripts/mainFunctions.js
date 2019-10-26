@@ -118,12 +118,18 @@ function updateDisplay() {
     document.getElementById('MC').disabled = memory.length == 0 ;
     document.getElementById('MR').disabled = memory.length == 0;
     document.getElementById('M').disabled = memory.length == 0;
-    if (memory.length == 1) {
+    if (memory.length == 0) {
         hideMemory();
     }
     if(display.indexOf('.') != -1){
         document.getElementById('dot').disabled = true;
     }
+
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
+    }
+
     // document.getElementById("memory").innerHTML = memory;
    // document.getElementById("history").innerHTML = history.toString().replace(/,/g, " ");
     setButtonState(buttonState);
