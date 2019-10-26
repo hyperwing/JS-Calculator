@@ -1,5 +1,6 @@
 /*
 File created 10/26/2019 by Sharon Qiu
+Edited 10/26/2019 by Sri Ramya Dandu
 Moved main functions for standard calc here.
 */
 
@@ -8,11 +9,9 @@ var lastButtonOperator = false;
 var calculations = [];
 var history = [];
 var buttonState = true; //Might not need to exist.
-updateDisplay();
-// TODO: set buttonState to true when =, CE, or C are pressed.
-// TODO: make method less thicc.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
+// Edited 10/19/2019 by Sri Ramya Dandu: Fixed decimal 
 // Operators handled here and updates display
 function onOperatorClick(symbol) {
     if (lastButtonOperator) {
@@ -33,7 +32,9 @@ function onOperatorClick(symbol) {
             display = "0"
             buttonState = true;
         }
-    } else {
+    } else if (symbol == '.'){
+        display += '.';
+    }else {
         if (symbol == "+/-" && display != "0") {
             if (display.charAt(0) == '-') {
                 display = display.substr(1);
@@ -51,6 +52,13 @@ function onOperatorClick(symbol) {
                     display = "0";
                 }
             }
+        } else if (symbol == "C") {
+            display = "0"
+            buttonState = true;
+            calculations = [];
+        } else if (symbol == "CE") {
+            display = "0"
+            buttonState = true;
         }
     }
     updateDisplay();
@@ -102,17 +110,22 @@ function onEqualClick() {
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
 // Edited 10/25/2019 by Leah Gillespie: included history update
+// Edited 10/26/2019 by Sri Ramya Dandu: Fixed decimal 
 // Updates the display after new calculations.
 function updateDisplay() {
     document.getElementById("display").innerHTML = display;
     document.getElementById("calculations").innerHTML = calculations.toString().replace(/,/g, " ");
-    document.getElementById('MC').disabled = memory.length < 1;
-    document.getElementById('MR').disabled = memory.length < 1;
-    document.getElementById('M').disabled = memory.length < 1;
-    displayMemory();
-    if (memory.length < 1) {}
+    document.getElementById('MC').disabled = memory.length == 0 ;
+    document.getElementById('MR').disabled = memory.length == 0;
+    document.getElementById('M').disabled = memory.length == 0;
+    if (memory.length == 1) {
+        hideMemory();
+    }
+    if(display.indexOf('.') != -1){
+        document.getElementById('dot').disabled = true;
+    }
     // document.getElementById("memory").innerHTML = memory;
-    document.getElementById("history").innerHTML = history.toString().replace(/,/g, " ");
+   // document.getElementById("history").innerHTML = history.toString().replace(/,/g, " ");
     setButtonState(buttonState);
 }
 
@@ -204,5 +217,8 @@ function setButtonState() {
     var buttons = document.getElementsByClassName("div-by-zero");
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].disabled = !buttonState;
+    }
+    if(display.indexOf('.') != -1){
+        document.getElementById('dot').disabled = true;
     }
 }

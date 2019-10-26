@@ -12,17 +12,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="../scripts/memoryFunctions.js"></script>
-    <script src="../scripts/mainFunctions.js"></script>
-    <script src="../scripts/navbar.js"></script>
+    <script src="scripts/memoryFunctions.js"></script>
+    <script src="scripts/mainFunctions.js"></script>
+    <script src="scripts/navbar.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Use the title from a page's frontmatter if it has one -->
     <title>Javascript Calculator</title>
-    <link rel="stylesheet" type="text/css" href="../stylesheets/calculator.css">
-    <link rel="stylesheet" type="text/css" href="../stylesheets/navbar.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/calculator.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/navbar.css">
   </head>
 
   <body>
@@ -55,7 +55,7 @@
             <td><button id = "MC" onclick="clearMemory()" disabled>MC</button></td>
             <td><button id="MR" onclick="memoryRecall(memory)" disabled>MR</button></td>
             <td><button onclick="storeMemory()">MS</button></td>
-            <td><button id= "M" onclick="displayMemory()">M&#9654;</button></td>
+            <td><button id= "M" onclick="displayMemory()" disabled>M&#9654;</button></td>
         </tr>
         <tr>
             <td><button onclick="onOperatorClick('CE')">CE</button></td>
@@ -84,7 +84,7 @@
         <tr>
             <td><button class="div-by-zero" onclick="onOperatorClick('+/-')">+/-</button></td>
             <td><button onclick="numberPress('0')">0</button></td>
-            <td><button class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
+            <td><button id = "dot" class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
             <td><button onclick="onEqualClick()">=</button></td>
         </tr>                         
     </table>

@@ -30,10 +30,8 @@ function storeMemory() {
         document.getElementById('display-memory-list').style.display = "none"
         displayMemory();
     }
-    console.log(memory);
     updateDisplay();
     display = "";
-    console.log(display);
 }
 
 // Created 10/18/2019 by Sharon Qiu
@@ -41,7 +39,12 @@ function storeMemory() {
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
     memory.splice(index,1);
-    document.getElementById('display-memory-list').style.display = "none"
+    document.getElementById('display-memory-list').style.display = "none";
+    if(memory.length != 0){
+        displayMemory();
+    }else {
+        display = "0";
+    }
     updateDisplay();
 }
 
@@ -107,6 +110,11 @@ function memorySubtract(index) {
     }else {
         memory[index] -= Number(display)
     }
+
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
+    }
     updateDisplay();
     display = "";
 }
@@ -121,6 +129,10 @@ function memoryAdd(index) {
         memory[0] += Number(display);
     } else {
         memory[index] += Number(display)
+    }
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
     }
     updateDisplay();
     display = "";
@@ -139,6 +151,10 @@ function memoryDivide(index) {
     }else{
         memory[index] /= display;
     }
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
+    }
     updateDisplay();
     display = "";
 }
@@ -152,6 +168,10 @@ function memoryMultiply(index) {
         memory[0] *= display;
     }else{
         memory[index] *= display;
+    }
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
     }
     updateDisplay();
     display = "";
