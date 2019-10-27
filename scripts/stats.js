@@ -121,8 +121,10 @@ function handleSubmit(){
     num_input = parseFloat(num_box.value);
 
     // input checking
-    if (num_input == NaN || num_input == ""){
+    if (isNaN(num_input) || num_input == ""){
+        console.log("nope");
         return -1;
+        
     }
     console.log(num_input);
     addToDisplay(num_input)
@@ -140,7 +142,6 @@ function handleSubmit(){
     let mean = displayMean();
     let range = displayRange();
     let sd = displayStandardDeviation(mean);
-    displayProbability();
 }
 
 function handleClear(){
