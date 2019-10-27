@@ -1,0 +1,13 @@
+/* Created 10/27/19 David Wing */
+
+.input_field{
+    margin-top: 15%;
+    position: relative;
+    text-align: center;
+}
+
+.display_stats{
+    margin-top: 5%;
+    position: relative;
+    text-align: center;
+}

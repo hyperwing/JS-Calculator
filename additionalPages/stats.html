@@ -1,0 +1,50 @@
+<!-- 
+File created 10/26/2019 by David Wing
+HTML page for Statistic analysis
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="../scripts/degrees.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Use the title from a page's frontmatter if it has one -->
+    <title>Degrees/Radians Converter</title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/modes.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/stats.css">
+
+</head>
+
+<body>
+    <header class="title">Degrees/Radians</header>
+
+    <!--Navbar-->
+    <div id="navbar" class="sidenav">
+        <a href="../calculator.html">Standard</a>
+        <a href="convertModes.html">Modes</a>
+        <a href="degrees.html">Degrees/Radians</a>
+        <a class="current" href="stats.html">Statistics</a>
+    </div>
+
+    <!-- input new numbers to stat calculations -->
+    <form class="input_field">
+            Input Number: 
+            <input type="number" name="input">
+            <input type="button" name="submit" value="add"> 
+    </form>
+       
+    <!-- Display all stats -->
+    <div class="display_stats" >
+        Median:     <br>
+        Mode:       <br>
+        
+    </div>
+
+</body>
+
+</html>
