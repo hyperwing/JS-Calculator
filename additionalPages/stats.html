@@ -7,13 +7,13 @@ HTML page for Statistic analysis
 <html lang="en">
 
 <head>
-    <script src="../scripts/degrees.js"></script>
+    <script src="../scripts/stats.js"></script>
     <script src="../scripts/navbar.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Use the title from a page's frontmatter if it has one -->
-    <title>Degrees/Radians Converter</title>
+    <title>Statistics</title>
     <link rel="stylesheet" type="text/css" href="../stylesheets/modes.css">
     <link rel="stylesheet" type="text/css" href="../stylesheets/navbar.css">
     <link rel="stylesheet" type="text/css" href="../stylesheets/stats.css">
@@ -21,7 +21,7 @@ HTML page for Statistic analysis
 </head>
 
 <body>
-    <header class="title">Degrees/Radians</header>
+    <header class="title">Statistics</header>
 
     <!--Navbar-->
     <div id="navbar" class="sidenav">
@@ -31,18 +31,28 @@ HTML page for Statistic analysis
         <a class="current" href="stats.html">Statistics</a>
     </div>
 
+    <!-- Display current dataset -->\
+    <div class="dataset" id="display">
+        Data: 
+    </div>
+
+
     <!-- input new numbers to stat calculations -->
     <form class="input_field">
             Input Number: 
-            <input type="number" name="input">
-            <input type="button" name="submit" value="add"> 
+            <input type="number" name="input" id="input">
+            <input type="button" name="submit" value="add" onclick="handleSubmit()"> 
     </form>
        
     <!-- Display all stats -->
     <div class="display_stats" >
-        Median:     <br>
-        Mode:       <br>
         
+        Median: <span id="median"></span> <br>
+        Mode: <span id="mode"></span><br>
+        Mean: <span id="mean"></span><br>
+        Range: <span id="range"></span><br>
+        Standard Deviation: <span id="sd"></span><br>
+        Probability: <span id="prob"></span><br>
     </div>
 
 </body>

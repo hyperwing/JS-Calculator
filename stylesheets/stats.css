@@ -1,7 +1,13 @@
 /* Created 10/27/19 David Wing */
 
 .input_field{
-    margin-top: 15%;
+    margin-top: 5%;
+    position: relative;
+    text-align: center;
+}
+
+.dataset{
+    margin-top: 1%;
     position: relative;
     text-align: center;
 }
@@ -9,5 +15,6 @@
 .display_stats{
     margin-top: 5%;
     position: relative;
-    text-align: center;
+    margin-left: 20%;
+    text-align: left;
 }
