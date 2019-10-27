@@ -32,17 +32,18 @@ HTML page for Statistic analysis
     </div>
 
     <!-- Display current dataset -->\
-    <div class="dataset" id="display">
-        Data: 
-    </div>
+    <div class="dataset" id="display"></div>
 
 
     <!-- input new numbers to stat calculations -->
     <form class="input_field">
             Input Number: 
-            <input type="number" name="input" id="input">
-            <input type="button" name="submit" value="add" onclick="handleSubmit()"> 
+            <input type="number" name="input" id="input" value="0">
+            <input type="button" value="add" onclick="handleSubmit()"> <br>
+            <input type="button" value="clear" onclick="handleClear()">
+            <input type="button" value="sort" onclick="handleSort()">
     </form>
+
        
     <!-- Display all stats -->
     <div class="display_stats" >
@@ -52,7 +53,6 @@ HTML page for Statistic analysis
         Mean: <span id="mean"></span><br>
         Range: <span id="range"></span><br>
         Standard Deviation: <span id="sd"></span><br>
-        Probability: <span id="prob"></span><br>
     </div>
 
 </body>

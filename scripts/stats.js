@@ -11,7 +11,7 @@ function addToSet(val){
 function addToDisplay(val){
     let display_box = document.getElementById("display");
 
-    if(data_set.length == 0){
+    if(display_box.innerText == ""){
         display_box.innerText += " " + val;
     }else{
         display_box.innerText += ", " + val;
@@ -39,8 +39,7 @@ function displayMedian(){
         median = data_set[parseInt(len/2)+1];
     }
 
-    let display_mode = document.getElementById("median");
-    display_mode.innerText = median;
+    document.getElementById("median").innerText = median;
 }
 
 // calculate and display mode
@@ -65,34 +64,96 @@ function displayMode(){
     }
     // console.log(map);
 
-    let display_mode = document.getElementById("mode");
-    display_mode.innerText = mode;
+    document.getElementById("mode").innerText = mode;
 
 }
 
 // calculate and display range
 function displayRange(){
+    let display_range = document.getElementById("range");
+    display_range.innerText = data_set[data_set.length-1] - data_set[0];
+}
+
+// calculate and display mean
+function displayMean(){
+    mean = 0;
+
+    data_set.forEach(add);
+    function add(item){
+        mean += parseFloat(item);
+    }
+
+    mean = mean/data_set.length;
+    document.getElementById("mean").innerText = mean;
+    return mean;
 
 }
 
 // calculate and display SD
-function displayStandardDeviation(){
+function displayStandardDeviation(mean){
+    let sigma = 0;
+    let sd = 0;
+    data_set.forEach(calcSigma);
+    function calcSigma(item){
+        sigma += Math.pow((mean-item), 2);
+    }
 
+    sd = sigma / data_set.length;
+    sd = Math.sqrt(sd);
+    
+    document.getElementById("sd").innerText = sd;
 }
 
-// calculate and display Prob
-function displayProbability(){
+function clearDisplay(){
+    document.getElementById("display").innerText = "";
+
+    document.getElementById("mean").innerText = "";
+    document.getElementById("median").innerText = "";
+    document.getElementById("mode").innerText = "";
+    document.getElementById("range").innerText = "";
+    document.getElementById("sd").innerText = "";
 
 }
-
 
 function handleSubmit(){
 
     let num_box = document.getElementById("input");
-    console.log(num_box.value);
-    addToDisplay(num_box.value)
-    addToSet(num_box.value);
 
-    displayMode();
-    displayMedian();
+    num_input = parseFloat(num_box.value);
+
+    // input checking
+    if (num_input == NaN || num_input == ""){
+        return -1;
+    }
+    console.log(num_input);
+    addToDisplay(num_input)
+    addToSet(num_input);
+
+    num_box.value = " "
+    
+    // sort data before handling
+    data_set.sort(function(a, b){return a - b});
+
+    console.log(data_set);
+
+    let mode = displayMode();
+    let median = displayMedian();
+    let mean = displayMean();
+    let range = displayRange();
+    let sd = displayStandardDeviation(mean);
+    displayProbability();
+}
+
+function handleClear(){
+    data_set = [];
+    clearDisplay();
+}
+
+function handleSort(){
+    document.getElementById("display").innerText = "";
+    data_set.forEach(reprint);
+    function reprint(item){
+        addToDisplay(item);
+    }
+
 }
