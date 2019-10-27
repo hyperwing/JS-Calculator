@@ -1,0 +1,58 @@
+<!-- 
+File created 10/27/2019 by Neel Mansukhani
+HTML page for logic calculator
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="../scripts/mainFunctions.js"></script>
+    <script src="../scripts/logic.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Use the title from a page's frontmatter if it has one -->
+    <title>Logic Calculator</title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/modes.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/navbar.css">
+</head>
+
+<body>
+    <!--Navbar-->
+    <div id="navbar" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="../calculator.html">Standard</a>
+        <a href="convertModes.html">Modes</a>
+        <a href="degrees.html">Degrees/Radians</a>
+        <a href="logic.html">Logic</a>
+    </div>
+    <span class="openButton" onclick="openNav()">&#9776;Logic</span>
+
+    <!-- Format of buttons -->
+    <table class="mode-converter">
+        <tr>
+            <td id="display" colspan="4">0</td> 
+        </tr>
+        <tr>
+            <td colspan="1.5"><button onclick="onSimpleButtonClick('CE')">CE</button></td>
+            <td colspan="1.5"><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
+            
+        </tr>
+        <tr>
+            <td colspan="1.5"><button id="pi" onclick="onLogicalOperatorPress('and')">and</button></td>
+            <td colspan="1.5"><button id="pi" onclick="onLogicalOperatorPress('or')">or</button></td>
+            <td colspan="1.5"><button id="pi" onclick="onLogicalOperatorPress('not')">not</button></td>
+        </tr>
+            <td colspan="1.5"><button id="pi" onclick="onParenthesisPress('open')">(</button></td>
+            <td colspan="1.5"><button id="pi" onclick="onParanthesisPress('close')">)</button></td>
+            
+        <tr>
+            <td><button onclick="numberPress('0')">0</button></td>
+            <td><button onclick="numberPress('1')">1</button></td>
+        </tr>
+    </table>
+</body>
+
+</html>
