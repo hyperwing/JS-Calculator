@@ -121,14 +121,14 @@ function handleSubmit(){
     num_input = parseFloat(num_box.value);
 
     // input checking
-    if (num_input == NaN || num_input == ""){
-        return -1;
+    if (isNaN(num_input)){
+        return -1;        
     }
     console.log(num_input);
     addToDisplay(num_input)
     addToSet(num_input);
 
-    num_box.value = " "
+    num_box.value = ""
     
     // sort data before handling
     data_set.sort(function(a, b){return a - b});
@@ -140,7 +140,6 @@ function handleSubmit(){
     let mean = displayMean();
     let range = displayRange();
     let sd = displayStandardDeviation(mean);
-    displayProbability();
 }
 
 function handleClear(){
