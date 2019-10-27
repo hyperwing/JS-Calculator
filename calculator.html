@@ -33,6 +33,7 @@
         <a href="calculator.html">Standard</a>
         <a href="additionalPages/convertModes.html">Modes</a>
         <a href="additionalPages/degrees.html">Degrees/Radians</a>
+        <a href="additionalPages/surprise.html">Surprise!</a>
     </div>
     <span class="openButton" onclick="openNav()">&#9776; Standard</span>
 
@@ -55,7 +56,7 @@
             <td><button id = "MC" onclick="clearMemory()" disabled>MC</button></td>
             <td><button id="MR" onclick="memoryRecall(memory)" disabled>MR</button></td>
             <td><button onclick="storeMemory()">MS</button></td>
-            <td><button id= "M" onclick="displayMemory()">M&#9654;</button></td>
+            <td><button id= "M" onclick="displayMemory()" disabled>M&#9654;</button></td>
         </tr>
         <tr>
             <td><button onclick="onOperatorClick('CE')">CE</button></td>
@@ -84,7 +85,7 @@
         <tr>
             <td><button class="div-by-zero" onclick="onOperatorClick('+/-')">+/-</button></td>
             <td><button onclick="numberPress('0')">0</button></td>
-            <td><button class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
+            <td><button id = "dot" class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
             <td><button onclick="onEqualClick()">=</button></td>
         </tr>                         
     </table>

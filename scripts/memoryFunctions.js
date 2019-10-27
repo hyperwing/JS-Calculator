@@ -11,11 +11,13 @@ Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 */
 
 var memory = [];
+var memoryTrigger = false; //Checks if M+-/*S has been triggered, keeping display if that is the case.
 // Created 10/17/2019 by Sri Ramya Dandu
 // Edited 10/18/2019 by Sri Ramya Dandu: diabled buttons 
 // Clears all the values stored in memory, sets the memory to 0
 function clearMemory(){
     memory.length = 0;
+    displayMemory();
     updateDisplay();
 }
 
@@ -29,7 +31,9 @@ function storeMemory() {
         document.getElementById('display-memory-list').style.display = "none"
         displayMemory();
     }
-    display = "";
+    memoryTrigger = true;
+    updateDisplay();
+    
 }
 
 // Created 10/18/2019 by Sharon Qiu
@@ -37,7 +41,12 @@ function storeMemory() {
 // Functionality for ms button. clears a single specific value.
 function clearMemorySingle(index) {
     memory.splice(index,1);
-    document.getElementById('display-memory-list').style.display = "none"
+    document.getElementById('display-memory-list').style.display = "none";
+    if(memory.length != 0){
+        displayMemory();
+    }
+    updateDisplay();
+    memoryTrigger = true;
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
@@ -95,61 +104,83 @@ function hideMemory(){
 // Edited 10/26/2019 by Sharon Qiu: Allowed for immediate add to list even if 0.
 // Functionality for m- button.
 function memorySubtract(index) {
-    if (index === undefined && memory < 1) {
-        memory.unshift(0);
+    if (index === undefined && memory.length < 1) {
+        memory.unshift(0-display)
     } else if (index === undefined) {
         memory[0] -= display;
     }else {
         memory[index] -= Number(display)
     }
-    displayMemory();
-    display = "";
+
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none";
+        displayMemory();
+    }
+    memoryTrigger = true;
+    updateDisplay();
 }
 
 // Created 10/18/2019 by Sharon Qiu
 // Edited 10/26/2019 by Sharon Qiu: Allowed for immediate add to list even if 0.
 // Functionality for m+ button.
 function memoryAdd(index) {
-    if (index === undefined && memory < 1 && display != 0) {
+    if (index === undefined && memory.length < 1 && display != 0) {
         memory.unshift(display);
-    } else if (index === undefined && memory < 1) {
+    } else if (index === undefined && memory.length < 1) {
         memory.unshift(0);
     } else if (index === undefined) {
-        memory[0] += Number(display);
+        memory[0] = Number(memory[0]) + Number(display);
     } else {
         memory[index] += Number(display)
     }
-    displayMemory();
-    display = "";
+    
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
+    }
+    memoryTrigger = true;
+    updateDisplay();
+    console.log(display);
 }
 
 // Created 10/18/2019 by Sharon Qiu
 // Edited 10/26/2019 by Sharon Qiu: Added conditions division by 0 and undefined results.
-// Functionality for m+ button.
+// Functionality for m/ button.
 function memoryDivide(index) {
     if (display == 0) {
         display = "Cannot divide by 0";
     } else if ((index == 0) && (display == 0)) {
         display = "Result is undefined.";
+    } else if (index === undefined && memory.length < 1) {
+        memory.unshift(0);
     } else if (index === undefined) {
         memory[0] /= display;
-    }else{
+    } else {
         memory[index] /= display;
     }
-    displayMemory();
-    display = "";
+
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
+    }
+    memoryTrigger = true;
+    updateDisplay();
 }
 
 // Created 10/18/2019 by Sharon Qiu
-// Functionality for m+ button.
+// Functionality for m* button.
 function memoryMultiply(index) {
-    if (index === undefined && memory < 1) {
+    if (index === undefined && memory.length < 1) {
         memory.unshift(0);
     } else if (index === undefined) {
         memory[0] *= display;
     }else{
         memory[index] *= display;
     }
-    displayMemory();
-    display = "";
+    if(document.getElementById('display-memory-list').style.display == "block"){
+        document.getElementById('display-memory-list').style.display = "none"
+        displayMemory();
+    }
+    memoryTrigger = true;
+    updateDisplay();
 }
