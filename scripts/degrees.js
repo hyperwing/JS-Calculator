@@ -1,6 +1,6 @@
 /*
 File created 10/26/2019 by Sharon Qiu
-Edited 10/20/2019 by Sharon Qiu
+Edited 10/27/2019 by Sharon Qiu
 Degree/radians conversions
 */
 
@@ -9,31 +9,15 @@ var lastButtonOperator = false;
 var buttonState = true;
 
 // Created 10/26/2019 by Sharon Qiu
+// Edited 10/27/2019 by Sharon Qiu: Handles cases for decimal values.
 // Updates the display after new calculations.
 function updateDisplay() {
 
     var calculated = display;
-    // Only one pi allowed!
-    if (display.indexOf('&#960;') != -1){
-        document.getElementById('pi').disabled = true;
-        if (display[display.length - 1] == ';'){
-            document.getElementById('dot').disabled = true;
-        }else{
-            document.getElementById('dot').disabled = false;
-        }
-    }else{
-        document.getElementById('pi').disabled = false;
-        document.getElementById('dot').disabled = false;
-    }
-
-    document.getElementById("displayFrom").innerHTML = display;
 
     from = document.getElementById("convertFrom").value;
     to = document.getElementById("convertTo").value;
 
-
-    console.log(from)
-    console.log(to)
     if (from != to){
         if (from == "Degrees"){
             calculated = degree_to_radians();
@@ -46,10 +30,35 @@ function updateDisplay() {
         }
     } else if (from == "Degrees" && to == "Degrees") {
         if (display.indexOf('&#960;') != -1) {
-            calculated = "invalid input! Degrees cannot have pi values.";
+            alert("invalid input! Degrees cannot have pi values.");
+            calculated = "0";
             display = "0";
         }
         document.getElementById('pi').disabled = true;
+    }
+
+    // Only one pi allowed! also enables/re-enables decimals
+    if (display.indexOf('&#960;') != -1) {
+        document.getElementById('pi').disabled = true;
+        if (display[display.length - 1] == ';') {
+            document.getElementById('dot').disabled = true;
+        } else if (display.indexOf('.') != -1){
+            if (display.match(/\./g).length == 2) {
+                document.getElementById('dot').disabled = true;
+            } else if (display.match(/\./g).length < 2) {
+                document.getElementById('dot').disabled = false;
+            }
+        }else {
+            document.getElementById('dot').disabled = false; //re-enables if no decimal yet & there is a pi.
+        }
+    } else {
+        if (display.indexOf('.') != -1) {
+            if (display.match(/\./g).length == 1) {
+                document.getElementById('dot').disabled = true;
+            } else {
+                document.getElementById('dot').disabled = false;
+            }
+        }
     }
 
     document.getElementById("displayTo").innerHTML = calculated;
@@ -74,13 +83,13 @@ function numberPress(symbol) {
 function degree_to_radians() {
     if (display.indexOf("&#960;") != -1) {
         display = "0";
-        return "Invalid input! Input has been cleared.";
+        alert("Invalid input! You cannot have pi in degrees.");
+        return "0";
     }else{
         var degree = parseFloat(display);
     }
     return (degree * Math.PI) / 180;
 }
-
 
 // Created 10/26/2019 by Sharon Qiu
 // Converts radians to degrees
@@ -89,7 +98,7 @@ function radians_to_degrees() {
     //pi exists here
     if (display.indexOf("&#960;") != -1){
         var splitVal = display.split("&#960;");
-        console.log(splitVal);
+        //calculator allows like 24.1(pi)42.3, Multiplies all values together.
         degree = (splitVal.reduce((product, next) => {
             if (product == ""){
                 product = 1;
@@ -155,8 +164,8 @@ function onOperatorClick(symbol) {
                 display = "0"
             }
             if (display != "0") {
-                if (display.indexOf("&#960;") != -1){
-                    display = display.substr(0, display.length - 6);
+                if (display[display.length-1] == ";"){
+                    display = display.substr(0, display.length - ("&#960;".length));
                 }else{
                     display = display.substr(0, display.length - 1);
                 }
