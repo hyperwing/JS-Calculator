@@ -121,16 +121,14 @@ function handleSubmit(){
     num_input = parseFloat(num_box.value);
 
     // input checking
-    if (isNaN(num_input) || num_input == ""){
-        console.log("nope");
-        return -1;
-        
+    if (isNaN(num_input)){
+        return -1;        
     }
     console.log(num_input);
     addToDisplay(num_input)
     addToSet(num_input);
 
-    num_box.value = " "
+    num_box.value = ""
     
     // sort data before handling
     data_set.sort(function(a, b){return a - b});
