@@ -8,6 +8,7 @@ var display = "0";
 var lastButtonOperator = false;
 var calculations = [];
 var lastHistory;
+var lastButtonEquals = false;
 var buttonState = true; //Might not need to exist.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
@@ -61,11 +62,13 @@ function onOperatorClick(symbol) {
             buttonState = true;
         }
     }
+    lastButtonEquals = false;
     updateDisplay();
 }
 
 
 //created by David Wing 10/21/19
+// Edited 10/27/2019 by Leah Gillespie: adjusted to work after = is pressed
 // handles numbers pressed on calc and updates display
 function numberPress(symbol) {
     if (memoryTrigger && !lastButtonOperator) {
@@ -90,13 +93,14 @@ function numberPress(symbol) {
                 buttonState = true;
                 display = "0"
             }
-            if (display == "0") {
+            if (display == "0" || lastButtonEquals) {
                 display = symbol;
             } else {
                 display += symbol;
             }
         }
     }
+    lastButtonEquals = false;
     updateDisplay();
 }
 
@@ -119,6 +123,7 @@ function onEqualClick() {
     }
     lastHistory = button;
     calculations = [];
+    lastButtonEquals = true;
     updateDisplay();
 }
 
@@ -161,6 +166,7 @@ function onOperationButtonClick(operation) {
         display = calculateCalculations();
     }
     lastButtonOperator = true;
+    lastButtonEquals = false;
     updateDisplay();
 }
 // Created 10/17/2019 by Neel Mansukhani
