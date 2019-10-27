@@ -1,5 +1,6 @@
 /*
 File created 10/26/2019 by Sharon Qiu
+Edited 10/20/2019 by Sharon Qiu
 Degree/radians conversions
 */
 
@@ -7,10 +8,7 @@ var display = "0";
 var lastButtonOperator = false;
 var buttonState = true;
 
-// Created 10/17/2019 by Neel Mansukhani
-// Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
-// Edited 10/22/2019 by Sri Ramya Dandu: Added formatting for repeating values 
-// Edited 10/23/2019 by Sri Ramya Dandu: Enable/disable buttons
+// Created 10/26/2019 by Sharon Qiu
 // Updates the display after new calculations.
 function updateDisplay() {
 
@@ -33,15 +31,25 @@ function updateDisplay() {
     from = document.getElementById("convertFrom").value;
     to = document.getElementById("convertTo").value;
 
+
+    console.log(from)
+    console.log(to)
     if (from != to){
         if (from == "Degrees"){
-
             calculated = degree_to_radians();
             document.getElementById('pi').disabled = true;
         }else{
             calculated = radians_to_degrees();
-            document.getElementById('pi').disabled = false;
+            if (display.indexOf("&#960;") == -1){
+                document.getElementById('pi').disabled = false ;
+            }
         }
+    } else if (from == "Degrees" && to == "Degrees") {
+        if (display.indexOf('&#960;') != -1) {
+            calculated = "invalid input! Degrees cannot have pi values.";
+            display = "0";
+        }
+        document.getElementById('pi').disabled = true;
     }
 
     document.getElementById("displayTo").innerHTML = calculated;
@@ -73,6 +81,7 @@ function degree_to_radians() {
     return (degree * Math.PI) / 180;
 }
 
+
 // Created 10/26/2019 by Sharon Qiu
 // Converts radians to degrees
 function radians_to_degrees() {
@@ -80,8 +89,11 @@ function radians_to_degrees() {
     //pi exists here
     if (display.indexOf("&#960;") != -1){
         var splitVal = display.split("&#960;");
+        console.log(splitVal);
         degree = (splitVal.reduce((product, next) => {
-            product = 1;
+            if (product == ""){
+                product = 1;
+            }
             if (next != ""){
                 product *= next
             }
