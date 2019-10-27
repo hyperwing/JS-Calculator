@@ -7,7 +7,8 @@ Moved main functions for standard calc here.
 var display = "0";
 var lastButtonOperator = false;
 var calculations = [];
-var history = [];
+var lastHistory;
+var lastButtonEquals = false;
 var buttonState = true; //Might not need to exist.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
@@ -61,11 +62,13 @@ function onOperatorClick(symbol) {
             buttonState = true;
         }
     }
+    lastButtonEquals = false;
     updateDisplay();
 }
 
 
 //created by David Wing 10/21/19
+// Edited 10/27/2019 by Leah Gillespie: adjusted to work after = is pressed
 // handles numbers pressed on calc and updates display
 function numberPress(symbol) {
     if (memoryTrigger && !lastButtonOperator) {
@@ -90,24 +93,37 @@ function numberPress(symbol) {
                 buttonState = true;
                 display = "0"
             }
-            if (display == "0") {
+            if (display == "0" || lastButtonEquals) {
                 display = symbol;
             } else {
                 display += symbol;
             }
         }
     }
+    lastButtonEquals = false;
     updateDisplay();
 }
 
 // Created 10/20/2019 by Leah Gillespie
 // Edited 10/25/2019 by Leah Gillespie: works with last thing entered being an operator
+// Edited 10/26/2019 by Leah Gillespie: Added history display
 // Registers = button click and updates display
 function onEqualClick() {
-    //history.unshift([calculations + " =\n" + display]);
     calculations.push(parseFloat(display));
     display = calculateCalculations();
+    var button = document.createElement("button");
+    button.setAttribute("onclick", "onHistoryClick(" + "\"" + calculations + "\"" + ", " + display + ")");
+    var txt = document.createTextNode(calculations.toString().replace(/,/g," ") + " =\n" + display);
+    button.append(txt);
+    var historyList = document.getElementById("history");
+    if (historyList.childElementCount === 0) {
+        historyList.append(button);
+    } else {
+        historyList.insertBefore(button, lastHistory);
+    }
+    lastHistory = button;
     calculations = [];
+    lastButtonEquals = true;
     updateDisplay();
 }
 
@@ -150,6 +166,7 @@ function onOperationButtonClick(operation) {
         display = calculateCalculations();
     }
     lastButtonOperator = true;
+    lastButtonEquals = false;
     updateDisplay();
 }
 // Created 10/17/2019 by Neel Mansukhani
@@ -231,4 +248,10 @@ function setButtonState() {
     if(display.indexOf('.') != -1){
         document.getElementById('dot').disabled = true;
     }
+}
+
+function onHistoryClick(calc, disp) {
+    calculations = calc;
+    display = disp;
+    updateDisplay();
 }
