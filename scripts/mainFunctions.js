@@ -7,7 +7,7 @@ Moved main functions for standard calc here.
 var display = "0";
 var lastButtonOperator = false;
 var calculations = [];
-var history = [];
+var lastHistory;
 var buttonState = true; //Might not need to exist.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
@@ -102,11 +102,22 @@ function numberPress(symbol) {
 
 // Created 10/20/2019 by Leah Gillespie
 // Edited 10/25/2019 by Leah Gillespie: works with last thing entered being an operator
+// Edited 10/26/2019 by Leah Gillespie: Added history display
 // Registers = button click and updates display
 function onEqualClick() {
-    //history.unshift([calculations + " =\n" + display]);
     calculations.push(parseFloat(display));
     display = calculateCalculations();
+    var button = document.createElement("button");
+    button.setAttribute("onclick", "onHistoryClick(" + "\"" + calculations + "\"" + ", " + display + ")");
+    var txt = document.createTextNode(calculations.toString().replace(/,/g," ") + " =\n" + display);
+    button.append(txt);
+    var historyList = document.getElementById("history");
+    if (historyList.childElementCount === 0) {
+        historyList.append(button);
+    } else {
+        historyList.insertBefore(button, lastHistory);
+    }
+    lastHistory = button;
     calculations = [];
     updateDisplay();
 }
@@ -231,4 +242,10 @@ function setButtonState() {
     if(display.indexOf('.') != -1){
         document.getElementById('dot').disabled = true;
     }
+}
+
+function onHistoryClick(calc, disp) {
+    calculations = calc;
+    display = disp;
+    updateDisplay();
 }

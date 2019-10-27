@@ -80,3 +80,8 @@ td{
 :disabled{
     background: #dddddd;
 }
+
+#history{
+    float: right;
+    margin: 0 10%;
+}
