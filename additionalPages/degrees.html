@@ -9,7 +9,6 @@ HTML page for degrees/radians conversions
 <head>
     <script src="../scripts/degrees.js"></script>
     <script src="../scripts/navbar.js"></script>
-    <script src="../scripts/mainFunctions.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,7 +25,6 @@ HTML page for degrees/radians conversions
         <a href="../calculator.html">Standard</a>
         <a href="convertModes.html">Modes</a>
         <a href="degrees.html">Degrees/Radians</a>
-        <a href="surprise.html">Surprise!</a>
     </div>
     <span class="openButton" onclick="openNav()">&#9776; Degrees/Radians</span>
 
@@ -63,7 +61,7 @@ HTML page for degrees/radians conversions
         <tr>
             <td colspan="1.5"><button onclick="onSimpleButtonClick('CE')">CE</button></td>
             <td colspan="1.5"><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
-            <td colspan="1.5"><button onclick="onSimpleButtonClick('PI')">&#960;</button></td>
+            <td colspan="1.5"><button id="pi" onclick="piPress()">&#960;</button></td>
         </tr>
         <tr>
             <td><button onclick="numberPress('7')">7</button></td>
