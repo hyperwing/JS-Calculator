@@ -36,7 +36,7 @@ td{
 
 .calculator{
     float: left;
-    margin-left: 30%;
+    margin-left: 40%;
     margin-top: 10%
 }
 /* Display for overall list of numbers in memory */
@@ -79,4 +79,12 @@ td{
 
 :disabled{
     background: #dddddd;
+}
+
+header.title{
+    position: relative;
+    font-size: 50px;
+    text-align: center;
+    text-emphasis: Bold;
+    text-decoration-line: underline;
 }

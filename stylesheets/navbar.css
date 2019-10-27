@@ -1,11 +1,11 @@
 .sidenav {
-    position: fixed;
+    position: absolute;
     height: 100%;
-    width: 0;
+    width: 20%;
     top: 0;
     left: 0;
     background-color: #111;
-    overflow-x: auto;
+    overflow-x: hidden;
     transition: 0.5s;
     padding: 3% 0%;
 }
@@ -17,6 +17,7 @@
     color: #818181;
     display: block;
     transition: 0.3s;
+    margin: 0px;
 }
 
 .sidenav a:hover {
@@ -36,12 +37,6 @@
     float: left;
 }
 
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
-
-    .sidenav a {
-        font-size: 18px;
-    }
+a.current {
+    color: white;
 }
