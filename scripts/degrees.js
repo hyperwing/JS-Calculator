@@ -4,6 +4,8 @@ Degree/radians conversions
 */
 
 var display = "0";
+var lastButtonOperator = false;
+var buttonState = true;
 
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
@@ -16,7 +18,7 @@ function updateDisplay() {
     // Only one pi allowed!
     if (display.indexOf('&#960;') != -1){
         document.getElementById('pi').disabled = true;
-        if (display[display.length - 1] == '&#960;'){
+        if (display[display.length - 1] == ';'){
             document.getElementById('dot').disabled = true;
         }else{
             document.getElementById('dot').disabled = false;
@@ -33,13 +35,17 @@ function updateDisplay() {
 
     if (from != to){
         if (from == "Degrees"){
+
             calculated = degree_to_radians();
+            document.getElementById('pi').disabled = true;
         }else{
             calculated = radians_to_degrees();
+            document.getElementById('pi').disabled = false;
         }
     }
 
     document.getElementById("displayTo").innerHTML = calculated;
+    document.getElementById("displayFrom").innerHTML = display;
 }
 
 // Created 10/21/19 by David Wing
@@ -58,8 +64,13 @@ function numberPress(symbol) {
 // Created 10/26/2019 by Sharon Qiu
 // Converts degrees to radians
 function degree_to_radians() {
-    var degree = parseFloat(display);
-    return (degree * 180) / Math.PI;
+    if (display.indexOf("&#960;") != -1) {
+        display = "0";
+        return "Invalid input! Input has been cleared.";
+    }else{
+        var degree = parseFloat(display);
+    }
+    return (degree * Math.PI) / 180;
 }
 
 // Created 10/26/2019 by Sharon Qiu
@@ -69,8 +80,13 @@ function radians_to_degrees() {
     //pi exists here
     if (display.indexOf("&#960;") != -1){
         var splitVal = display.split("&#960;");
-        //implicit that pi exists in display. Since formula is radians *(180/pi) can ignore pi.
-        degree = splitVal.reduce((product, next) => {return product * next}) * 180;
+        degree = (splitVal.reduce((product, next) => {
+            product = 1;
+            if (next != ""){
+                product *= next
+            }
+            return product
+        }) * 180);
     }else{
         degree = (parseFloat(display) * 180)/Math.PI;
     }
@@ -80,8 +96,71 @@ function radians_to_degrees() {
 // Created 10/26/2019 by Sharon Qiu
 // it's pi
 function piPress(){
-    if (display[display.length - 1] != '.'){
+    if (display == 0){
+        display = "&#960;";
+    }
+    else if (display[display.length - 1] != '.'){
         display += "&#960;";
     }
+    updateDisplay();
+}
+
+// Created 10/17/2019 by Neel Mansukhani
+// Edited 10/19/2019 by David Wing: added CE and C routes
+// Edited 10/19/2019 by Sri Ramya Dandu: Fixed decimal 
+// Operators handled here and updates display
+function onOperatorClick(symbol) {
+    if (lastButtonOperator) {
+        if (symbol == ".") {
+            display = "0.";
+            lastButtonOperator = false;
+        } else if (symbol == "+/-") {
+            if (display.charAt(0) == '-') {
+                display = display.substr(1);
+            } else {
+                display = "-" + display;
+            }
+        } else if (symbol == "C") {
+            display = "0"
+            buttonState = true;
+            calculations = [];
+        } else if (symbol == "CE") {
+            display = "0"
+            buttonState = true;
+        }
+    } else if (symbol == '.') {
+        display += '.';
+    } else {
+        if (symbol == "+/-" && display != "0") {
+            if (display.charAt(0) == '-') {
+                display = display.substr(1);
+            } else {
+                display = "-" + display;
+            }
+        } else if (symbol == "DEL") {
+            if (!buttonState) {
+                buttonState = true;
+                display = "0"
+            }
+            if (display != "0") {
+                if (display.indexOf("&#960;") != -1){
+                    display = display.substr(0, display.length - 6);
+                }else{
+                    display = display.substr(0, display.length - 1);
+                }
+                if (display.length == 0 || display == "-") {
+                    display = "0";
+                }
+            }
+        } else if (symbol == "C") {
+            display = "0"
+            buttonState = true;
+            calculations = [];
+        } else if (symbol == "CE") {
+            display = "0"
+            buttonState = true;
+        }
+    }
+    lastButtonEquals = false;
     updateDisplay();
 }
