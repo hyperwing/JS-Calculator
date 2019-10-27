@@ -40,6 +40,7 @@ function displayMedian(){
     }
 
     document.getElementById("median").innerText = median;
+    return median;
 }
 
 // calculate and display mode
@@ -62,10 +63,8 @@ function displayMode(){
             mode = item;
         }
     }
-    // console.log(map);
-
     document.getElementById("mode").innerText = mode;
-
+    return mode;
 }
 
 // calculate and display range
@@ -86,7 +85,6 @@ function displayMean(){
     mean = mean/data_set.length;
     document.getElementById("mean").innerText = mean;
     return mean;
-
 }
 
 // calculate and display SD
@@ -102,6 +100,7 @@ function displayStandardDeviation(mean){
     sd = Math.sqrt(sd);
     
     document.getElementById("sd").innerText = sd;
+    return sd;
 }
 
 function clearDisplay(){
