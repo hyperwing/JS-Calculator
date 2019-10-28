@@ -2,7 +2,7 @@
 // Edited 10/24/2019 by Sri Ramya Dandu
 
 const rewire = require("rewire");
-const modeConversion = rewire("../scripts/modeConversion");
+const modeConversion = rewire("../scripts/modeConversion.js");
 expect = require('chai').expect;
 // conversion values for hex and decimal 
 var conversionsMap = {

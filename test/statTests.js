@@ -1,10 +1,10 @@
 // File created 10/27/19 David Wing
 
 const rewire = require("rewire");
-const modeConversion = rewire("../modeConversion");
+const modeConversion = rewire("../scripts/stats.js");
 expect = require('chai').expect;
 
-
+/*
 describe ('Check Statistics', () => {
   var data_set = [2,2,3,4,5];
   
@@ -23,3 +23,4 @@ describe ('Check Statistics', () => {
     expect(mean).to.equal('3.2');
 })
 });
+*/

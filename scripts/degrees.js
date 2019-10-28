@@ -20,17 +20,17 @@ function updateDisplay() {
 
     if (from != to){
         if (from == "Degrees"){
-            calculated = degree_to_radians();
+            calculated = degree_to_radians(display);
             document.getElementById('pi').disabled = true;
         }else{
-            calculated = radians_to_degrees();
+            calculated = radians_to_degrees(display);
             if (display.indexOf("&#960;") == -1){
                 document.getElementById('pi').disabled = false ;
             }
         }
     } else if (from == "Degrees" && to == "Degrees") {
         if (display.indexOf('&#960;') != -1) {
-            alert("invalid input! Degrees cannot have pi values.");
+            window.alert("invalid input! Degrees cannot have pi values.");
             calculated = "0";
             display = "0";
         }
@@ -66,6 +66,7 @@ function updateDisplay() {
 }
 
 // Created 10/21/19 by David Wing
+// Edited 10/27/19 by Sharon Qiu: Shortened function.
 // handles numbers pressed on calc and updates display
 function numberPress(symbol) {
     if (!isNaN(symbol)) {
@@ -80,10 +81,10 @@ function numberPress(symbol) {
 
 // Created 10/26/2019 by Sharon Qiu
 // Converts degrees to radians
-function degree_to_radians() {
+function degree_to_radians(display) {
     if (display.indexOf("&#960;") != -1) {
         display = "0";
-        alert("Invalid input! You cannot have pi in degrees.");
+        window.alert("Invalid input! You cannot have pi in degrees.");
         return "0";
     }else{
         var degree = parseFloat(display);
@@ -93,7 +94,7 @@ function degree_to_radians() {
 
 // Created 10/26/2019 by Sharon Qiu
 // Converts radians to degrees
-function radians_to_degrees() {
+function radians_to_degrees(display) {
     var degree = 0;
     //pi exists here
     if (display.indexOf("&#960;") != -1){
