@@ -6,6 +6,7 @@ Edited 10/23/2019 by Sri Ramya Dandu
 Edited 10/24/2019 by Sri Ramya Dandu
 Edited 10/25/2019 by Sri Ramya Dandu
 Edited 10/27/2019 by Sri Ramya Dandu
+Edited 10/28/2019 by Sri Ramya Dandu
 */
 
 // conversion values for hex and decimal 
@@ -21,6 +22,7 @@ var display = "0";
 // Edited 10/21/2019 by Sri Ramya Dandu: Modified to match new calc
 // Edited 10/22/2019 by Sri Ramya Dandu: Added decimal point recoganization 
 // Edited 10/27/2019 by Sri Ramya Dandu: Added +/-
+// Edited 10/28/2019 by Sri Ramya Dandu: Fixed display for -0
 // Number button clicks are registered here then display is updated.
 function onSimpleButtonClick(symbol) {
     if (symbol == "DEL") {
@@ -35,13 +37,15 @@ function onSimpleButtonClick(symbol) {
     }  else if (symbol == "+/-") {
       if (display.charAt(0) == '-') {
           display = display.substr(1);
-      } else {
+      } else{
           display = "-" + display;
       }
     } else {
        if(display == "0" && symbol != '.') {
             display = symbol;
-        } else { 
+        } else if(display == "-0"){
+            display = '-' + symbol;
+        }else { 
             display += symbol;
         }
         
@@ -78,6 +82,37 @@ function updateDisplay() {
     }else{
         document.getElementById("dot").disabled = false;
     }
+
+    // disables buttons based on chosen form of input 
+    disableInputButtons(from);
+    
+  }
+
+// Created 10/28/2019 by Sri Ramya Dandu
+// disables buttons based on chosen form of input 
+function disableInputButtons(from){
+  // disable alpha buttons for non-hex input
+  if(from == 10 || from == 2){
+    setButtons(["A", "B", "C", "D", "E", "F"], true);
+  }else {
+    setButtons(["A", "B", "C", "D", "E", "F"], false);
+  }
+
+  // disable 1+ buttons for birnary input 
+  if(from == 2){
+    setButtons(["two", "three", "four", "five", "six", "seven", "eight", "nine"], true);
+  }else{
+    setButtons(["two", "three", "four", "five", "six", "seven", "eight", "nine"], false);
+  }
+}
+
+
+// Created 10/28/2019 by Sri Ramya Dandu
+// Sets disabled property of buttons with ids in idArray to buttonState
+function setButtons(idArray, buttonState){
+  idArray.forEach(function(elt){
+    document.getElementById(elt).disabled = buttonState;
+  })
 }
 
 // Created 10/20/2019 by Sri Ramya Dandu
@@ -197,7 +232,7 @@ function getKey(value){
 }
 
 // Created 10/23/2019 by Sri Ramya Dandu
-// Checks if input is valid 
+// Checks if input in current display is valid 
 // Returns boolean 
 function isValidInput(display,from){
   var values = display.split('');
@@ -231,23 +266,27 @@ function callFunctions(display, from, to){
     document.getElementById("displayTo").innerHTML = 'Invalid Input!'
   }else {
     var actualDisplay = display;
-    if(display.charAt(0) == '-'){
+    var isNegative = actualDisplay.charAt(0) == '-';
+    if(isNegative){
       display = display.substring(1);
     }
     splitNum = wholeFracSplit(display);
-    decimal = "";
+    var decimal = "";
     // no conversion required 
     if(from == to){
         document.getElementById("displayTo").innerHTML = actualDisplay;
     }else if (from == 10) { // converting from decimal to a different base 
-        document.getElementById("displayTo").innerHTML = displayCalculated(getDecimalToBase(splitNum,to), actualDisplay.charAt(0) == '-');
+        document.getElementById("displayTo").innerHTML = displayCalculated(getDecimalToBase(splitNum,to), isNegative);
     }else{ // converting from a base != decimal 
-        getBaseToDecimal(splitNum,from);
+        decimal = getBaseToDecimal(splitNum,from);
         // if converting to decimal 
         if (to == 10){
+            if (isNegative){
+              decimal = '-'+decimal;
+            }
             document.getElementById("displayTo").innerHTML = decimal;
         } else { // if converting to a base != decimal, converts decimal to that base 
-            document.getElementById("displayTo").innerHTML = displayCalculated(getDecimalToBase(wholeFracSplit(decimal),to),actualDisplay.charAt(0) == '-');
+            document.getElementById("displayTo").innerHTML = displayCalculated(getDecimalToBase(wholeFracSplit(decimal),to),isNegative);
         }
     }
   }
@@ -276,7 +315,7 @@ function getDecimalToBase(split,to){
 //        to is the base to convert to 
 // Returns string of the converted value from base to decimal  
 function getBaseToDecimal(split,from){
-  decimal = "";
+  var decimal = "";
   // converts from base to decimal 
   if(splitNum.length == 2){   // if whole and fraction 
     var whole = convertWholeFromBase(splitNum[0],from);
