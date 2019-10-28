@@ -1,7 +1,7 @@
 // File created 10/27/19 David Wing
 
 const rewire = require("rewire");
-const modeConversion = rewire("../modeConversion");
+const stats = rewire("../scripts/stats");
 expect = require('chai').expect;
 
 

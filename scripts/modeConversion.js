@@ -5,6 +5,7 @@ Edited 10/22/2019 by Sri Ramya Dandu
 Edited 10/23/2019 by Sri Ramya Dandu 
 Edited 10/24/2019 by Sri Ramya Dandu
 Edited 10/25/2019 by Sri Ramya Dandu
+Edited 10/27/2019 by Sri Ramya Dandu
 */
 
 // conversion values for hex and decimal 
@@ -19,6 +20,7 @@ var display = "0";
 // Edited 10/19/2019 by David Wing: added CE and C routes
 // Edited 10/21/2019 by Sri Ramya Dandu: Modified to match new calc
 // Edited 10/22/2019 by Sri Ramya Dandu: Added decimal point recoganization 
+// Edited 10/27/2019 by Sri Ramya Dandu: Added +/-
 // Number button clicks are registered here then display is updated.
 function onSimpleButtonClick(symbol) {
     if (symbol == "DEL") {
@@ -30,6 +32,12 @@ function onSimpleButtonClick(symbol) {
         }    
     } else if (symbol == "CE") {
         display = "0"
+    }  else if (symbol == "+/-") {
+      if (display.charAt(0) == '-') {
+          display = display.substr(1);
+      } else {
+          display = "-" + display;
+      }
     } else {
        if(display == "0" && symbol != '.') {
             display = symbol;
@@ -45,6 +53,7 @@ function onSimpleButtonClick(symbol) {
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
 // Edited 10/22/2019 by Sri Ramya Dandu: Added formatting for repeating values 
 // Edited 10/23/2019 by Sri Ramya Dandu: Enable/disable buttons
+// Edited 10/27/2019 by Sri Ramya Dandu: Removed disable of negative
 // Updates the display after new calculations.
 function updateDisplay() {
     document.getElementById("displayFrom").innerHTML = display;
@@ -68,12 +77,6 @@ function updateDisplay() {
         document.getElementById("dot").disabled = true;
     }else{
         document.getElementById("dot").disabled = false;
-    }
-
-    if (display.indexOf('-') != -1 || (display.length >= 1 && display != '0')){
-        document.getElementById("neg").disabled = true;
-    }else{
-        document.getElementById("neg").disabled = false;
     }
 }
 
@@ -289,7 +292,7 @@ function getBaseToDecimal(split,from){
 // Created 10/22/2019 by Sri Ramya Dandu
 // Input: String to format
 // Displays 4 bits with space 
-function splitInto4(value){
+function splitIntoFour(value){
   var spacedValue = "";
 
   // if input is the fraction part 
@@ -318,19 +321,19 @@ function displayCalculated(result, isNegative){
  var printValue = '';
   parts = wholeFracSplit(result);
   if(parts.length == 2){
-    printValue = splitInto4(parts[0]) + '.';
+    printValue = splitIntoFour(parts[0]) + '.';
      
     // adds repeating symbol 
     if (isRepeating(parts[1].substring(1))&& parts[1].length > 7){
-      printValue += '<span id = "repeating" >' + splitInto4(parts[1]) + '</span>';
+      printValue += '<span id = "repeating" >' + splitIntoFour(parts[1]) + '</span>';
     }else if (isRepeating(parts[1].substring(5))&& parts[1].length > 11) {
-      var toPrint = splitInto4(parts[1]);
+      var toPrint = splitIntoFour(parts[1]);
       printValue += toPrint.substring(0,5) + '<span id = "repeating" >' + toPrint.substring(5) + '</span>';
     }else{
-      printValue += splitInto4(parts[1]);
+      printValue += splitIntoFour(parts[1]);
     }
   }else{
-    printValue = splitInto4(parts[0]);
+    printValue = splitIntoFour(parts[0]);
   }
   if(isNegative){
     printValue = '- ' + printValue;
