@@ -38,26 +38,33 @@ function updateDisplay() {
     }
 
     // Only one pi allowed! also enables/re-enables decimals
+    // With pi
     if (display.indexOf('&#960;') != -1) {
         document.getElementById('pi').disabled = true;
+        var values = display.split('&#960;'); // check first and second values
         if (display[display.length - 1] == ';') {
             document.getElementById('dot').disabled = true;
-        } else if (display.indexOf('.') != -1){
-            if (display.match(/\./g).length == 2) {
+        } //first value does not have a decimal
+        else if (display.indexOf('.') != -1){
+            //first value does not have a decimal
+            if (((values[0].indexOf('.') == -1) && display.match(/\./g).length == 1) || display.match(/\./g).length == 2) {
                 document.getElementById('dot').disabled = true;
-            } else if (display.match(/\./g).length < 2) {
+            }else{
                 document.getElementById('dot').disabled = false;
             }
         }else {
             document.getElementById('dot').disabled = false; //re-enables if no decimal yet & there is a pi.
         }
-    } else {
+    } // Without pi
+    else {
         if (display.indexOf('.') != -1) {
             if (display.match(/\./g).length == 1) {
                 document.getElementById('dot').disabled = true;
             } else {
                 document.getElementById('dot').disabled = false;
             }
+        }else{
+            document.getElementById('dot').disabled = false;
         }
     }
 
