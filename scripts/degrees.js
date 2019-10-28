@@ -1,6 +1,7 @@
 /*
 File created 10/26/2019 by Sharon Qiu
 Edited 10/27/2019 by Sharon Qiu
+Edited 10/28/2019 by Sharon Qiu
 Degree/radians conversions
 */
 
@@ -10,6 +11,7 @@ var buttonState = true;
 
 // Created 10/26/2019 by Sharon Qiu
 // Edited 10/27/2019 by Sharon Qiu: Handles cases for decimal values.
+// Edited 10/28/2019 by Sharon Qiu: Fixed bug where you can type multiple decimal values.
 // Updates the display after new calculations.
 function updateDisplay() {
 
@@ -18,23 +20,25 @@ function updateDisplay() {
     from = document.getElementById("convertFrom").value;
     to = document.getElementById("convertTo").value;
 
-    if (from != to){
-        if (from == "Degrees"){
-            calculated = degree_to_radians(display);
+    if (from != to) {
+        if (from == "Degrees") {
             document.getElementById('pi').disabled = true;
-        }else{
+            calculated = degree_to_radians(display);
+        } else {
             calculated = radians_to_degrees(display);
-            if (display.indexOf("&#960;") == -1){
-                document.getElementById('pi').disabled = false ;
+            if (display.indexOf("&#960;") == -1) {
+                document.getElementById('pi').disabled = false;
             }
         }
-    } else if (from == "Degrees" && to == "Degrees") {
+    }else if (from == "Degrees") {
+        document.getElementById('pi').disabled = true;
         if (display.indexOf('&#960;') != -1) {
             window.alert("invalid input! Degrees cannot have pi values.");
             calculated = "0";
             display = "0";
         }
-        document.getElementById('pi').disabled = true;
+    } else{
+        document.getElementById('pi').disabled = false;
     }
 
     // Only one pi allowed! also enables/re-enables decimals
@@ -60,6 +64,9 @@ function updateDisplay() {
         if (display.indexOf('.') != -1) {
             if (display.match(/\./g).length == 1) {
                 document.getElementById('dot').disabled = true;
+                if (display[display.length - 1] == '.'){
+                    document.getElementById('pi').disabled = true;
+                }
             } else {
                 document.getElementById('dot').disabled = false;
             }
@@ -90,7 +97,7 @@ function numberPress(symbol) {
 // Converts degrees to radians
 function degree_to_radians(display) {
     if (display.indexOf("&#960;") != -1) {
-        display = "0";
+        window.display = "0";
         window.alert("Invalid input! You cannot have pi in degrees.");
         return "0";
     }else{
