@@ -35,17 +35,17 @@ function onSimpleButtonClick(symbol) {
     } else if (symbol == "CE") {
         display = "0"
     }  else if (symbol == "+/-") {
-      if (display.charAt(0) == '-') {
-          display = display.substr(1);
-      } else{
-          display = "-" + display;
+      if(display != "0"){ //no negative zero 
+        if (display.charAt(0) == '-') {
+            display = display.substr(1);
+        } else{
+            display = "-" + display;
+        }
       }
     } else {
        if(display == "0" && symbol != '.') {
             display = symbol;
-        } else if(display == "-0"){
-            display = '-' + symbol;
-        }else { 
+        } else { 
             display += symbol;
         }
         

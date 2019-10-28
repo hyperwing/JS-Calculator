@@ -19,7 +19,7 @@ David Wing:
 Neel Mansukhani: 
 
 #### Extra Functionality:
-Sri Ramya Dandu: Modes Calculator for whole numbers and fractions (Decimal, Binary, Hex)
+Sri Ramya Dandu: Modes calculator for whole numbers and fractions (Decimal, Binary, Hex)
 Leah Gillespie: 
 Sharon Qiu: 
 David Wing:
