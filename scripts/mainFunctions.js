@@ -72,6 +72,7 @@ function onOperatorClick(symbol) {
 
 //created by David Wing 10/21/19
 // Edited 10/27/2019 by Leah Gillespie: adjusted to work after = is pressed
+// Edited 10/29/2019 by Leah Gillespie: works with history
 // handles numbers pressed on calc and updates display
 function numberPress(symbol) {
     if (memoryTrigger && !lastButtonOperator) {
@@ -114,6 +115,7 @@ function numberPress(symbol) {
 // Created 10/20/2019 by Leah Gillespie
 // Edited 10/25/2019 by Leah Gillespie: works with last thing entered being an operator
 // Edited 10/26/2019 by Leah Gillespie: Added history display
+// Edited 10/29/2019 by Leah Gillespie: works with history
 // Registers = button click and updates display
 function onEqualClick() {
     if (changeLastNum) {
@@ -142,7 +144,7 @@ function onEqualClick() {
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
 // Edited 10/25/2019 by Leah Gillespie: included history update
-// Edited 10/26/2019 by Sri Ramya Dandu: Fixed decimal 
+// Edited 10/26/2019 by Sri Ramya Dandu: Fixed decimal
 // Updates the display after new calculations.
 function updateDisplay() {
     document.getElementById("display").innerHTML = display;
@@ -167,6 +169,7 @@ function updateDisplay() {
 }
 
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/29/2019 by Leah Gillespie: works with history
 // Operation button clicks are registered here then display is updated.
 function onOperationButtonClick(operation) {
     if (changeLastNum) {
@@ -269,6 +272,7 @@ function setButtonState() {
 }
 
 // Created 10/27/2019 by Leah Gillespie
+// Edited 10/29/2019 by Leah Gillespie: fixed calculation bug
 function onHistoryClick(calc, disp) {
     calculations = [];
     for (var i = 0; i < calc.length; i = i + 2) {
