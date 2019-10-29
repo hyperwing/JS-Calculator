@@ -1,12 +1,13 @@
 /*  File Created 10/20/2019 by Sri Ramya Dandu
     Edited 10/21/2019 by Sri Ramya Dandu: Added formating for new display and options input 
     Edited 10/22/2019 by Sri Ramya Dandu: Changed overflow and white space handling for displays 
+    Edited 10/29/2019 by Sri Ramya Dandu: Fixed button display for Firefox
 */
 html {
     height: 100%;
 }
 button {
-    height: 100%;
+    height: 55px;
     width: 100%;
 }
 
