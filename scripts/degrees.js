@@ -107,6 +107,7 @@ function degree_to_radians(display) {
 }
 
 // Created 10/26/2019 by Sharon Qiu
+// Edited 10/28/2019 by Sharon Qiu: Added fix so it registers -pi values.
 // Converts radians to degrees
 function radians_to_degrees(display) {
     var degree = 0;
@@ -117,6 +118,8 @@ function radians_to_degrees(display) {
         degree = (splitVal.reduce((product, next) => {
             if (product == ""){
                 product = 1;
+            } else if (product == "-"){
+                product = -1;
             }
             if (next != ""){
                 product *= next
