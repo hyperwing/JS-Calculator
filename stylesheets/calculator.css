@@ -22,12 +22,6 @@ button {
     text-align: right;
 }
 
-#history {
-    float: right;
-    margin: 0 10%;
-    width: 15%;
-}
-
 td{
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 }
@@ -97,4 +91,27 @@ header.title{
     text-align: center;
     text-emphasis: Bold;
     text-decoration-line: underline;
+}
+
+#history {
+    float: right;
+    margin: 0 15%;
+    width: 15%;
+    text-align: center;
+}
+
+#history p {
+    text-decoration: underline;
+    font-size: 25px;
+}
+
+#history button {
+    background-color: white;
+    font-size: 16px;
+    border-color: lightgray;
+    border-width: 2px;
+}
+
+#history button:hover {
+    background-color: lightgrey;
 }
