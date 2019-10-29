@@ -19,7 +19,7 @@ function addToDisplay(val){
 }
 
 // calculate and display Median
-function calculateMedian(){
+function displayMedian(){
 
     let len = data_set.length;
     let median = 0;
@@ -38,11 +38,13 @@ function calculateMedian(){
     else{
         median = data_set[parseInt(len/2)+1];
     }
+
+    document.getElementById("median").innerText = median;
     return median;
 }
 
 // calculate and display mode
-function calculateMode(){
+function displayMode(){
     let max = 0;
     let mode = data_set[0]
     let map = {};
@@ -61,38 +63,32 @@ function calculateMode(){
             mode = item;
         }
     }
+    document.getElementById("mode").innerText = mode;
     return mode;
 }
 
-
-
 // calculate and display range
-function calculateRange(){
-    range = data_set[data_set.length-1] - data_set[0];
-    return range;
+function displayRange(){
+    let display_range = document.getElementById("range");
+    display_range.innerText = data_set[data_set.length-1] - data_set[0];
 }
 
-function displayRange(range){
-    document.getElementById("range").innerText = range
-}
-
-function calculateMean(){
+// calculate and display mean
+function displayMean(){
     mean = 0;
 
     data_set.forEach(add);
     function add(item){
         mean += parseFloat(item);
     }
+
     mean = mean/data_set.length;
+    document.getElementById("mean").innerText = mean;
     return mean;
 }
 
-function displayMean(mean){
-    document.getElementById("mean").innerText = mean;
-}
-
 // calculate and display SD
-function calculateStandardDeviation(mean){
+function displayStandardDeviation(mean){
     let sigma = 0;
     let sd = 0;
     data_set.forEach(calcSigma);
@@ -103,11 +99,13 @@ function calculateStandardDeviation(mean){
     sd = sigma / data_set.length;
     sd = Math.sqrt(sd);
     
+    document.getElementById("sd").innerText = sd;
     return sd;
 }
 
 function clearDisplay(){
     document.getElementById("display").innerText = "";
+
     document.getElementById("mean").innerText = "";
     document.getElementById("median").innerText = "";
     document.getElementById("mode").innerText = "";
@@ -137,13 +135,11 @@ function handleSubmit(){
 
     console.log(data_set);
 
-    document.getElementById("mode").innerText = calculateMode();
-    document.getElementById("median").innerText = calculateMedian();
-    let mean = calculateMean();
-    document.getElementById("mean").innerText =mean;
-    document.getElementById("range").innerText = calculateRange();
-    document.getElementById("sd").innerText = calculateStandardDeviation(mean);
-
+    let mode = displayMode();
+    let median = displayMedian();
+    let mean = displayMean();
+    let range = displayRange();
+    let sd = displayStandardDeviation(mean);
 }
 
 function handleClear(){
