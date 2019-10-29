@@ -36,7 +36,7 @@ function calculateMedian(){
         
     }
     else{
-        median = data_set[parseInt(len/2)+1];
+        median = data_set[parseInt(len/2)];
     }
     return median;
 }
