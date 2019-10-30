@@ -55,9 +55,9 @@
         </tr>
 
         <tr>
-            <td><button id = "MC" onclick="clearMemory()" disabled>MC</button></td>
-            <td><button id="MR" onclick="memoryRecall(memory)" disabled>MR</button></td>
-            <td><button onclick="storeMemory()">MS</button></td>
+            <td><button id = "MC" onclick="callFunction('MC',memory,display)" disabled>MC</button></td>
+            <td><button id="MR" onclick="callFunction('MR',memory,display)" disabled>MR</button></td>
+            <td><button onclick="callFunction('MS',memory,display)">MS</button></td>
             <td><button id= "M" onclick="displayMemory()" disabled>M&#9654;</button></td>
         </tr>
         <tr>
