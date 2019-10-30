@@ -13,6 +13,10 @@ button {
 
 }
 
+:disabled{
+    background: #dddddd;
+}
+
 .space{
     height:90px;
 }

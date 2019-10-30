@@ -3,6 +3,7 @@
     Edited 10/22/2019 by Sri Ramya Dandu: Changed overflow and white space handling for displays 
     Edited 10/29/2019 by Sri Ramya Dandu: Fixed button display for Firefox
     Edited 10/29/2019 by Sharon Qiu: Fixed button display for Firefox specifically for degrees
+    Edited 10/29/2019 by Sri Ramya Dandu: Button CSS
 */
 html {
     height: 100%;
@@ -68,4 +69,8 @@ header.title {
     text-align: center;
     text-emphasis: Bold;
     text-decoration-line: underline;
+}
+
+:disabled{
+    background: #dddddd;
 }
