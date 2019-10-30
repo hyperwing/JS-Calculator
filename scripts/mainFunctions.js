@@ -275,8 +275,18 @@ function setButtonState() {
 // Edited 10/29/2019 by Leah Gillespie: fixed calculation bug
 function onHistoryClick(calc, disp) {
     calculations = [];
-    for (var i = 0; i < calc.length; i = i + 2) {
-        calculations.push(calc.charAt(i))
+    var currNum = '';
+    for (var i = 0; i < calc.length; i++) {
+        if (calc.charAt(i) >= '0' && calc.charAt(i) <= '9') {
+            currNum += calc.charAt(i);
+        } else if (isOperator(calc.charAt(i))) {
+            calculations.push(currNum);
+            currNum = '';
+            calculations.push(calc.charAt(i));
+        }
+    }
+    if (currNum.length > 0) {
+        calculations.push(currNum);
     }
     display = disp.toString();
     lastButtonOperator = false;
@@ -291,5 +301,5 @@ function onHistoryClick(calc, disp) {
 // THIS PART WORKS history, then number - changes display to new number, doesn't change calculation
     // ALSO WORKS then equals - calculation disappears, but the last number in it is changed to the display and its all added to history
     // GOOD then number - just expands display
-    // then operation - replaces last number in calculation with number now in display, adds operation, updates display to calculation (not counting newest operation)
+    // DONE then operation - replaces last number in calculation with number now in display, adds operation, updates display to calculation (not counting newest operation)
 // THIS IS GOOD history, then operation - adds operation to end of calculation, then anything then everything happens as normal
