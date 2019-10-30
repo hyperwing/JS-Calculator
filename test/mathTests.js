@@ -2,7 +2,7 @@
 // Test cases for powAndRoots file.
 
 const rewire = require("rewire");
-const powAndRoot = rewire("../scripts/powAndRoot.js");
+const powAndRoot = rewire("../scripts/stats.js");
 expect = require('chai').expect;
 
 // Created 10/29/2019 by Leah Gillespie
