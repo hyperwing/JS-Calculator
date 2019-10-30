@@ -3,6 +3,7 @@ File created 10/26/2019 by Sharon Qiu
 HTML page for degrees/radians conversions
 Edited 10/27/2019 by Neel Mansukhani: Added logic to navbar.
 Edited 10/30/2019 by Neel Mansukhani: Minor display change.
+Edited 10/30/2019 by Sharon Qiu: Added name and value parameters to button tags for event listener support.
 -->
 
 <!DOCTYPE html>
@@ -61,35 +62,35 @@ Edited 10/30/2019 by Neel Mansukhani: Minor display change.
     </table>
 
     <!-- Format of buttons -->
-    <table class="mode-converter">
+    <table class="degrees-converter" id="calculator-buttons">
         <tr>
-            <td colspan="1.5"><button onclick="onOperatorClick('CE')">CE</button></td>
-            <td colspan="1.5"><button onclick="onOperatorClick('DEL')">DEL</button></td>
-            <td colspan="1.5"><button id="pi" onclick="piPress()">&#960;</button></td>
+            <td colspan="1.5"><button value="CE" name="operator-button">CE</button></td>
+            <td colspan="1.5"><button value="DEL" name="operator-button">DEL</button></td>
+            <td colspan="1.5"><button id="pi">&#960;</button></td>
         </tr>
         <tr>
-            <td><button onclick="numberPress('7')">7</button></td>
-            <td><button onclick="numberPress('8')">8</button></td>
-            <td><button onclick="numberPress('9')">9</button></td>
+            <td><button name="number" value='7'>7</button></td>
+            <td><button name="number" value='8'>8</button></td>
+            <td><button name="number" value='9'>9</button></td>
 
         </tr>
         <tr>
-            <td><button onclick="numberPress('4')">4</button></td>
-            <td><button onclick="numberPress('5')">5</button></td>
-            <td><button onclick="numberPress('6')">6</button></td>
+            <td><button name="number" value='4'>4</button></td>
+            <td><button name="number" value='5'>5</button></td>
+            <td><button name="number" value='6'>6</button></td>
 
         </tr>
         <tr>
-            <td><button onclick="numberPress('1')">1</button></td>
-            <td><button onclick="numberPress('2')">2</button></td>
-            <td><button onclick="numberPress('3')">3</button></td>
+            <td><button name="number" value='1'>1</button></td>
+            <td><button name="number" value='2'>2</button></td>
+            <td><button name="number" value='3'>3</button></td>
 
         </tr>
 
         <tr>
-            <td><button id='neg' class="div-by-zero" onclick="onOperatorClick('+/-')">+/-</button></td>
-            <td><button onclick="numberPress('0')">0</button></td>
-            <td><button id='dot' class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
+            <td><button id='neg' class="div-by-zero" value="+/-" name="operator-button">+/-</button></td>
+            <td><button name="number" value='0'>0</button></td>
+            <td><button id='dot' class="div-by-zero" value="." name="operator-button">.</button></td>
 
         </tr>
     </table>

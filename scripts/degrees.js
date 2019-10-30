@@ -2,6 +2,7 @@
 File created 10/26/2019 by Sharon Qiu
 Edited 10/27/2019 by Sharon Qiu
 Edited 10/28/2019 by Sharon Qiu
+Edited 10/30/2019 by Sharon Qiu
 Degree/radians conversions
 */
 
@@ -81,13 +82,15 @@ function updateDisplay() {
 
 // Created 10/21/19 by David Wing
 // Edited 10/27/19 by Sharon Qiu: Shortened function.
+// Edited 10/30/19 by Sharon Qiu: Added functionality to fit event listeners.
 // handles numbers pressed on calc and updates display
-function numberPress(symbol) {
-    if (!isNaN(symbol)) {
+function numberPress(event) {
+    var targetVal = String(event.target.value);
+    if (!isNaN(targetVal)) {
         if (display == "0") {
-            display = symbol;
+            display = targetVal;
         } else {
-            display += symbol;
+            display += targetVal;
         }
     }
     updateDisplay();
@@ -135,6 +138,7 @@ function radians_to_degrees(display) {
 // Created 10/26/2019 by Sharon Qiu
 // it's pi
 function piPress(){
+
     if (display == 0){
         display = "&#960;";
     }
@@ -147,8 +151,10 @@ function piPress(){
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
 // Edited 10/19/2019 by Sri Ramya Dandu: Fixed decimal 
+// Edited 10/30/19 by Sharon Qiu: Added functionality to fit event listeners.
 // Operators handled here and updates display
-function onOperatorClick(symbol) {
+function onOperatorClick(event) {
+    symbol = String(event.target.value);
     if (lastButtonOperator) {
         if (symbol == ".") {
             display = "0.";
@@ -203,3 +209,25 @@ function onOperatorClick(symbol) {
     lastButtonEquals = false;
     updateDisplay();
 }
+
+function loadEvListeners(){
+
+    //number buttons
+    var numElArr = document.getElementsByName("number");
+    for (var i = 0; i < numElArr.length; i++){
+        numElArr[i].addEventListener('click', numberPress, false);
+    }
+
+    //pi button
+    var pi = document.getElementById("pi");
+    pi.addEventListener('click',piPress,false);
+
+    //operators
+    var operatorArr = document.getElementsByName("operator-button");
+    for (var i = 0; i < operatorArr.length; i++) {
+        operatorArr[i].addEventListener('click', onOperatorClick, false);
+    }
+
+}
+window.addEventListener('load',loadEvListeners, false)
+
