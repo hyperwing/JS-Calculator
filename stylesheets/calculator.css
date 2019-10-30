@@ -20,6 +20,8 @@ button {
 
 #display, #calculations {
     text-align: right;
+    max-width: 298px;
+    word-break:break-all;
 }
 
 td{
