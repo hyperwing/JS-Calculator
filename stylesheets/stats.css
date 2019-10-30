@@ -1,0 +1,21 @@
+/* Created 10/27/19 by David Wing */
+
+.input_field{
+    margin-top: 5%;
+    position: relative;
+    text-align: center;
+}
+
+.dataset{
+    margin-top: 1%;
+    position: relative;
+    text-align: center;
+}
+
+.display_stats{
+    margin-top: 5%;
+    position: relative;
+    text-align: left;
+    display:inline-block;
+}
+

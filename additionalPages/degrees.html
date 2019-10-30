@@ -9,7 +9,6 @@ Edited 10/27/2019 by Neel Mansukhani: Added logic to navbar.
 
 <head>
     <script src="../scripts/degrees.js"></script>
-    <script src="../scripts/navbar.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,15 +19,17 @@ Edited 10/27/2019 by Neel Mansukhani: Added logic to navbar.
 </head>
 
 <body>
+
+    <header class="title">Degrees/Radians</header>
+
     <!--Navbar-->
-    <div id="navbar" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="sidenav">
         <a href="../calculator.html">Standard</a>
         <a href="convertModes.html">Modes</a>
-        <a href="degrees.html">Degrees/Radians</a>
         <a href="logic.html">Logic</a>
+        <a class="current" href="degrees.html">Degrees/Radians</a>
+        <a href="stats.html">Statistics</a>
     </div>
-    <span class="openButton" onclick="openNav()">&#9776; Degrees/Radians</span>
 
     <!-- Format of display boxes -->
     <table class=display-boxes>
@@ -61,8 +62,8 @@ Edited 10/27/2019 by Neel Mansukhani: Added logic to navbar.
     <!-- Format of buttons -->
     <table class="mode-converter">
         <tr>
-            <td colspan="1.5"><button onclick="onSimpleButtonClick('CE')">CE</button></td>
-            <td colspan="1.5"><button onclick="onSimpleButtonClick('DEL')">DEL</button></td>
+            <td colspan="1.5"><button onclick="onOperatorClick('CE')">CE</button></td>
+            <td colspan="1.5"><button onclick="onOperatorClick('DEL')">DEL</button></td>
             <td colspan="1.5"><button id="pi" onclick="piPress()">&#960;</button></td>
         </tr>
         <tr>
@@ -84,11 +85,10 @@ Edited 10/27/2019 by Neel Mansukhani: Added logic to navbar.
 
         </tr>
 
-
         <tr>
-            <td><button id='neg' class="div-by-zero" onclick="onSimpleButtonClick('-')">-</button></td>
-            <td><button onclick="onSimpleButtonClick('0')">0</button></td>
-            <td><button id='dot' class="div-by-zero" onclick="onSimpleButtonClick('.')">.</button></td>
+            <td><button id='neg' class="div-by-zero" onclick="onOperatorClick('+/-')">-</button></td>
+            <td><button onclick="numberPress('0')">0</button></td>
+            <td><button id='dot' class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
 
         </tr>
     </table>

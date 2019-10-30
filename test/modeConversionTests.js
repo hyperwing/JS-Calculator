@@ -2,7 +2,7 @@
 // Edited 10/24/2019 by Sri Ramya Dandu
 
 const rewire = require("rewire");
-const modeConversion = rewire("../modeConversion");
+const modeConversion = rewire("../scripts/modeConversion.js");
 expect = require('chai').expect;
 // conversion values for hex and decimal 
 var conversionsMap = {
@@ -635,51 +635,51 @@ describe ('Tests input for hexadecimal', () => {
 describe ('Tests outtping in 4 bits', () => {
 
   it('Boundary case input is 0', () => {
-    expect(modeConversion.__get__("splitInto4")('0')).to.equal('0000');
+    expect(modeConversion.__get__("splitIntoFour")('0')).to.equal('0000');
   });
 
   it('Input has less than four digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('20')).to.equal('0020');
+    expect(modeConversion.__get__("splitIntoFour")('20')).to.equal('0020');
   });
 
   it('Input has exactly four digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('1220')).to.equal('1220');
+    expect(modeConversion.__get__("splitIntoFour")('1220')).to.equal('1220');
   });
 
   it('Input has between four and eight digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('2ASLK0')).to.equal('002A SLK0');
+    expect(modeConversion.__get__("splitIntoFour")('2ASLK0')).to.equal('002A SLK0');
   });
 
   it('Input has exactly eight digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('12111120')).to.equal('1211 1120');
+    expect(modeConversion.__get__("splitIntoFour")('12111120')).to.equal('1211 1120');
   });
 
   it('Input has 20+ digits', () => {
-    expect(modeConversion.__get__("splitInto4")('123456789012345678901234567890')).to.equal('0012 3456 7890 1234 5678 9012 3456 7890');
+    expect(modeConversion.__get__("splitIntoFour")('123456789012345678901234567890')).to.equal('0012 3456 7890 1234 5678 9012 3456 7890');
   });
 
   it('Boundary case: input is .0', () => {
-    expect(modeConversion.__get__("splitInto4")('.0')).to.equal('0000');
+    expect(modeConversion.__get__("splitIntoFour")('.0')).to.equal('0000');
   });
 
   it('Fraction input has less than four digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('.20')).to.equal('2000');
+    expect(modeConversion.__get__("splitIntoFour")('.20')).to.equal('2000');
   });
 
   it('Fraction input has exactly four digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('.1220')).to.equal('1220');
+    expect(modeConversion.__get__("splitIntoFour")('.1220')).to.equal('1220');
   });
 
   it('Fraction input has between four and eight digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('.2ASLK0')).to.equal('2ASL K000');
+    expect(modeConversion.__get__("splitIntoFour")('.2ASLK0')).to.equal('2ASL K000');
   });
 
   it('Fraction input has exactly eight digits ', () => {
-    expect(modeConversion.__get__("splitInto4")('.12111120')).to.equal('1211 1120');
+    expect(modeConversion.__get__("splitIntoFour")('.12111120')).to.equal('1211 1120');
   });
 
   it('Fraction input has 20+ digits', () => {
-    expect(modeConversion.__get__("splitInto4")('.123456789012345678901234567890')).to.equal('1234 5678 9012 3456 7890 1234 5678 9000');
+    expect(modeConversion.__get__("splitIntoFour")('.123456789012345678901234567890')).to.equal('1234 5678 9012 3456 7890 1234 5678 9000');
   });
 
 });

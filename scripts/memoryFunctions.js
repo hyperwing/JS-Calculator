@@ -33,7 +33,6 @@ function storeMemory() {
     }
     memoryTrigger = true;
     updateDisplay();
-    
 }
 
 // Created 10/18/2019 by Sharon Qiu
@@ -140,7 +139,6 @@ function memoryAdd(index) {
     }
     memoryTrigger = true;
     updateDisplay();
-    console.log(display);
 }
 
 // Created 10/18/2019 by Sharon Qiu

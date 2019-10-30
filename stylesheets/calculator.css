@@ -21,6 +21,12 @@ button {
     text-align: right;
 }
 
+#history {
+    float: right;
+    margin: 0 10%;
+    width: 15%;
+}
+
 td{
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 }
@@ -36,8 +42,8 @@ td{
 
 .calculator{
     float: left;
-    margin-left: 30%;
-    margin-top: 10%
+    margin-left: 22%;
+    margin-top: 5%
 }
 /* Display for overall list of numbers in memory */
 #display-memory-list {
@@ -45,7 +51,7 @@ td{
     width: 300px;
     height: 307px;
     overflow: auto;
-    margin-top: 16.2%;
+    margin-top: 11.3%;
     float: left;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -81,8 +87,10 @@ td{
     background: #dddddd;
 }
 
-#history{
-    float: right;
-    margin: 0 10%;
-    width: 15%;
+header.title{
+    position: relative;
+    font-size: 50px;
+    text-align: center;
+    text-emphasis: Bold;
+    text-decoration-line: underline;
 }

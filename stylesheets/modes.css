@@ -44,13 +44,22 @@ td{
 
 .display-boxes{
     float:left;
-    margin-left: 20%;
+    padding-top: 5%;
+    margin-left: 30%;
     margin-right: 30px;
 }
 
 .mode-converter{
     margin-left: 30%;
-    margin-top: 10%;
+    margin-top: 5%;
     width: 300px;
     height: 400px;
+}
+
+header.title {
+    position: relative;
+    font-size: 50px;
+    text-align: center;
+    text-emphasis: Bold;
+    text-decoration-line: underline;
 }

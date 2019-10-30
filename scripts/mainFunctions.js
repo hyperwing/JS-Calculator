@@ -110,7 +110,7 @@ function numberPress(symbol) {
 // Registers = button click and updates display
 function onEqualClick() {
     calculations.push(parseFloat(display));
-    display = calculateCalculations();
+    display = String(calculateCalculations());
     var button = document.createElement("button");
     button.setAttribute("onclick", "onHistoryClick(" + "\"" + calculations + "\"" + ", " + display + ")");
     var txt = document.createTextNode(calculations.toString().replace(/,/g," ") + " =\n" + display);
@@ -163,7 +163,7 @@ function onOperationButtonClick(operation) {
     } else {
         calculations.push(parseFloat(display));
         calculations.push(operation);
-        display = calculateCalculations();
+        display = String(calculateCalculations());
     }
     lastButtonOperator = true;
     lastButtonEquals = false;

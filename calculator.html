@@ -16,7 +16,6 @@
   <head>
     <script src="scripts/memoryFunctions.js"></script>
     <script src="scripts/mainFunctions.js"></script>
-    <script src="scripts/navbar.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport"
@@ -28,16 +27,17 @@
   </head>
 
   <body>
-
     <!-- Navbar-->
     <div id="navbar" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="calculator.html">Standard</a>
+        <a class="current" href="calculator.html">Standard</a>
         <a href="additionalPages/convertModes.html">Modes</a>
         <a href="additionalPages/degrees.html">Degrees/Radians</a>
         <a href="additionalPages/logic.html">Logic</a>
+        <a href="additionalPages/stats.html">Statistics</a>
+
     </div>
-    <span class="openButton" onclick="openNav()">&#9776; Standard</span>
+
+    <header class="title">Standard</header>
 
     <table class="calculator">
         <tr>
