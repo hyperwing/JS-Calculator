@@ -7,13 +7,25 @@ Edited 10/24/2019 by Sri Ramya Dandu
 Edited 10/25/2019 by Sri Ramya Dandu
 Edited 10/27/2019 by Sri Ramya Dandu
 Edited 10/28/2019 by Sri Ramya Dandu
+Edited 10/29/2019 by Sri Ramya Dandu: Added chaining to conversions object
 */
 
 // conversion values for hex and decimal 
-var conversionsMap = {
+// conversions for numeric values - superclass 
+var singleDigitConversions = {
   0:"0", 1: "1", 2: "2", 3: "3", 4:"4", 5:"5", 6:"6",
-  7:"7", 8:"8", 9:"9", 10:"A", 11:"B", 12:"C", 13:"D", 14:"E", 15:"F"
+  7:"7", 8:"8", 9:"9"
 };
+
+// conversions object for alpha - subclass 
+var conversionsMap = {
+  10:"A", 11:"B", 12:"C", 13:"D", 14:"E", 15:"F"
+};
+
+// Object prototyping ("chaining") to represent 
+// super-class/sub-class relationships between 
+// conversionsMap and singleDigitConversions objects 
+conversionsMap.__proto__ = singleDigitConversions;
 
 var display = "0";
 

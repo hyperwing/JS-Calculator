@@ -1,4 +1,7 @@
 // File created 10/27/19 David Wing
+// File edited 10/28/19 David Wing
+// File edited 10/29/19 David Wing
+// File edited 10/29/19 Leah Gillespie
 
 let data_set = [];
 
@@ -19,7 +22,7 @@ function addToDisplay(val){
 }
 
 // calculate and display Median
-function displayMedian(){
+function calculateMedian(){
 
     let len = data_set.length;
     let median = 0;
@@ -29,22 +32,18 @@ function displayMedian(){
     }else if(len %2 ==0){
         let m1 = parseFloat(data_set[parseInt(len/2-1)]);
         let m2 = parseFloat(data_set[parseInt(len/2)]);
-        // console.log("m1:"+ m1)
-        // console.log("m2:"+ m2);
 
         median = (m1 + m2) / 2;
         
     }
     else{
-        median = data_set[parseInt(len/2)+1];
+        median = data_set[Math.floor(len/2)];
     }
-
-    document.getElementById("median").innerText = median;
-    return median;
+    return parseFloat(median);
 }
 
 // calculate and display mode
-function displayMode(){
+function calculateMode(){
     let max = 0;
     let mode = data_set[0]
     let map = {};
@@ -63,49 +62,58 @@ function displayMode(){
             mode = item;
         }
     }
-    document.getElementById("mode").innerText = mode;
-    return mode;
+    return parseFloat(mode);
 }
+
+
 
 // calculate and display range
-function displayRange(){
-    let display_range = document.getElementById("range");
-    display_range.innerText = data_set[data_set.length-1] - data_set[0];
+function calculateRange(){
+    range = data_set[data_set.length-1] - data_set[0];
+    return parseFloat(range);
 }
 
-// calculate and display mean
-function displayMean(){
+function displayRange(range){
+    document.getElementById("range").innerText = range
+}
+
+function calculateMean(){
     mean = 0;
 
     data_set.forEach(add);
     function add(item){
         mean += parseFloat(item);
     }
-
     mean = mean/data_set.length;
-    document.getElementById("mean").innerText = mean;
-    return mean;
+    return parseFloat(mean);
 }
 
-// calculate and display SD
-function displayStandardDeviation(mean){
+function displayMean(mean){
+    document.getElementById("mean").innerText = mean;
+}
+
+// calculate and display SD 
+function calculateStandardDeviation(mean){
+
     let sigma = 0;
     let sd = 0;
     data_set.forEach(calcSigma);
     function calcSigma(item){
-        sigma += Math.pow((mean-item), 2);
+
+        sigma += power((mean-item), 2);
+
+        // sigma += Math.pow((mean-item), 2);
     }
 
     sd = sigma / data_set.length;
-    sd = Math.sqrt(sd);
+    sd = square_root(sd);
+    // sd = Math.sqrt(sd);
     
-    document.getElementById("sd").innerText = sd;
-    return sd;
+    return parseFloat(sd);
 }
 
 function clearDisplay(){
     document.getElementById("display").innerText = "";
-
     document.getElementById("mean").innerText = "";
     document.getElementById("median").innerText = "";
     document.getElementById("mode").innerText = "";
@@ -135,16 +143,22 @@ function handleSubmit(){
 
     console.log(data_set);
 
-    let mode = displayMode();
-    let median = displayMedian();
-    let mean = displayMean();
-    let range = displayRange();
-    let sd = displayStandardDeviation(mean);
+    document.getElementById("mode").innerText = calculateMode();
+    document.getElementById("median").innerText = calculateMedian();
+    let mean = calculateMean();
+    document.getElementById("mean").innerText =mean;
+    document.getElementById("range").innerText = calculateRange();
+    document.getElementById("sd").innerText = calculateStandardDeviation(mean);
+
 }
 
 function handleClear(){
-    data_set = [];
+    clearSet();    
     clearDisplay();
+}
+
+function clearSet(){
+    data_set = [];
 }
 
 function handleSort(){
@@ -154,4 +168,32 @@ function handleSort(){
         addToDisplay(item);
     }
 
+}
+
+
+// Created 10/29/2019 by Leah Gillespie
+// takes two numbers as inputs, returns a ^ b
+function power(a, b) {
+    if (b == 0) {
+        return 1;
+    }
+    let ans = a;
+    for (let i = 1; i < b; i++) {
+        ans*=a;
+    }
+    return ans;
+}
+
+// Created 10/29/2019 by Leah Gillespie
+// takes a number as the input, returns the square root of that number using newton's iteration, accurate within .0001%
+// return value is rounded to two decimal places and is a string
+function square_root(a) {
+    if (a == 0) {
+        return '0.00';
+    }
+    let r = a;
+    while (Math.abs(r * r - a) / a >= .0000001) {
+        r = (r + a / r) / 2;
+    }
+    return r.toFixed(2);
 }

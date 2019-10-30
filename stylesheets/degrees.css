@@ -2,61 +2,61 @@
     Edited 10/21/2019 by Sri Ramya Dandu: Added formating for new display and options input 
     Edited 10/22/2019 by Sri Ramya Dandu: Changed overflow and white space handling for displays 
     Edited 10/29/2019 by Sri Ramya Dandu: Fixed button display for Firefox
+    Edited 10/29/2019 by Sharon Qiu: Fixed button display for Firefox specifically for degrees
+    Edited 10/29/2019 by Sri Ramya Dandu: Button CSS
 */
 html {
     height: 100%;
 }
+
 button {
-    height: 55px;
+    height: 75px;
     width: 100%;
     border-radius: 0px;
-
 }
 
-:disabled{
-    background: #dddddd;
+.space {
+    height: 90px;
 }
 
-.space{
-    height:90px;
-}
-
-.options{
+.options {
     background-color: transparent;
     box-shadow: none;
 }
 
-select{
+select {
     background-color: lightgray;
     height: 20px;
     margin-top: 5px;
     font-size: 11px;
 }
 
-td{
-    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+td {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
-#displayFrom, #displayTo{
+#displayFrom,
+#displayTo {
     border: 1px solid black;
     box-shadow: none;
     width: 250px;
     max-width: 250px;
     height: 30px;
     max-height: 30px;
+    text-align: right;
     display: flex;
     overflow: auto;
     white-space: nowrap;
 }
 
-.display-boxes{
-    float:left;
+.display-boxes {
+    float: left;
     padding-top: 5%;
     margin-left: 30%;
     margin-right: 30px;
 }
 
-.mode-converter{
+.mode-converter {
     margin-left: 30%;
     margin-top: 5%;
     width: 300px;
@@ -69,4 +69,8 @@ header.title {
     text-align: center;
     text-emphasis: Bold;
     text-decoration-line: underline;
+}
+
+:disabled{
+    background: #dddddd;
 }

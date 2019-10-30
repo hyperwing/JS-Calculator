@@ -9,6 +9,8 @@ var lastButtonOperator = false;
 var calculations = [];
 var lastHistory;
 var lastButtonEquals = false;
+var lastButtonHistory = false;
+var changeLastNum = false;
 var buttonState = true; //Might not need to exist.
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
@@ -63,18 +65,20 @@ function onOperatorClick(symbol) {
         }
     }
     lastButtonEquals = false;
+    lastButtonHistory = false;
     updateDisplay();
 }
 
 
 //created by David Wing 10/21/19
 // Edited 10/27/2019 by Leah Gillespie: adjusted to work after = is pressed
+// Edited 10/29/2019 by Leah Gillespie: works with history
 // handles numbers pressed on calc and updates display
 function numberPress(symbol) {
     if (memoryTrigger && !lastButtonOperator) {
-        memoryTrigger = false;
-        buttonState = true;
-        display = symbol;
+            memoryTrigger = false;
+            buttonState = true;
+            display = symbol;
     } else if(lastButtonOperator) {
         if (!isNaN(symbol)) {
             buttonState = true;
@@ -93,22 +97,30 @@ function numberPress(symbol) {
                 buttonState = true;
                 display = "0"
             }
-            if (display == "0" || lastButtonEquals) {
+            if (display == "0" || lastButtonEquals || lastButtonHistory) {
                 display = symbol;
+                if(lastButtonHistory){
+                    changeLastNum = true;
+                }
             } else {
                 display += symbol;
             }
         }
     }
     lastButtonEquals = false;
+    lastButtonHistory = false;
     updateDisplay();
 }
 
 // Created 10/20/2019 by Leah Gillespie
 // Edited 10/25/2019 by Leah Gillespie: works with last thing entered being an operator
 // Edited 10/26/2019 by Leah Gillespie: Added history display
+// Edited 10/29/2019 by Leah Gillespie: works with history
 // Registers = button click and updates display
 function onEqualClick() {
+    if (changeLastNum) {
+        calculations.pop()
+    }
     calculations.push(parseFloat(display));
     display = String(calculateCalculations());
     var button = document.createElement("button");
@@ -124,13 +136,15 @@ function onEqualClick() {
     lastHistory = button;
     calculations = [];
     lastButtonEquals = true;
+    lastButtonHistory = false;
+    changeLastNum = false;
     updateDisplay();
 }
 
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
 // Edited 10/25/2019 by Leah Gillespie: included history update
-// Edited 10/26/2019 by Sri Ramya Dandu: Fixed decimal 
+// Edited 10/26/2019 by Sri Ramya Dandu: Fixed decimal
 // Updates the display after new calculations.
 function updateDisplay() {
     document.getElementById("display").innerHTML = display;
@@ -151,22 +165,29 @@ function updateDisplay() {
     }
 
     // document.getElementById("memory").innerHTML = memory;
-   // document.getElementById("history").innerHTML = history.toString().replace(/,/g, " ");
     setButtonState(buttonState);
 }
 
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/29/2019 by Leah Gillespie: works with history
 // Operation button clicks are registered here then display is updated.
 function onOperationButtonClick(operation) {
+    if (changeLastNum) {
+        calculations.pop();
+        changeLastNum = false;
+    }
     if (isOperator(calculations[calculations.length - 1]) && lastButtonOperator) {
         calculations[calculations.length - 1] = operation;
     } else {
-        calculations.push(parseFloat(display));
+        if (!lastButtonHistory) {
+            calculations.push(parseFloat(display));
+        }
         calculations.push(operation);
         display = String(calculateCalculations());
     }
     lastButtonOperator = true;
     lastButtonEquals = false;
+    lastButtonHistory = false;
     updateDisplay();
 }
 // Created 10/17/2019 by Neel Mansukhani
@@ -250,8 +271,35 @@ function setButtonState() {
     }
 }
 
+// Created 10/27/2019 by Leah Gillespie
+// Edited 10/29/2019 by Leah Gillespie: fixed calculation bug
 function onHistoryClick(calc, disp) {
-    calculations = calc;
-    display = disp;
+    calculations = [];
+    var currNum = '';
+    for (var i = 0; i < calc.length; i++) {
+        if (calc.charAt(i) >= '0' && calc.charAt(i) <= '9') {
+            currNum += calc.charAt(i);
+        } else if (isOperator(calc.charAt(i))) {
+            calculations.push(currNum);
+            currNum = '';
+            calculations.push(calc.charAt(i));
+        }
+    }
+    if (currNum.length > 0) {
+        calculations.push(currNum);
+    }
+    display = disp.toString();
+    lastButtonOperator = false;
+    lastButtonEquals = false;
+    lastButtonHistory = true;
     updateDisplay();
 }
+
+
+
+
+// THIS PART WORKS history, then number - changes display to new number, doesn't change calculation
+    // ALSO WORKS then equals - calculation disappears, but the last number in it is changed to the display and its all added to history
+    // GOOD then number - just expands display
+    // DONE then operation - replaces last number in calculation with number now in display, adds operation, updates display to calculation (not counting newest operation)
+// THIS IS GOOD history, then operation - adds operation to end of calculation, then anything then everything happens as normal
