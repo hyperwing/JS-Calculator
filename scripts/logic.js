@@ -147,6 +147,7 @@ function calculate(arr) {
     let i = 0;
     let value1 = 0;
     let value2 = null;
+    let closeIndex = 0;
     while(i < arr.length) {
         if(arr[i] == '(') {
             closeIndex = findCloseIndex(arr, i + 1);
@@ -166,11 +167,11 @@ function calculate(arr) {
                     value2 = arr[i+2];
                     i += 3;
                 }
-                value2 = (value2 - 1) * (value2 - 1);
+                value2 = 1 - value2;
             } else {
                 closeIndex = findCloseIndex(arr, i + 2);
                 value2 = calculate(arr.slice(i + 2,closeIndex));
-                i = closeIndex + 1;                
+                i = closeIndex + 1;
             }
             value1 = doLogic(value1,value2,operator);
         } else if(arr[i] == '!') {
@@ -182,7 +183,7 @@ function calculate(arr) {
                 value1 = arr[i+1];
                 i += 2;
             }
-            value1 = (value1 - 1) * (value1 - 1);
+            value1 = 1 - value1;
         } else if (arr[i] == ')') {
             i += 1;
         } else {
