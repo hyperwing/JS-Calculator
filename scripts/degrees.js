@@ -210,6 +210,8 @@ function onOperatorClick(event) {
     updateDisplay();
 }
 
+// Created 10/26/2019 by Sharon Qiu
+// Event listeners creator
 function loadEvListeners(){
 
     //number buttons
@@ -228,6 +230,11 @@ function loadEvListeners(){
         operatorArr[i].addEventListener('click', onOperatorClick, false);
     }
 
+    //form conversions
+    var conversionArr = document.getElementsByName("conversion-change");
+    for (var i = 0; i < conversionArr.length; i++) {
+        conversionArr[i].addEventListener('change', updateDisplay, false);
+    }
 }
 window.addEventListener('load',loadEvListeners, false)
 
