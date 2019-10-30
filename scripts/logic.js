@@ -149,7 +149,7 @@ function calculate(arr) {
     let value2 = null;
     while(i < arr.length) {
         if(arr[i] == '(') {
-            closeIndex = findCloseIndex(arr);
+            closeIndex = findCloseIndex(arr, i + 1);
             value1 = calculate(arr.slice(i + 1,closeIndex));
             i = closeIndex + 1;
         } else if(isOperator(arr[i])) {
@@ -159,7 +159,7 @@ function calculate(arr) {
                 i += 2;
             } else if(arr[i+1] == '!') {
                 if(arr[i+2] == '(') {
-                    closeIndex = findCloseIndex(arr);
+                    closeIndex = findCloseIndex(arr, i + 3);
                     value2 = calculate(arr.slice(i + 3,closeIndex));
                     i = closeIndex + 1;
                 } else {
@@ -168,14 +168,14 @@ function calculate(arr) {
                 }
                 value2 = (value2 - 1) * (value2 - 1);
             } else {
-                closeIndex = findCloseIndex(arr);
+                closeIndex = findCloseIndex(arr, i + 2);
                 value2 = calculate(arr.slice(i + 2,closeIndex));
                 i = closeIndex + 1;                
             }
             value1 = doLogic(value1,value2,operator);
         } else if(arr[i] == '!') {
             if(arr[i+1] == '(') {
-                closeIndex = findCloseIndex(arr);
+                closeIndex = findCloseIndex(arr, i + 2);
                 value1 = calculate(arr.slice(i + 2,closeIndex));
                 i = closeIndex + 1;
             } else {
@@ -183,6 +183,8 @@ function calculate(arr) {
                 i += 2;
             }
             value1 = (value1 - 1) * (value1 - 1);
+        } else if (arr[i] == ')') {
+            i += 1;
         } else {
             value1 = arr[i];
             i += 1;
@@ -192,14 +194,14 @@ function calculate(arr) {
 }
 // Created 10/29/2019 by Neel Mansukhani
 // Given an array arr where the first index is an open parenthesis, it finds the index of the associated close parenthesis.
-function findCloseIndex(arr) {
-    arr = arr.slice(1);
+function findCloseIndex(arr, startIndex) {
+    arr = arr.slice(startIndex);
     var openParens = 1;
     for(let i = 0; i < arr.length; i++) {
         if(arr[i] == ')') {
             openParens--;
             if(openParens == 0) {
-                return i + 1;
+                return i + startIndex;
             }
         }
         if(arr[i] == '(') {
