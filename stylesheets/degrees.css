@@ -42,6 +42,7 @@ td {
     height: 30px;
     max-height: 30px;
     text-align: right;
+    display: flex;
     overflow: auto;
     white-space: nowrap;
 }
