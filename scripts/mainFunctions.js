@@ -2,6 +2,7 @@
 File created 10/26/2019 by Sharon Qiu
 Edited 10/26/2019 by Sri Ramya Dandu
 Edited 10/31/2019 by Sharon Qiu
+Edited 10/31/2019 by Sri Ramya Dandu
 Moved main functions for standard calc here.
 */
 
@@ -12,7 +13,8 @@ var lastHistory;
 var lastButtonEquals = false;
 var lastButtonHistory = false;
 var changeLastNum = false;
-var buttonState = true; //Might not need to exist.
+var buttonState = true; 
+
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
 // Edited 10/19/2019 by Sri Ramya Dandu: Fixed decimal 
@@ -152,7 +154,7 @@ function onEqualClick() {
 function updateDisplay() {
 
     var memLength = document.getElementById("memory-stack-display").childElementCount;
-    console.log(memLength);
+
     document.getElementById("display").innerHTML = display;
     document.getElementById("calculations").innerHTML = calculations.toString().replace(/,/g, " ");
 
@@ -166,6 +168,7 @@ function updateDisplay() {
     if (memLength == 0) {
         MemoryActions.hideMemory();
     }
+
     setButtonState(buttonState);
 }
 

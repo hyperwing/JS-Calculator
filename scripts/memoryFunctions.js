@@ -10,6 +10,7 @@ Edited 10/26/2019 by Sharon Qiu
 Edited 10/29/2019 by Sri Ramya Dandu
 Edited 10/30/2019 by Sri Ramya Dandu
 Edited 10/31/2019 by Sharon Qiu
+Edited 10/31/2019 by Sri Ramya Dandu
 Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 */
 
@@ -92,24 +93,26 @@ MemoryMath = {
     // Edited 10/31/2019 by Sharon Qiu: event listener stuff, references the value automatically
     // Functionality for m+ button.
     memoryAdd: function (value, countMemory) {
-        if (value === undefined && countMemory < 1 && display != 0) {
-            createEVMemoryVal(display);
-        }else if (value === undefined) {
-            value = document.getElementsByClassName("memory-list")[0];
-            var initialVal = value.getAttribute("value");
-            value.setAttribute("value", Number(initialVal) + Number(display));
-            value.textContent = String(Number(initialVal) + Number(display));
-        } else {
-            var initialVal = value.getAttribute("value");
-            value.setAttribute("value", Number(initialVal) + Number(display));
-            value.textContent = String(Number(initialVal) + Number(display));
+        if (!isNaN(display)){
+            if (value === undefined && countMemory < 1 && display != 0) {
+                createEVMemoryVal(display);
+            }else if (value === undefined) {
+                value = document.getElementsByClassName("memory-list")[0];
+                var initialVal = value.getAttribute("value");
+                value.setAttribute("value", Number(initialVal) + Number(display));
+                value.textContent = String(Number(initialVal) + Number(display));
+            } else {
+                var initialVal = value.getAttribute("value");
+                value.setAttribute("value", Number(initialVal) + Number(display));
+                value.textContent = String(Number(initialVal) + Number(display));
+            }
+            
+            if(document.getElementById('display-memory-list').style.display == "none"){
+                document.getElementById('display-memory-list').style.display = "block";
+            }
+            memoryTrigger = true;
+            updateDisplay();
         }
-        
-        if(document.getElementById('display-memory-list').style.display == "none"){
-            document.getElementById('display-memory-list').style.display = "block";
-        }
-        memoryTrigger = true;
-        updateDisplay();
     }
 
     // Created 10/18/2019 by Sharon Qiu
@@ -117,54 +120,62 @@ MemoryMath = {
     // Edited 10/31/2019 by Sharon Qiu: event listener stuff, references the value automatically
     // Functionality for m- button.
     ,memorySubtract: function (value, countMemory) {
-        if (value === undefined && countMemory < 1 && display != 0) {
-            createEVMemoryVal(0-display);
-        } else if (value === undefined) {
-            value = document.getElementsByClassName("memory-list")[0];
-            var initialVal = value.getAttribute("value");
-            value.setAttribute("value", initialVal - display);
-            value.textContent = String(initialVal - display);
-        }else {
-            var initialVal = value.getAttribute("value");
-            value.setAttribute("value", initialVal - display);
-            value.textContent = String(initialVal - display);
-        }
 
-        if (document.getElementById('display-memory-list').style.display == "none") {
-            document.getElementById('display-memory-list').style.display = "block";
+        if (!isNaN(display)){
+            if (value === undefined && countMemory < 1 && display != 0) {
+                createEVMemoryVal(0-display);
+            } else if (value === undefined) {
+                value = document.getElementsByClassName("memory-list")[0];
+                var initialVal = value.getAttribute("value");
+                value.setAttribute("value", initialVal - display);
+                value.textContent = String(initialVal - display);
+            }else {
+                var initialVal = value.getAttribute("value");
+                value.setAttribute("value", initialVal - display);
+                value.textContent = String(initialVal - display);
+            }
+
+            if (document.getElementById('display-memory-list').style.display == "none") {
+                document.getElementById('display-memory-list').style.display = "block";
+            }
+            memoryTrigger = true;
+            updateDisplay();
         }
-        memoryTrigger = true;
-        updateDisplay();
     }
 
     // Created 10/18/2019 by Sharon Qiu
     // Edited 10/26/2019 by Sharon Qiu: Added conditions division by 0 and undefined results.
     // Edited 10/31/2019 by Sharon Qiu: event listener stuff, references the value automatically
+    // Edited 10/31/2019 by Sri Ramya Dandu: Added button state change for NaN
     // Functionality for m/ button.
     ,memoryDivide: function(value, countMemory) {
 
-        if (value === undefined && countMemory > 0) {
-            value = document.getElementsByClassName("memory-list")[0]; //gets first value of memory list
-        }
+        if (!isNaN(display)){
+            if (value === undefined && countMemory > 0) {
+                value = document.getElementsByClassName("memory-list")[0]; //gets first value of memory list
+            }
 
-        if (countMemory > 0 && (value.getAttribute("value") == 0) && (display == 0)) {
-            display = "Result is undefined.";
-        } else if (display == 0) {
-            display = "Cannot divide by 0";
-        } else if (value === undefined && countMemory < 1) {
-            createEVMemoryVal(0);
-        } else {
-            var initialVal = value.getAttribute("value");
-            value.setAttribute("value", parseFloat(initialVal / display));
-            value.textContent = String(parseFloat(initialVal / display));
-        }
+            if (countMemory > 0 && (value.getAttribute("value") == 0) && (display == 0)) {
+                display = "Result is undefined.";
+                buttonState = false;
+            } else if (display == 0) {
+                display = "Cannot divide by 0";
+                buttonState = false;
+            } else if (value === undefined && countMemory < 1) {
+                createEVMemoryVal(0);
+            } else {
+                var initialVal = value.getAttribute("value");
+                value.setAttribute("value", parseFloat(initialVal / display));
+                value.textContent = String(parseFloat(initialVal / display));
+            }
 
-        if (document.getElementById('display-memory-list').style.display == "none") {
-            document.getElementById('display-memory-list').style.display = "block";
-        }
+            if (document.getElementById('display-memory-list').style.display == "none") {
+                document.getElementById('display-memory-list').style.display = "block";
+            }
 
-        memoryTrigger = true;
-        updateDisplay();
+            memoryTrigger = true;
+            updateDisplay();
+        }
     }
 
     // Created 10/18/2019 by Sharon Qiu
@@ -172,25 +183,27 @@ MemoryMath = {
     // Functionality for m* button.
     ,memoryMultiply: function(value, countMemory) {
         
-        if (value === undefined && countMemory < 1) {
-            createEVMemoryVal(0);
-        } else if (value === undefined) {
-            value = document.getElementsByClassName("memory-list")[0];
-            var initialVal = value.getAttribute("value");
-            value.setAttribute("value", initialVal*display);
-            value.textContent = String(initialVal*display);
-        } else {
-            var initialVal = value.getAttribute("value");
-            value.setAttribute("value", initialVal*display);
-            value.textContent = String(initialVal*display);
-        }
+        if (!isNaN(display)){
+            if (value === undefined && countMemory < 1) {
+                createEVMemoryVal(0);
+            } else if (value === undefined) {
+                value = document.getElementsByClassName("memory-list")[0];
+                var initialVal = value.getAttribute("value");
+                value.setAttribute("value", initialVal*display);
+                value.textContent = String(initialVal*display);
+            } else {
+                var initialVal = value.getAttribute("value");
+                value.setAttribute("value", initialVal*display);
+                value.textContent = String(initialVal*display);
+            }
 
-        if (document.getElementById('display-memory-list').style.display == "none") {
-            document.getElementById('display-memory-list').style.display = "block";
-        }
+            if (document.getElementById('display-memory-list').style.display == "none") {
+                document.getElementById('display-memory-list').style.display = "block";
+            }
 
-        memoryTrigger = true;
-        updateDisplay();
+            memoryTrigger = true;
+            updateDisplay();
+        }
     }
 
 }
@@ -274,6 +287,7 @@ function createEVMemoryVal(value) {
     memVal.setAttribute("class", "memory-list"); //sets class
     memVal.setAttribute("value", value); //sets value
     memVal.textContent = value; //sets content
+    memVal.addEventListener('click', function(){ display = String(value); updateDisplay();}, false);
 
     var memOpCont = document.createElement("div"); //memory option container
     memOpCont.setAttribute("class","memory-operations-container")
@@ -336,4 +350,5 @@ function loadEvListeners() {
         memOpArr[i].addEventListener('click', callFunction, false);
     }
 }
+
 window.addEventListener('load',loadEvListeners, false)
