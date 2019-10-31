@@ -119,6 +119,7 @@ function numberPress(event) {
 // Edited 10/25/2019 by Leah Gillespie: works with last thing entered being an operator
 // Edited 10/26/2019 by Leah Gillespie: Added history display
 // Edited 10/29/2019 by Leah Gillespie: works with history
+// Edited 10/29/2019 by Leah Gillesie: using eventListener rather than onclick
 // Registers = button click and updates display
 function onEqualClick() {
     if (changeLastNum) {
@@ -126,8 +127,10 @@ function onEqualClick() {
     }
     calculations.push(parseFloat(display));
     display = String(calculateCalculations());
+    let calc = calculations.toString();
+    let disp = display;
     var button = document.createElement("button");
-    button.setAttribute("onclick", "onHistoryClick(" + "\"" + calculations + "\"" + ", " + display + ")");
+    button.addEventListener("click", function(){ onHistoryClick(calc, disp);}, false);
     var txt = document.createTextNode(calculations.toString().replace(/,/g," ") + " =\n" + display);
     button.append(txt);
     var historyList = document.getElementById("history");
@@ -227,12 +230,13 @@ function calculateCalculations() {
 }
 
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/31/2019 by Leah Gillespie: Fixed bug when working with history
 // Does math between two numbers based on the given operator.
 function doMath(num1, num2, operator) {
     var value = 0;
     switch (operator) {
         case "+":
-            value = num1 + num2;
+            value = parseFloat(num1) + parseFloat(num2);
             break;
         case "-":
             value = num1 - num2;
@@ -277,6 +281,7 @@ function setButtonState() {
 
 // Created 10/27/2019 by Leah Gillespie
 // Edited 10/29/2019 by Leah Gillespie: fixed calculation bug
+// Edited 10/31/2019 by Leah Gillespie: fixed type issue with addition/concatination
 function onHistoryClick(calc, disp) {
     calculations = [];
     var currNum = '';
@@ -284,7 +289,7 @@ function onHistoryClick(calc, disp) {
         if (calc.charAt(i) >= '0' && calc.charAt(i) <= '9') {
             currNum += calc.charAt(i);
         } else if (isOperator(calc.charAt(i))) {
-            calculations.push(currNum);
+            calculations.push(parseFloat(currNum));
             currNum = '';
             calculations.push(calc.charAt(i));
         }
