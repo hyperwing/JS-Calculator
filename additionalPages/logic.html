@@ -1,6 +1,8 @@
 <!-- 
 File created 10/27/2019 by Neel Mansukhani
 Edited 10/29/2019 by Neel Mansukhani: Improved logical operations.
+Edited 10/31/2019 by Neel Mansukhani: Added event listeners.
+
 HTML page for logic calculator
 -->
 
@@ -39,24 +41,24 @@ HTML page for logic calculator
             <td id="display" colspan="4">0</td> 
         </tr>
         <tr>
-            <td colspan="1.5"><button onclick="onClearPress('CE')">CE</button></td>
-            <td colspan="1.5"><button onclick="onClearPress('C')">C</button></td>
-            <td colspan="1.5"><button onclick="onDeletePress('DEL')">DEL</button></td>
+            <td colspan="1.5"><button name="clear" value="CE">CE</button></td>
+            <td colspan="1.5"><button name="clear" value="C">C</button></td>
+            <td colspan="1.5"><button name="clear" value="DEL">DEL</button></td>
             
         </tr>
         <tr>
-            <td colspan="1.5"><button id="pi" onclick="onLogicalOperatorPress('&&')">&&</button></td>
-            <td colspan="1.5"><button id="pi" onclick="onLogicalOperatorPress('||')">||</button></td>
-            <td colspan="1.5"><button id="pi" onclick="onNotOperatorPress()">!</button></td>
+            <td colspan="1.5"><button name="operator" value="&&">&&</button></td>
+            <td colspan="1.5"><button name="operator" value="||">||</button></td>
+            <td colspan="1.5"><button name="not" value="!">!</button></td>
         </tr>
-            <td colspan="1.5"><button id="pi" onclick="onLogicalOperatorPress('==')">==</button></td>
-            <td colspan="1.5"><button id="pi" onclick="onParenthesisPress('(')">(</button></td>
-            <td colspan="1.5"><button id="pi" onclick="onParenthesisPress(')')">)</button></td>
+            <td colspan="1.5"><button name="operator" value="==">==</button></td>
+            <td colspan="1.5"><button name="parenthesis" value="(">(</button></td>
+            <td colspan="1.5"><button name="parenthesis" value=")">)</button></td>
             
         <tr>
-            <td colspan="1.5"><button onclick="onNumberPress('0')">0</button></td>
-            <td colspan="1.5"><button onclick="onNumberPress('1')">1</button></td>
-            <td colspan="1.5"><button onclick="onEqualsPress()">=</button></td>
+            <td colspan="1.5"><button name="number" value="0">0</button></td>
+            <td colspan="1.5"><button name="number" value="1">1</button></td>
+            <td colspan="1.5"><button name="eql">=</button></td>
         </tr>
     </table>
 </body>
