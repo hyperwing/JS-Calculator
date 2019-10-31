@@ -41,15 +41,14 @@ relationship. Sri and Sharon paired for this implementation.
 > npm -v
 3. If it says to install npm follow the next steps
 > sudo apt-get install npm
-4. If step 3 gives you an error about broken packages then run the following:
+4. If step 3 gives you an error about broken packages then run the following and install npm again:
 > sudo apt-get install nodejs-dev node-gyp libssl1.0-dev
-> sudo apt-get install npm
-5. Check to make sure you have npm installed
-6. Install mocha
+6. Check to make sure you have npm installed
+7. Install mocha
 > npm install mocha
-7. Install chai
+8. Install chai
 > npm install chai
-8. Install rewire
+9. Install rewire
 > npm install rewire
 
 Now your ready to run the test!
