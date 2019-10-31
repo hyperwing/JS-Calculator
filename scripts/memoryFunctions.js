@@ -36,10 +36,11 @@ MemoryActions = {
         if (!isNaN(display)){
             createEVMemoryVal(display);
             memoryTrigger = true;
+            if (document.getElementById('display-memory-list').style.display == "none") {
+                document.getElementById('display-memory-list').style.display = "block";
+                memoryDisplay = true;
+            }
             updateDisplay();
-        }
-        if (document.getElementById('display-memory-list').style.display == "none") {
-            document.getElementById('display-memory-list').style.display = "block";
         }
     }
 
@@ -55,7 +56,14 @@ MemoryActions = {
     // Edited 10/31/2019 by Sharon Qiu: just displays the block now.
     // Shows the list of numbers in memory 
     , displayMemory: function () {
-        document.getElementById('display-memory-list').style.display = "block";
+        if (memoryDisplay){
+            document.getElementById('display-memory-list').style.display = "none";
+            memoryDisplay = false;
+        }else{
+            document.getElementById('display-memory-list').style.display = "block";
+            memoryDisplay = true;
+        }
+        
     }
 
     // Created 10/17/2019 by Sri Ramya Dandu
@@ -135,11 +143,11 @@ MemoryMath = {
     // Functionality for m/ button.
     ,memoryDivide: function(value, countMemory) {
 
-        if (value === undefined){
+        if (value === undefined && countMemory > 0) {
             value = document.getElementsByClassName("memory-list")[0]; //gets first value of memory list
         }
 
-        if ((value.getAttribute("value") == 0) && (display == 0)) {
+        if (countMemory > 0 && (value.getAttribute("value") == 0) && (display == 0)) {
             display = "Result is undefined.";
         } else if (display == 0) {
             display = "Cannot divide by 0";
