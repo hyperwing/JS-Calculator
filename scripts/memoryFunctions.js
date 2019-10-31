@@ -19,7 +19,7 @@ MemoryActions = {
     // Created 10/17/2019 by Sri Ramya Dandu
     // Edited 10/18/2019 by Sri Ramya Dandu: diabled buttons 
     // Clears all the values stored in memory, sets the memory to 0
-    clearMemory: function(memory){
+    clearMemory: function(){
         memory.length = 0;
         displayMemory();
         updateDisplay();
@@ -28,7 +28,7 @@ MemoryActions = {
     // Created 10/18/2019 by Sharon Qiu
     // Edited 10/20/2019 by Sri Ramya Dandu: Added display memory
     // Functionality for ms button. Stores a value in memory
-    ,storeMemory: function(memory,display) {
+    ,storeMemory: function() {
         memory.unshift(display);
     
         if(document.getElementById('display-memory-list').style.display == "block"){
@@ -39,23 +39,23 @@ MemoryActions = {
         updateDisplay();
     }
 
-    ,memoryRecall: function(memory,display){
+    ,memoryRecall: function(){
         display = String(memory[0]);
         updateDisplay();
         return display;
     }
 }
 
-function callFunction(choice,memory,display){
+function callFunction(choice){
     switch (choice){
         case "MC": 
-            memory = MemoryActions.clearMemory(memory);
+            MemoryActions.clearMemory();
             break;
         case "MS": 
-            MemoryActions.storeMemory(memory,display);
+            MemoryActions.storeMemory();
             break;
         case "MR": 
-            display = MemoryActions.memoryRecall(memory,display);
+            MemoryActions.memoryRecall()
            
             break;
     }
