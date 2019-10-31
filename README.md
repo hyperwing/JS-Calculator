@@ -15,14 +15,14 @@ Also list if people worked together (pair programmed) on a particular section.
 Sri Ramya Dandu: MC, MR, and display of memory stack option
 Leah Gillespie: = button
 Sharon Qiu: 
-David Wing:
+David Wing: Clear, CE
 Neel Mansukhani: 
 
 #### Extra Functionality:
 Sri Ramya Dandu: Modes calculator for whole numbers and fractions (Decimal, Binary, Hex)
 Leah Gillespie: History
 Sharon Qiu: 
-David Wing:
+David Wing: Statistics for data set(mean, median, mode)
 Neel Mansukhani: 
 
 ### How to run the project
