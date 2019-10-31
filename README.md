@@ -26,6 +26,10 @@ Sharon Qiu: Degree conversion calculator
 David Wing: Stats Generator 
 Neel Mansukhani: Logic Calculator 
 
+### EXTRA CREDIT: Object Protoyping
+Object protoyping is used in memoryFunctions.js. The prototype ("superclass") is the MemoryMath object, and the main object is MemoryAction ("subclass"). Line 211, in the file, defines this
+relationship.
+
 ### How to run the project
 1. Open the project folder
 2. Open calculator.html in Firefox 
