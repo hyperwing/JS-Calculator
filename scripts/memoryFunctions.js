@@ -182,3 +182,4 @@ function memoryMultiply(index) {
     memoryTrigger = true;
     updateDisplay();
 }
+

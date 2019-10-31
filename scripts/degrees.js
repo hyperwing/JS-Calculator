@@ -210,7 +210,7 @@ function onOperatorClick(event) {
     updateDisplay();
 }
 
-// Created 10/26/2019 by Sharon Qiu
+// Created 10/30/2019 by Sharon Qiu
 // Event listeners creator
 function loadEvListeners(){
 
@@ -237,4 +237,3 @@ function loadEvListeners(){
     }
 }
 window.addEventListener('load',loadEvListeners, false)
-
