@@ -1,6 +1,7 @@
 /*
 File created 10/27/2019 by Neel Mansukhani
 Edited 10/29/2019 by Neel Mansukhani
+Edited 10/31/2019 by Neel Mansukhani
 */
 var calculations = [];
 var display = "0";
@@ -11,29 +12,23 @@ var lastNotIndex = -1;
 // Created 10/27/2019 by Neel Mansukhani
 // Edited 10/29/2019 by Neel Mansukhani
 // Handles number press events.
-function onNumberPress(symbol) {
+function onNumberPress(event) {
+    var symbol = String(event.target.value);
     display = symbol;
+    lastNotIndex = -1;
     lastButtonOperator = false;
     updateDisplay();
 }
 
 // Created 10/29/2019 by Neel Mansukhani
 // Handles clear press events.
-function onClearPress(symbol) {
+function onClearPress(event) {
+    var symbol = String(event.target.value);
     if(symbol == "C") {
-        calculations = [];
-        lastNotIndex = -1;
+        calculations = [];   
     }
+    lastNotIndex = -1;
     display = "0";  
-    updateDisplay();
-}
-
-// Created 10/29/2019 by Neel Mansukhani
-// Handles delete press events.
-function onDeletePress() {
-    if(display == "1") {
-        display = "0";
-    }
     updateDisplay();
 }
 
@@ -49,6 +44,7 @@ function onEqualsPress() {
     }
     display = calculate(calculations);
     calculations = [];
+    lastNotIndex = -1;
     updateDisplay();
 }
 
@@ -84,7 +80,8 @@ function onNotOperatorPress() {
 
 // Created 10/29/2019 by Neel Mansukhani
 // Handles logical operator press events not including the not operator.
-function onLogicalOperatorPress(operator) {
+function onLogicalOperatorPress(event) {
+    var operator = String(event.target.value);
     if (isOperator(calculations[calculations.length - 1]) && lastButtonOperator) {
         calculations[calculations.length - 1] = operator;
     } else {
@@ -100,7 +97,8 @@ function onLogicalOperatorPress(operator) {
 
 // Created 10/29/2019 by Neel Mansukhani
 // Handles parenthesis press events.
-function onParenthesisPress(symbol) {
+function onParenthesisPress(event) {
+    var symbol = String(event.target.value);
     if(symbol == '(' && calculations[calculations.length - 1] != ')' && isNaN(calculations[calculations.length - 1])) {
         calculations.push(symbol);
         openParenthesisCount++;
@@ -210,3 +208,42 @@ function findCloseIndex(arr, startIndex) {
         }
     }
 }
+
+// Created 10/26/2019 by Sharon Qiu
+// Edited 10/30/2019 by Sri Ramya Dandu: Added event handling 
+// Edited 10/31/2019 by Neel Mansukhani: Added logic event listeners.
+// Event listeners creator
+function loadEvListeners(){
+    //number buttons
+    var numElArr = document.getElementsByName("number");
+    for (var i = 0; i < numElArr.length; i++){
+        numElArr[i].addEventListener('click', onNumberPress, false);
+    }
+
+    //clear buttons
+    var clearArr = document.getElementsByName("clear");
+    for (var i = 0; i < clearArr.length; i++){
+        clearArr[i].addEventListener('click', onClearPress, false);
+    }
+    //operators
+    var operatorArr = document.getElementsByName("operator");
+    for (var i = 0; i < operatorArr.length; i++) {
+        operatorArr[i].addEventListener('click', onLogicalOperatorPress, false);
+    }
+
+    //parenthesis
+    var parenArr = document.getElementsByName("parenthesis");
+    for (var i = 0; i < parenArr.length; i++) {
+        parenArr[i].addEventListener('click', onParenthesisPress, false);
+    }
+    //not operator
+    var not = document.getElementsByName("not");
+    not[0].addEventListener('click', onNotOperatorPress, false);
+
+    var equal = document.getElementsByName("eql");
+    equal[0].addEventListener('click', onEqualsPress, false);
+
+}
+
+
+window.addEventListener('load',loadEvListeners, false);
