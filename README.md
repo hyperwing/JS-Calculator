@@ -22,13 +22,13 @@ Neel Mansukhani: Arithmetic operations and calc/buttons setup
 #### Extra Functionality:
 Sri Ramya Dandu: Modes calculator for whole numbers and fractions (Decimal, Binary, Hex)
 Leah Gillespie: History
-Sharon Qiu: Degree conversion calculator 
+Sharon Qiu: Degree conversion calculator
 David Wing: Stats Generator 
 Neel Mansukhani: Logic Calculator 
 
 ### EXTRA CREDIT: Object Protoyping
 Object protoyping is used in memoryFunctions.js. The prototype ("superclass") is the MemoryMath object, and the main object is MemoryAction ("subclass"). Line 211, in the file, defines this
-relationship.
+relationship. Sri and Sharon paired for this implementation.
 
 ### How to run the project
 1. Open the project folder
