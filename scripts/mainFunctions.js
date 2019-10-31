@@ -1,6 +1,7 @@
 /*
 File created 10/26/2019 by Sharon Qiu
 Edited 10/26/2019 by Sri Ramya Dandu
+Edited 10/30/2019 by Sri Ramya Dandu
 Edited 10/31/2019 by Sharon Qiu
 Edited 10/31/2019 by Sri Ramya Dandu
 Moved main functions for standard calc here.
@@ -19,7 +20,8 @@ var buttonState = true;
 // Edited 10/19/2019 by David Wing: added CE and C routes
 // Edited 10/19/2019 by Sri Ramya Dandu: Fixed decimal 
 // Operators handled here and updates display
-function onOperatorClick(symbol) {
+function onOperatorClick(event) {
+    symbol = String(event.target.value);
     if (lastButtonOperator) {
         if (symbol == ".") {
             display = "0.";
@@ -77,7 +79,8 @@ function onOperatorClick(symbol) {
 // Edited 10/27/2019 by Leah Gillespie: adjusted to work after = is pressed
 // Edited 10/29/2019 by Leah Gillespie: works with history
 // handles numbers pressed on calc and updates display
-function numberPress(symbol) {
+function numberPress(event) {
+    var symbol = String(event.target.value);
     if (memoryTrigger && !lastButtonOperator) {
             memoryTrigger = false;
             buttonState = true;
@@ -175,7 +178,8 @@ function updateDisplay() {
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/29/2019 by Leah Gillespie: works with history
 // Operation button clicks are registered here then display is updated.
-function onOperationButtonClick(operation) {
+function onOperationButtonClick(event) {
+    var operation = String(event.target.value);
     if (changeLastNum) {
         calculations.pop();
         changeLastNum = false;
@@ -300,6 +304,60 @@ function onHistoryClick(calc, disp) {
 }
 
 
+// Created 10/26/2019 by Sharon Qiu
+// Edited 10/30/2019 by Sri Ramya Dandu: Added event handling 
+// Event listeners creator
+function loadEvListeners(){
+
+    //number buttons
+    var numElArr = document.getElementsByName("number");
+    for (var i = 0; i < numElArr.length; i++){
+        numElArr[i].addEventListener('click', numberPress, false);
+    }
+
+    //operators
+    var operatorArr = document.getElementsByName("operator-button");
+    for (var i = 0; i < operatorArr.length; i++) {
+        operatorArr[i].addEventListener('click', onOperatorClick, false);
+    }
+
+     //operatoration
+     var operatorArr = document.getElementsByName("operation");
+     for (var i = 0; i < operatorArr.length; i++) {
+         operatorArr[i].addEventListener('click', onOperationButtonClick, false);
+     }
+
+     var equal = document.getElementsByName("eql");
+     equal[0].addEventListener('click', onEqualClick, false);
+
+     var memClear = document.getElementsByName("MC");
+     memClear[0].addEventListener('click', clearMemory, false);
+
+     var memStore = document.getElementsByName("MS");
+     memStore[0].addEventListener('click', storeMemory, false);
+
+     var memRecall = document.getElementsByName("MR");
+     memRecall[0].addEventListener('click', function(){ memoryRecall(memory);}, false);
+
+     var memAdd = document.getElementsByName("M+");
+     memAdd[0].addEventListener('click', function(){ memoryAdd();}, false);
+
+     var memSub = document.getElementsByName("M-");
+     memSub[0].addEventListener('click', function(){ memorySubtract();}, false);
+
+     var memMult = document.getElementsByName("M*");
+     memMult[0].addEventListener('click', function(){ memoryMultiply();}, false);
+
+     var memDiv = document.getElementsByName("M/");
+     memDiv[0].addEventListener('click', function(){ memoryDivide();}, false);
+
+     var displayMem = document.getElementsByName("M");
+     displayMem[0].addEventListener('click', function(){ displayMemory();}, false);
+
+}
+
+
+window.addEventListener('load',loadEvListeners, false);
 
 
 // THIS PART WORKS history, then number - changes display to new number, doesn't change calculation
