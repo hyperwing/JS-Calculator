@@ -148,6 +148,7 @@ function onEqualClick() {
 // Updates the display after new calculations.
 function updateDisplay() {
     document.getElementById("display").innerHTML = display;
+    console.log(display);
     document.getElementById("calculations").innerHTML = calculations.toString().replace(/,/g, " ");
     document.getElementById('MC').disabled = memory.length == 0 ;
     document.getElementById('MR').disabled = memory.length == 0;
