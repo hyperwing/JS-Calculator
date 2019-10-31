@@ -236,4 +236,4 @@ function loadEvListeners(){
         conversionArr[i].addEventListener('change', updateDisplay, false);
     }
 }
-window.addEventListener('load',loadEvListeners, false)
+//window.addEventListener('load',loadEvListeners, false)

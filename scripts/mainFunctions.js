@@ -154,7 +154,7 @@ function updateDisplay() {
     document.getElementById('MR').disabled = memory.length == 0;
     document.getElementById('M').disabled = memory.length == 0;
     if (memory.length == 0) {
-        hideMemory();
+        MemoryActions.hideMemory();
     }
     if(display.indexOf('.') != -1){
         document.getElementById('dot').disabled = true;
@@ -162,7 +162,7 @@ function updateDisplay() {
 
     if(document.getElementById('display-memory-list').style.display == "block"){
         document.getElementById('display-memory-list').style.display = "none"
-        displayMemory();
+        MemoryActions.displayMemory();
     }
 
     // document.getElementById("memory").innerHTML = memory;
