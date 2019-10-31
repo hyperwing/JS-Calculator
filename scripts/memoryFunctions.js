@@ -287,7 +287,7 @@ function createEVMemoryVal(value) {
     memVal.setAttribute("class", "memory-list"); //sets class
     memVal.setAttribute("value", value); //sets value
     memVal.textContent = value; //sets content
-    memVal.addEventListener('click', function(){ display = String(value); updateDisplay();}, false);
+    memVal.addEventListener('click', function(){ display = String(memVal.value); updateDisplay();}, false);
 
     var memOpCont = document.createElement("div"); //memory option container
     memOpCont.setAttribute("class","memory-operations-container")
