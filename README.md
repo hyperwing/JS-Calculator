@@ -43,6 +43,7 @@ relationship. Sri and Sharon paired for this implementation.
 > sudo apt-get install npm
 4. If step 3 gives you an error about broken packages then run the following:
 > sudo apt-get install nodejs-dev node-gyp libssl1.0-dev
+Then install npm again:
 > sudo apt-get install npm
 5. Check to make sure you have npm installed
 6. Install mocha
