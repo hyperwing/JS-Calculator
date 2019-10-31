@@ -2,14 +2,17 @@
 // File edited 10/28/19 David Wing
 // File edited 10/29/19 David Wing
 // File edited 10/29/19 Leah Gillespie
+// File edited 10/31/19 David Wing: added chaining of stat display
 
 let data_set = [];
 
+// Created 10/28/19 David Wing
 // adds to the set after button press
 function addToSet(val){
     data_set.push(val);
 }
 
+// Created 10/28/19 David Wing
 // display new additions
 function addToDisplay(val){
     let display_box = document.getElementById("display");
@@ -21,6 +24,7 @@ function addToDisplay(val){
     }
 }
 
+// Created 10/28/19 David Wing
 // calculate and display Median
 function calculateMedian(){
 
@@ -42,6 +46,7 @@ function calculateMedian(){
     return parseFloat(median);
 }
 
+// Created 10/28/19 David Wing
 // calculate and display mode
 function calculateMode(){
     let max = 0;
@@ -67,14 +72,11 @@ function calculateMode(){
 
 
 
+// Created 10/28/19 David Wing
 // calculate and display range
 function calculateRange(){
     range = data_set[data_set.length-1] - data_set[0];
     return parseFloat(range);
-}
-
-function displayRange(range){
-    document.getElementById("range").innerText = range
 }
 
 function calculateMean(){
@@ -88,10 +90,8 @@ function calculateMean(){
     return parseFloat(mean);
 }
 
-function displayMean(mean){
-    document.getElementById("mean").innerText = mean;
-}
 
+// Created 10/28/19 David Wing
 // calculate and display SD 
 function calculateStandardDeviation(mean){
 
@@ -101,7 +101,6 @@ function calculateStandardDeviation(mean){
     function calcSigma(item){
 
         sigma += power((mean-item), 2);
-
         // sigma += Math.pow((mean-item), 2);
     }
 
@@ -112,16 +111,23 @@ function calculateStandardDeviation(mean){
     return parseFloat(sd);
 }
 
+// Created 10/28/19 David Wing
+// Edited 10/31/19 David Wing: added chaining
 function clearDisplay(){
+
+    //number buttons
+    var statOut = document.getElementsByName("outputStat");
+    for (var i = 0; i < statOut.length; i++){
+        statOut[i].innerHTML = "";       
+    }
+
     document.getElementById("display").innerText = "";
-    document.getElementById("mean").innerText = "";
-    document.getElementById("median").innerText = "";
-    document.getElementById("mode").innerText = "";
-    document.getElementById("range").innerText = "";
-    document.getElementById("sd").innerText = "";
 
 }
 
+// Created 10/28/19 David Wing
+// edited 10/29/19 David Wing
+// edited 10/31/19 David Wing: chaining and arrays
 function handleSubmit(){
 
     let num_box = document.getElementById("input");
@@ -132,7 +138,6 @@ function handleSubmit(){
     if (isNaN(num_input)){
         return -1;        
     }
-    console.log(num_input);
     addToDisplay(num_input)
     addToSet(num_input);
 
@@ -141,26 +146,42 @@ function handleSubmit(){
     // sort data before handling
     data_set.sort(function(a, b){return a - b});
 
-    console.log(data_set);
+    // console.log(data_set);
 
-    document.getElementById("mode").innerText = calculateMode();
-    document.getElementById("median").innerText = calculateMedian();
+    let stat_arr = [5];
+    stat_arr[0] = calculateMedian();
+    stat_arr[1] = calculateMode();
     let mean = calculateMean();
-    document.getElementById("mean").innerText =mean;
-    document.getElementById("range").innerText = calculateRange();
-    document.getElementById("sd").innerText = calculateStandardDeviation(mean);
+    stat_arr[2] = mean;
+    stat_arr[3] = calculateRange()
+    stat_arr[4] = calculateStandardDeviation(mean);
+
+    updateStatDisplays(stat_arr);
 
 }
 
+// Created 10/28/19 David Wing
 function handleClear(){
     clearSet();    
     clearDisplay();
 }
 
+// Created 10/31/19 David Wing: added chaining
+function updateStatDisplays(arr){
+
+    var statOut = document.getElementsByName("outputStat");
+    for (var i = 0; i < statOut.length; i++){
+        statOut[i].innerHTML = arr[i];       
+    }
+
+}
+
+// Created 10/28/19 David Wing
 function clearSet(){
     data_set = [];
 }
 
+// Created 10/28/19 David Wing
 function handleSort(){
     document.getElementById("display").innerText = "";
     data_set.forEach(reprint);

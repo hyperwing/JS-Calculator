@@ -5,14 +5,12 @@
     Edited 10/19/2019 by Sri Ramya Dandu: Fixed memroy display for resizing
     Edited 10/20/2019 by Sri Ramya Dandu: Moved calculator to center 
     Edited 10/29/2019 by Sri Ramya Dandu: Fixed button display for Firefox
+    Edited 10/30/2019 by Neel Mansukhani: Fixed css for logic page.
 */
 html {
     height: 100%;
 }
-table {
-    width: 300px;
-    height: 400px;
-}
+
 button {
     height: 46px;
     width: 100%;
@@ -41,9 +39,18 @@ td{
 }
 
 .calculator{
+    width: 300px;
+    height: 400px;
     float: left;
     margin-left: 22%;
     margin-top: 5%
+}
+.logic {
+    width: 300px;
+    height: 260px;
+    float: left;
+    margin-left: 22%;
+    margin-top: 5%;
 }
 /* Display for overall list of numbers in memory */
 #display-memory-list {
@@ -98,7 +105,7 @@ header.title{
 
 #history {
     float: right;
-    margin: 0 15%;
+    margin: 0 15% 0 0;
     width: 15%;
     text-align: center;
 }

@@ -8,6 +8,7 @@ Edited 10/25/2019 by Sri Ramya Dandu
 Edited 10/27/2019 by Sri Ramya Dandu
 Edited 10/28/2019 by Sri Ramya Dandu
 Edited 10/29/2019 by Sri Ramya Dandu: Added chaining to conversions object
+Edited 10/30/2019 by Sri Ramya Dandu
 */
 
 // conversion values for hex and decimal 
@@ -36,7 +37,8 @@ var display = "0";
 // Edited 10/27/2019 by Sri Ramya Dandu: Added +/-
 // Edited 10/28/2019 by Sri Ramya Dandu: Fixed display for -0
 // Number button clicks are registered here then display is updated.
-function onSimpleButtonClick(symbol) {
+function onSimpleButtonClick(event) {
+  symbol = String(event.target.value);
     if (symbol == "DEL") {
         if(display != "0") {
             display = display.substr(0, display.length - 1);
@@ -101,29 +103,45 @@ function updateDisplay() {
   }
 
 // Created 10/28/2019 by Sri Ramya Dandu
+// Edited 10/30/2019 by Sri Ramya Dandu: changed to event handling 
 // disables buttons based on chosen form of input 
 function disableInputButtons(from){
+
+
+  //splits into number and alpha values
+  var numElArr = document.getElementsByName("inputValue");
+  var nums = [];
+  var alpha = [];
+  for (var i = 0; i < numElArr.length -1; i++){
+    if (i != 6 && i<9){ // don't want to disable 1
+      nums.push(numElArr[i]);
+    }else if(i>8){
+      alpha.push(numElArr[i]);
+    }
+  }
+
   // disable alpha buttons for non-hex input
   if(from == 10 || from == 2){
-    setButtons(["A", "B", "C", "D", "E", "F"], true);
+    setButtons(alpha, true);
   }else {
-    setButtons(["A", "B", "C", "D", "E", "F"], false);
+    setButtons(alpha, false);
   }
 
   // disable 1+ buttons for birnary input 
   if(from == 2){
-    setButtons(["two", "three", "four", "five", "six", "seven", "eight", "nine"], true);
+    setButtons(nums, true);
   }else{
-    setButtons(["two", "three", "four", "five", "six", "seven", "eight", "nine"], false);
+    setButtons(nums, false);
   }
 }
 
 
 // Created 10/28/2019 by Sri Ramya Dandu
+// Edited 10/30/2019 by Sri Ramya Dandu: changed to event handling 
 // Sets disabled property of buttons with ids in idArray to buttonState
-function setButtons(idArray, buttonState){
-  idArray.forEach(function(elt){
-    document.getElementById(elt).disabled = buttonState;
+function setButtons(valArray, buttonState){
+  valArray.forEach(function(elt){
+    elt.disabled = buttonState;
   })
 }
 
@@ -192,7 +210,7 @@ function convertWholeFromBase(numStr, base){
   var decimalNum = 0;
   var exponent = numStr.length-1;
   for(i = 0; i < numStr.length; i++){
-    decimalNum += getKey(numStr.charAt(i)) * Math.pow(base,exponent); // # * base^exponent 
+    decimalNum += getKey(numStr.charAt(i)) * power(base,exponent); // # * base^exponent 
     exponent--;
   }
   return String(decimalNum);
@@ -209,7 +227,7 @@ function convertFractionFromBase(numStr, base){
   // removes decimal point from number 
   numStr = numStr.substring(1);
   for(i = 0; i < numStr.length; i++){
-    decimalNum += getKey(numStr.charAt(i)) * Math.pow(base,exponent); // # * base^exponent  //TODO: Write a Math.pow func
+    decimalNum += getKey(numStr.charAt(i)) * (1/power(base,(-exponent))); // # * base^exponent s
     exponent--;
   }
   return String(decimalNum);
@@ -391,3 +409,42 @@ function displayCalculated(result, isNegative){
   }
   return printValue;
 }
+
+// Created 10/26/2019 by Sharon Qiu
+// Edited 10/30/2019 by Sri Ramya Dandu: Modified to match mode calc
+// Event listeners creator
+function loadEvListeners(){
+
+  //number buttons
+  var numElArr = document.getElementsByName("inputValue");
+  for (var i = 0; i < numElArr.length; i++){
+      numElArr[i].addEventListener('click', onSimpleButtonClick, false);
+  }
+
+  //operators
+  var operatorArr = document.getElementsByName("operator-button");
+  for (var i = 0; i < operatorArr.length; i++) {
+      operatorArr[i].addEventListener('click', onSimpleButtonClick, false);
+  }
+
+  //form conversions
+  var conversionArr = document.getElementsByName("conversion-change");
+  for (var i = 0; i < conversionArr.length; i++) {
+      conversionArr[i].addEventListener('change', updateDisplay, false);
+  }
+}
+
+// Created 10/29/2019 by Leah Gillespie
+// takes two numbers as inputs, returns a ^ b
+function power(a, b) {
+    if (b == 0) {
+        return 1;
+    }
+    let ans = a;
+    for (let i = 1; i < b; i++) {
+        ans*=a;
+    }
+    return ans;
+}
+
+

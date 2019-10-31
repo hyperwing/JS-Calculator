@@ -10,6 +10,7 @@
 <!-- Edited 10/25/2019 by Leah Gillespie: Added history display -->
 <!-- Edited 10/26/2019 by Sharon Qiu: Added menu bar -->
 <!-- Edited 10/27/2019 by Neel Mansukhani: Added logic to menu bar -->
+<!-- Edited 10/30/2019 by Sri Ramya Dandu: Added event handling -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,47 +49,48 @@
         </tr>
 
         <tr>
-            <td><button onclick="memoryAdd()">M+</button></td>
-            <td><button onclick="memorySubtract()">M-</button></td>
-            <td><button onclick="memoryMultiply()">M*</button></td>
-            <td><button onclick="memoryDivide()">M/</button></td>
+            <td><button class="div-by-zero" name="memory-op" value="M+">M+</button></td>
+            <td><button class="div-by-zero" name="memory-op" value="M-">M-</button></td>
+            <td><button class="div-by-zero" name="memory-op" value="M*">M*</button></td>
+            <td><button class="div-by-zero" name="memory-op" value="M/">M/</button></td>
         </tr>
 
         <tr>
-            <td><button id = "MC" onclick="clearMemory()" disabled>MC</button></td>
-            <td><button id="MR" onclick="memoryRecall(memory)" disabled>MR</button></td>
-            <td><button onclick="storeMemory()">MS</button></td>
-            <td><button id= "M" onclick="displayMemory()" disabled>M&#9654;</button></td>
+            <td><button name="memory-op" id="MC" value="MC" disabled>MC</button></td>
+            <td><button name="memory-op" id="MR" value="MR" disabled>MR</button></td>
+            <td><button class="div-by-zero" name="memory-op" value="MS">MS</button></td>
+            <td><button name="memory-op" id="M" value="mem-disp" disabled>M&#9654;</button></td>
         </tr>
         <tr>
-            <td><button onclick="onOperatorClick('CE')">CE</button></td>
-            <td><button onclick="onOperatorClick('C')">C</button></td>
-            <td><button onclick="onOperatorClick('DEL')">DEL</button></td>
-            <td><button class="div-by-zero" onclick="onOperationButtonClick('/')">/</button></td>
+        
+            <td><button value="CE" name="operator-button">CE</button></td>
+            <td><button value="C" name="operator-button">C</button></td>
+            <td><button value="DEL" name="operator-button">DEL</button></td>
+            <td><button class="div-by-zero" value = "/" name = 'operation'>/</button></td>
         </tr>
         <tr>
-            <td><button onclick="numberPress('7')">7</button></td>
-            <td><button onclick="numberPress('8')">8</button></td>
-            <td><button onclick="numberPress('9')">9</button></td>
-            <td><button class="div-by-zero" onclick="onOperationButtonClick('*')">*</button></td>
+            <td><button name="number" value='7'>7</button></td>
+            <td><button name="number" value='8'>8</button></td>
+            <td><button name="number" value='9'>9</button></td>
+            <td><button class="div-by-zero" value = "*" name = 'operation'>*</button></td>
         </tr>
         <tr>
-            <td><button onclick="numberPress('4')">4</button></td>
-            <td><button onclick="numberPress('5')">5</button></td>
-            <td><button onclick="numberPress('6')">6</button></td>
-            <td><button class="div-by-zero" onclick="onOperationButtonClick('-')">-</button></td>
+            <td><button name="number" value='4'>4</button></td>
+            <td><button name="number" value='5'>5</button></td>
+            <td><button name="number" value='6'>6</button></td>
+            <td><button class="div-by-zero" value = "-" name = 'operation'>-</button></td>
         </tr>
         <tr>
-            <td><button onclick="numberPress('1')">1</button></td>
-            <td><button onclick="numberPress('2')">2</button></td>
-            <td><button onclick="numberPress('3')">3</button></td>
-            <td><button class="div-by-zero" onclick="onOperationButtonClick('+')">+</button></td>
+            <td><button name="number" value='1'>1</button></td>
+            <td><button name="number" value='2'>2</button></td>
+            <td><button name="number" value='3'>3</button></td>
+            <td><button class="div-by-zero" value = "+" name = 'operation'>+</button></td>
         </tr>
         <tr>
-            <td><button class="div-by-zero" onclick="onOperatorClick('+/-')">+/-</button></td>
-            <td><button onclick="numberPress('0')">0</button></td>
-            <td><button id = "dot" class="div-by-zero" onclick="onOperatorClick('.')">.</button></td>
-            <td><button onclick="onEqualClick()">=</button></td>
+            <td><button class="div-by-zero" value="+/-" name="operator-button">+/-</button></td>
+            <td><button name="number" value='0'>0</button></td>
+            <td><button id = "dot" class="div-by-zero" value="." name="operator-button">.</button></td>
+            <td><button name = "eql">=</button></td>
         </tr>                         
     </table>
 
