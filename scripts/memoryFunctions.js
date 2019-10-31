@@ -12,48 +12,73 @@ Functions for memory including ms, mr, m-, m+, m*, m/, mc.
 
 var memory = [];
 var memoryTrigger = false; //Checks if M+-/*S has been triggered, keeping display if that is the case.
-// Created 10/17/2019 by Sri Ramya Dandu
-// Edited 10/18/2019 by Sri Ramya Dandu: diabled buttons 
-// Clears all the values stored in memory, sets the memory to 0
-function clearMemory(){
-    memory.length = 0;
-    displayMemory();
-    updateDisplay();
-}
 
-// Created 10/18/2019 by Sharon Qiu
-// Edited 10/20/2019 by Sri Ramya Dandu: Added display memory
-// Functionality for ms button. Stores a value in memory
-function storeMemory() {
-    memory.unshift(display);
 
-    if(document.getElementById('display-memory-list').style.display == "block"){
-        document.getElementById('display-memory-list').style.display = "none"
+MemoryActions = {
+    //Checks if M+-/*S has been triggered, keeping display if that is the case.
+    // Created 10/17/2019 by Sri Ramya Dandu
+    // Edited 10/18/2019 by Sri Ramya Dandu: diabled buttons 
+    // Clears all the values stored in memory, sets the memory to 0
+    clearMemory: function () {
+        memory.length = 0;
         displayMemory();
+        updateDisplay();
     }
-    memoryTrigger = true;
-    updateDisplay();
+
+    // Created 10/18/2019 by Sharon Qiu
+    // Edited 10/20/2019 by Sri Ramya Dandu: Added display memory
+    // Functionality for ms button. Stores a value in memory
+    ,
+    storeMemory: function () {
+        memory.unshift(display);
+
+        if (document.getElementById('display-memory-list').style.display == "block") {
+            document.getElementById('display-memory-list').style.display = "none"
+            displayMemory();
+        }
+        memoryTrigger = true;
+        updateDisplay();
+    }
+
+    ,
+    // Created 10/17/2019 by Sri Ramya Dandu
+    // Edited 10/17/2019 by Sri Ramya Dandu: Added paramter for memory back in 
+    // Uses the number in memory as the current value 
+    memoryRecall: function () {
+        display = String(memory[0]);
+        updateDisplay();
+        return display;
+    },
+
+    // Created 10/18/2019 by Sharon Qiu
+    // Edited 10/20/2019 by Sri Ramya Dandu: Keeps memory up after deleting 
+    // Functionality for ms button. clears a single specific value.
+    clearMemorySingle: function(index) {
+        memory.splice(index, 1);
+        document.getElementById('display-memory-list').style.display = "none";
+        if (memory.length != 0) {
+            displayMemory();
+        }
+        updateDisplay();
+        memoryTrigger = true;
+    }
 }
 
-// Created 10/18/2019 by Sharon Qiu
-// Edited 10/20/2019 by Sri Ramya Dandu: Keeps memory up after deleting 
-// Functionality for ms button. clears a single specific value.
-function clearMemorySingle(index) {
-    memory.splice(index,1);
-    document.getElementById('display-memory-list').style.display = "none";
-    if(memory.length != 0){
-        displayMemory();
+function callFunction(choice) {
+    switch (choice) {
+        case "MC":
+            MemoryActions.clearMemory();
+            break;
+        case "MC-single":
+            MemoryActions.clearMemorySingle();
+            break;
+        case "MS":
+            MemoryActions.storeMemory();
+            break;
+        case "MR":
+            MemoryActions.memoryRecall()
+            break;
     }
-    updateDisplay();
-    memoryTrigger = true;
-}
-
-// Created 10/17/2019 by Sri Ramya Dandu
-// Edited 10/17/2019 by Sri Ramya Dandu: Added paramter for memory back in 
-// Uses the number in memory as the current value 
-function memoryRecall(memory){
-    display = String(memory[0]);
-    updateDisplay();
 }
 
 // Created 10/17/2019 by Sri Ramya Dandu
@@ -183,3 +208,8 @@ function memoryMultiply(index) {
     updateDisplay();
 }
 
+// Created 10/26/2019 by Sharon Qiu
+// Event listeners creator
+function loadEvListeners() {
+
+}
