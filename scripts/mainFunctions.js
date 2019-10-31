@@ -2,6 +2,8 @@
 File created 10/26/2019 by Sharon Qiu
 Edited 10/26/2019 by Sri Ramya Dandu
 Edited 10/30/2019 by Sri Ramya Dandu
+Edited 10/31/2019 by Sharon Qiu
+Edited 10/31/2019 by Sri Ramya Dandu
 Moved main functions for standard calc here.
 */
 
@@ -12,7 +14,8 @@ var lastHistory;
 var lastButtonEquals = false;
 var lastButtonHistory = false;
 var changeLastNum = false;
-var buttonState = true; //Might not need to exist.
+var buttonState = true; 
+
 // Created 10/17/2019 by Neel Mansukhani
 // Edited 10/19/2019 by David Wing: added CE and C routes
 // Edited 10/19/2019 by Sri Ramya Dandu: Fixed decimal 
@@ -119,24 +122,33 @@ function numberPress(event) {
 // Edited 10/25/2019 by Leah Gillespie: works with last thing entered being an operator
 // Edited 10/26/2019 by Leah Gillespie: Added history display
 // Edited 10/29/2019 by Leah Gillespie: works with history
+// Edited 10/29/2019 by Leah Gillesie: using eventListener rather than onclick
 // Registers = button click and updates display
 function onEqualClick() {
     if (changeLastNum) {
         calculations.pop()
     }
     calculations.push(parseFloat(display));
-    display = String(calculateCalculations());
-    var button = document.createElement("button");
-    button.setAttribute("onclick", "onHistoryClick(" + "\"" + calculations + "\"" + ", " + display + ")");
-    var txt = document.createTextNode(calculations.toString().replace(/,/g," ") + " =\n" + display);
-    button.append(txt);
-    var historyList = document.getElementById("history");
-    if (historyList.childElementCount === 0) {
-        historyList.append(button);
-    } else {
-        historyList.insertBefore(button, lastHistory);
+    let ans = calculateCalculations();
+    let result = typeof ans;
+    display = String(ans);
+    if (result == "number") {
+        let calc = calculations.toString();
+        let disp = display;
+        var button = document.createElement("button");
+        button.addEventListener("click", function () {
+            onHistoryClick(calc, disp);
+        }, false);
+        var txt = document.createTextNode(calculations.toString().replace(/,/g, " ") + " =\n" + display);
+        button.append(txt);
+        var historyList = document.getElementById("history");
+        if (historyList.childElementCount === 0) {
+            historyList.append(button);
+        } else {
+            historyList.insertBefore(button, lastHistory);
+        }
+        lastHistory = button;
     }
-    lastHistory = button;
     calculations = [];
     lastButtonEquals = true;
     lastButtonHistory = false;
@@ -148,26 +160,27 @@ function onEqualClick() {
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
 // Edited 10/25/2019 by Leah Gillespie: included history update
 // Edited 10/26/2019 by Sri Ramya Dandu: Fixed decimal
+// Edited 10/30/2019 by Sharon Qiu: Updated memory value references.
+// Edited 10/31/2019 by Sharon Qiu: Updated memory display toggle.
 // Updates the display after new calculations.
 function updateDisplay() {
+
+    var memLength = document.getElementById("memory-stack-display").childElementCount;
+
     document.getElementById("display").innerHTML = display;
     document.getElementById("calculations").innerHTML = calculations.toString().replace(/,/g, " ");
-    document.getElementById('MC').disabled = memory.length == 0 ;
-    document.getElementById('MR').disabled = memory.length == 0;
-    document.getElementById('M').disabled = memory.length == 0;
-    if (memory.length == 0) {
-        hideMemory();
-    }
+
+    document.getElementById('MC').disabled = memLength == 0;
+    document.getElementById('MR').disabled = memLength == 0;
+    document.getElementById('M').disabled = memLength == 0;
     if(display.indexOf('.') != -1){
         document.getElementById('dot').disabled = true;
     }
 
-    if(document.getElementById('display-memory-list').style.display == "block"){
-        document.getElementById('display-memory-list').style.display = "none"
-        displayMemory();
+    if (memLength == 0) {
+        MemoryActions.hideMemory();
     }
 
-    // document.getElementById("memory").innerHTML = memory;
     setButtonState(buttonState);
 }
 
@@ -227,12 +240,13 @@ function calculateCalculations() {
 }
 
 // Created 10/17/2019 by Neel Mansukhani
+// Edited 10/31/2019 by Leah Gillespie: Fixed bug when working with history
 // Does math between two numbers based on the given operator.
 function doMath(num1, num2, operator) {
     var value = 0;
     switch (operator) {
         case "+":
-            value = num1 + num2;
+            value = parseFloat(num1) + parseFloat(num2);
             break;
         case "-":
             value = num1 - num2;
@@ -277,6 +291,7 @@ function setButtonState() {
 
 // Created 10/27/2019 by Leah Gillespie
 // Edited 10/29/2019 by Leah Gillespie: fixed calculation bug
+// Edited 10/31/2019 by Leah Gillespie: fixed type issue with addition/concatination
 function onHistoryClick(calc, disp) {
     calculations = [];
     var currNum = '';
@@ -284,7 +299,7 @@ function onHistoryClick(calc, disp) {
         if (calc.charAt(i) >= '0' && calc.charAt(i) <= '9') {
             currNum += calc.charAt(i);
         } else if (isOperator(calc.charAt(i))) {
-            calculations.push(currNum);
+            calculations.push(parseFloat(currNum));
             currNum = '';
             calculations.push(calc.charAt(i));
         }

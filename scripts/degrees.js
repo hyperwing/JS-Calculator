@@ -237,4 +237,3 @@ function loadEvListeners(){
     }
 }
 
-//window.addEventListener('load',loadEvListeners, false)
