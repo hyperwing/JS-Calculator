@@ -296,7 +296,7 @@ function onHistoryClick(calc, disp) {
     calculations = [];
     var currNum = '';
     for (var i = 0; i < calc.length; i++) {
-        if (calc.charAt(i) >= '0' && calc.charAt(i) <= '9') {
+        if ((calc.charAt(i) >= '0' && calc.charAt(i) <= '9') || calc.charAt(i) == '.') {
             currNum += calc.charAt(i);
         } else if (isOperator(calc.charAt(i))) {
             calculations.push(parseFloat(currNum));
