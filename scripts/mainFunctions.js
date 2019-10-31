@@ -1,6 +1,7 @@
 /*
 File created 10/26/2019 by Sharon Qiu
 Edited 10/26/2019 by Sri Ramya Dandu
+Edited 10/31/2019 by Sharon Qiu
 Moved main functions for standard calc here.
 */
 
@@ -145,27 +146,26 @@ function onEqualClick() {
 // Edited 10/20/2019 by Sri Ramya Dandu: Button enable/disable
 // Edited 10/25/2019 by Leah Gillespie: included history update
 // Edited 10/26/2019 by Sri Ramya Dandu: Fixed decimal
+// Edited 10/30/2019 by Sharon Qiu: Updated memory value references.
+// Edited 10/31/2019 by Sharon Qiu: Updated memory display toggle.
 // Updates the display after new calculations.
 function updateDisplay() {
+
+    var memLength = document.getElementById("memory-stack-display").childElementCount;
+    console.log(memLength);
     document.getElementById("display").innerHTML = display;
-    console.log(display);
     document.getElementById("calculations").innerHTML = calculations.toString().replace(/,/g, " ");
-    document.getElementById('MC').disabled = memory.length == 0 ;
-    document.getElementById('MR').disabled = memory.length == 0;
-    document.getElementById('M').disabled = memory.length == 0;
-    if (memory.length == 0) {
-        MemoryActions.hideMemory();
-    }
+
+    document.getElementById('MC').disabled = memLength == 0;
+    document.getElementById('MR').disabled = memLength == 0;
+    document.getElementById('M').disabled = memLength == 0;
     if(display.indexOf('.') != -1){
         document.getElementById('dot').disabled = true;
     }
 
-    if(document.getElementById('display-memory-list').style.display == "block"){
-        document.getElementById('display-memory-list').style.display = "none"
-        MemoryActions.displayMemory();
+    if (memLength == 0) {
+        MemoryActions.hideMemory();
     }
-
-    // document.getElementById("memory").innerHTML = memory;
     setButtonState(buttonState);
 }
 
