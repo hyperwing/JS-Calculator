@@ -50,14 +50,13 @@ function callFunction(choice){
     switch (choice){
         case "MC": 
             MemoryActions.clearMemory();
-            break;
+            
         case "MS": 
             MemoryActions.storeMemory();
-            break;
+            
         case "MR": 
             MemoryActions.memoryRecall()
-           
-            break;
+            
     }
 }
 
