@@ -126,20 +126,26 @@ function onEqualClick() {
         calculations.pop()
     }
     calculations.push(parseFloat(display));
-    display = String(calculateCalculations());
-    let calc = calculations.toString();
-    let disp = display;
-    var button = document.createElement("button");
-    button.addEventListener("click", function(){ onHistoryClick(calc, disp);}, false);
-    var txt = document.createTextNode(calculations.toString().replace(/,/g," ") + " =\n" + display);
-    button.append(txt);
-    var historyList = document.getElementById("history");
-    if (historyList.childElementCount === 0) {
-        historyList.append(button);
-    } else {
-        historyList.insertBefore(button, lastHistory);
+    let ans = calculateCalculations();
+    let result = typeof ans;
+    display = String(ans);
+    if (result == "number") {
+        let calc = calculations.toString();
+        let disp = display;
+        var button = document.createElement("button");
+        button.addEventListener("click", function () {
+            onHistoryClick(calc, disp);
+        }, false);
+        var txt = document.createTextNode(calculations.toString().replace(/,/g, " ") + " =\n" + display);
+        button.append(txt);
+        var historyList = document.getElementById("history");
+        if (historyList.childElementCount === 0) {
+            historyList.append(button);
+        } else {
+            historyList.insertBefore(button, lastHistory);
+        }
+        lastHistory = button;
     }
-    lastHistory = button;
     calculations = [];
     lastButtonEquals = true;
     lastButtonHistory = false;
